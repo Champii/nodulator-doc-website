@@ -1,0 +1,12 @@
+/*.sidebar {
+  position: fixed;
+  width: 250px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.content {
+  width: 500px;
+  padding-left: 300px;
+}
+*/
