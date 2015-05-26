@@ -10,3 +10,13 @@
   padding-left: 300px;
 }
 */
+
+.codetoggle {
+  float: left;
+  padding-left: 10px;
+}
+
+.selected {
+  font-weight: bold;
+  color: #f44d3c;
+}
