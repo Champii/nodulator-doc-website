@@ -154,7 +154,11 @@ section {
 }
 
 #section2 {
-	background-color: #fff;
+  background-color: #fff;
+}
+
+#section2 .container{
+  width: 1700px;
 }
 
 #section3 {

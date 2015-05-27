@@ -45,9 +45,11 @@ html
       .v-center
         h1.text-center Nodulator.js
         h2.text-center.lato.animate.slideInDown
-          | Coffeescript
+          | Complete
           b  Framework
           |  for Restfull APIs
+        p.text-center (And more if affinity)
+        p.text-center v0.0.18
         p.text-center
           br
           a.btn.btn-danger.btn-lg.btn-huge.lato(href='#section2') Getting Started
@@ -108,9 +110,13 @@ html
               .col-sm-12.text-center
                 .panel.panel-default.slideInLeft.animate
                   .panel-heading
-                    h3 Concept
+                    h3 Philosophy
                       .panel-body
-                    p Nodulator is a NodeJS framework designed to make it more easy to create highly modulable applications built with REST APIs and with integrated ORM in CoffeeScript.
+                    p Nodulator is a NodeJS framework designed to make it more easy to create highly modulable REST API applications with integrated ORM in CoffeeScript and Javascript.
+                    p In a few lines of code, you can create complex project architectures with high performance and reusability.
+                    p It tries make a big overlay to every traditionnal packages used to make REST client/server applications in CoffeeScript.
+                    p Its main goal is to give developers a complex REST routing system, an ORM and high-level modules, encapsulating every classic behaviour needed to create complex projects.
+                    p Its core provides everything needed to build powerfull REST APIs, and allow the developer to reuse his code through every projects.
                     hr
                     hr
           .col-sm-4.text-center
@@ -118,11 +124,13 @@ html
               .col-sm-12.text-center
                 .panel.panel-default.slideInUp.animate
                   .panel-heading
-                    h3 Philosophy
+                    h3 Modular
                       .panel-body
-                    p Nodulator is a project that is trying to make a big overlay to every traditionnal packages used to make REST client/server applications in CoffeeScript.
-                    p Its main goal is to give developers a complex REST routing system, an ORM and high-level modules, encapsulating every classic behaviour needed to create complex projects.
-                    p Its core provides everything needed to build powerfull and highly modulable REST APIs, and allow the developer to reuse his code through every projects.
+                    p There is plenty of modules made for Nodulator. Watch for all the functionalities they can provide to your project:
+                    p - Nodulator-Assets: Automatic assets management, just append folders' path to the default module configuration and enjoy watching your assets be automaticaly added to your client page.
+                    p - Nodulator-Account: Extends basic Resource to support and manage every authentication part of your application with PassportJS.
+                    p - Nodulator-Angular: Add AngularJS support client-side with a bunch of Coffeescript classes, and link them with your server in order to facilitate model exchanges.
+                    p - Nodulator-Socket: Add SocketIO support, and binds a lot of usual socket fonctionalities to the client.
                     hr
                     hr
           .col-sm-4.text-center
@@ -130,11 +138,16 @@ html
               .col-sm-12.text-center
                 .panel.panel-default.slideInRight.animate
                   .panel-heading
-                    h3 Modular
+                    h3 Database agnostic
                       .panel-body
-                    p There is plenty of modules made for Nodulator. Watch for all the functionalities they can provide to your project
+                    p Nodulator natively support MySQL and MongoDB.
+                    p It is designed to possibly switch from one to another transparently during developement processes.
+                    p Also, there is a Dummy-DB included for developement facilities, that is flushed upon every server restart. This is the default behaviour.
+                    p You can add your own Database support easely thanks to differents levels of abstraction.
+                    p For exemple, adding Amazon S3 support by default is actually under discussion.
                     hr
                     hr
+
         // /row
         .row
           br
@@ -213,11 +226,11 @@ html
                 |  method when you want it to be usable first time. It will create the model in database if non existant, associate the route object (if any) and prepare schema, validation and model association.
               p Here it creates a foo row in selected table/document (see
                 b  Configuration
-                |  section) and change one if its values before save it again.
+                |  section) and change one of its values before save it again.
               p By default,
                 b  Resources
                 |  are Schema-less and you can add pretty much whatever you want into them. See next exemple for a Schema-full model.
-              p You can use the create element like any javascript object, and call
+              p You can use the created element like any javascript object, and call
                 b  Save()
                 |  method for exemple
               //- img(src='//placehold.it/100')
@@ -252,7 +265,7 @@ html
             .media-body.media-middle
               p Each time you specify a schema property in the config object, your Resource now checks for fields validity and might return some errors if you provide bad types.
               p Note that you can pass arguments to Nodulator.Resource(). We'll see later that we can add another one to specify routes.
-              p In this mode, if you add a field that doesn't belong to a real field in your DB, you might get ugly row MySQL errors (for exemple)
+              p In this mode, if you add a field that doesn't belong to a real field in schema, it might be ignored.
           hr
           .media
             h3 Model association
