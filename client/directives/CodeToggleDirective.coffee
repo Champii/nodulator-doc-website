@@ -4,6 +4,5 @@ class CodeToggleDirective extends Nodulator.Directive 'codetoggle', {transclude:
 
   Toggle: (@language) ->
     prettyPrint()
-    console.log @
 
 CodeToggleDirective.Init()

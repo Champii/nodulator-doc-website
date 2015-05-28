@@ -1,931 +1,2058 @@
-div(class="content")
+div(class="pagebody")
   h1 Nodulator
 
-
-//- [![Build Status](https://travis-ci.org/Champii/Nodulator.svg?branch=master)](https://travis-ci.org/Champii/Nodulator) (Master)
-
-//- [![Build Status](https://travis-ci.org/Champii/Nodulator.svg?branch=develop)](https://travis-ci.org/Champii/Nodulator) (Develop)
-
-//- [![NPM](https://nodei.co/npm/nodulator.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/nodulator/)
-
-//- [![NPM](https://nodei.co/npm-dl/nodulator.png?months=1)](https://nodei.co/npm/nodulator/)
-
-//- ##### Under heavy development
-
-//- ___
-//- ## Concept
-
-//- `Nodulator` is designed to make it more easy to create highly modulable applications, built with REST APIs and with integrated ORM in CoffeeScript.
-
-//- You must understand [express](https://github.com/strongloop/express) basics for routing
-
-//- Open [exemple.coffee](https://github.com/Champii/Nodulator/blob/master/exemple.coffee) to see a full working exemple
-
-//- Released under [GPLv2](https://github.com/Champii/Nodulator/blob/master/LICENSE.txt)
-
-//- ___
-//- ## Jump To
-
-
-
-//- ___
-//- ## Philosophy
-
-//- `Nodulator` is a project that is trying to make a big overlay to every traditionnal packages used to make REST client/server applications in CoffeeScript.
-//- Its main goal is to give developers a complex REST routing system, an ORM and high-level modules, encapsulating every classic behaviour needed to create complex projects.
-
-//- Its core provides everything needed to build powerfull and highly modulable REST APIs, and allow the developer to reuse his code through every projects.
-
-//- With this framework, you will never loose 10 or 20 hours anymore boostraping a project from scratch or looking for the right technology to implement.
-//- You will never have headache anymore trying to combine `socket.io` and `passport` to keep track of your session with your sockets (for exemple),
-//- or you will never have to consider assets management,
-//- and with the integrated [Project Generation](#project-generation) you will never need to manage your `Nodulator` modules dependencies.
-
-//- You need to add authentication logic to your open/public API ? Look for [Nodulator-Account](https://github.com/Champii/Nodulator-Account) !
-
-//- You need to add socket.io support ? Look for [Nodulator-Socket](https://github.com/Champii/Nodulator-Socket) !
-
-//- If you don't find your desired module, just [build it](#modules) !
-
-//- `Nodulator` is like a lego game, instead of learning how to use a given technology and how to combine it with thoses you often use,
-//- it allows you to manipulate simple concepts like adding a `Account` concept to your application(for exemple), and so adding authentication and permission logic to your app.
-
-//- Also, each brick or layer of a `Nodulator` application is highly linked to every others.
-//- For exemple, when you add `Nodulator-Account` module to your app, if you have already included `Nodulator-Angular` it will automaticaly add everything needed
-//- to handle angular authentication (it will add a separate view, some directives and a user service). Have you added `Nodulator-Socket` ?
-//- So `Nodulator-Angular` will also be highly linked to your server's models, by providing a socket interface to your server `Resource`.
-
-//- Check the [Jump To](#jump-to) section !
-
-//- ___
-//- ## Features
-
-//- - Integrated ORM
-//- - Integrated Routing system (with express, and highly linked with ORM)
-//- - Multiple DB Systems
-//- - Complex inheritance system
-//- - Modulable
-//- - Project generation
-//- - Schema-less/Schema-full models
-//- - Model validation
-//- - Model association and automatic retrieval
-
-//- ___
-//- ### Compatible modules
-
-//- - [Nodulator-Assets](https://github.com/Champii/Nodulator-Assets):
-//-   - Automatic assets management
-//- - [Nodulator-Socket](https://github.com/Champii/Nodulator-Socket):
-//-   - Socket.io implementation for Nodulator
-//- - [Nodulator-Angular](https://github.com/Champii/Nodulator-Angular):
-//-   - Angular implementation for Nodulator
-//-   - Inheritance system
-//-   - Integrated and linked SocketIO
-//-   - Assets management
-//- - [Nodulator-Account](https://github.com/Champii/Nodulator-Account):
-//-   - Authentication with passport
-//-   - Permissions management
-//-   - Sessions
-//-   - Nodulator-Angular integration
-
-//- ___
-//- ## Installation
-
-//- Just run :
-//- ```
-//- npm install nodulator
-//- ```
-//- Or check the [Project Generation](#project-generation) section
-
-//- After you can require `Nodulator` as a module :
-
-//- ```coffeescript
-//- Nodulator = require 'nodulator'
-//- ```
-
-//- ___
-//- ## Quick Start
-
-//- Here is the quickiest way to play around `Nodulator`
-
-//- ```coffeescript
-//- _ = require 'underscore'
-//- Nodulator = require 'nodulator'
-
-//- class PlayerRoute extends Nodulator.Route.DefaultRoute
-//-   Config: ->
-
-//-     # We create: GET => /api/1/{resource_name}/usernames
-//-     # Get a list of every players' usernames
-//-     @Get '/usernames', (req, res) =>
-
-//-       # There is a @resource property, containing attached Resource class
-//-       @resource.ListUsernames (err, usernames) ->
-//-         return res.status(500).send err if err?
-
-//-         res.status(200).send usernames
-
-//-     # We call super() to apply Nodulator.Route.DefaultRoute behaviour
-//-     # We called '/usernames' route before, so it won't be override by
-//-     # default route GET => /api/1/{resource_name}/:id
-//-     super()
-
-//-     # We create: PUT => /api/1/{resource_name}/:id/levelUp
-//-     @Put '/:id/levelUp', (req, res) =>
-
-//-       # For DefaultRoute routes with '/:id/*',
-//-       # Fetch the corresponding Resource and put the instance in @instance
-//-       # (here it can be called 'req.player' but we want to stay generic)
-//-       @instance.LevelUp (err, resource) ->
-//-         return res.status(500).send err if err?
-
-//-         res.status(200).send resource.ToJSON()
-
-//- # We create a resource, and we attach the PlayerRoute
-//- class PlayerResource extends Nodulator.Resource 'player', PlayerRoute
-
-//-   # We create a LevelUp method
-//-   LevelUp: (done) ->
-//-     @level++
-//-     @Save done
-
-//-   # And a class method to get a list of usernames
-//-   @ListUsernames: (done) ->
-//-     @List (err, players) ->
-//-       return done err if err?
-
-//-       done null, _(players).pluck 'username'
-
-//- # And we Init()
-//- PlayerResource.Init()
-
-//- ```
-
-//- Go inside your project folder, copy this POC in a `test.coffee` file and type in:
-
-//- `$> coffee test.coffee`
-
-//- It will run your project on port `3000` by default
-
-//- Then open your favorite REST API Client ([Postman for Chrome](https://www.google.fr/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&cad=rja&uact=8&ved=0CCMQFjAA&url=https%3A%2F%2Fchrome.google.com%2Fwebstore%2Fdetail%2Fpostman-rest-client%2Ffdmmgilgnpjigdojojpjoooidkmcomcm%3Fhl%3Den&ei=Tu6iVMqpJZDaatmGgOAL&usg=AFQjCNHaecLwAKk91gpdCY_y1x_ViIrHwQ&sig2=3FcPD7i2Id8La26xJt4PJA&bvm=bv.82001339,d.d2s) is my favorite)
-
-//- and try the following routes :
-
-//- ```
-//- (Assuming full url is always of the following form : "http://localhost:3000/api/1/[...]")
-//- Each route is of the following form :
-
-//- {VERB}  {URL}                       ({PARAMS})                       => {ANSWER}
-
-//- POST    '/api/1/players'            {username: 'test1', level: 1}    => {id: 1, username: 'test1', level: 1}
-//- POST    '/api/1/players'            {username: 'test2', level: 1}    => {id: 2, username: 'test2', level: 1}
-
-//- GET     '/api/1/players'                                             => [{id: 1, username: 'test1', level: 1},
-//-                                                                          {id: 2, username: 'test2', level: 1}]
-
-//- GET     '/api/1/players/1'                                           => {id: 1, username: 'test1', level: 1}
-//- GET     '/api/1/players/2'                                           => {id: 2, username: 'test2', level: 1}
-
-//- PUT     '/api/1/players/2/levelUp'  {}                               => {id: 2, username: 'test2', level: 2}
-//- PUT     '/api/1/players/2/levelUp'  {}                               => {id: 2, username: 'test2', level: 3}
-
-//- GET     '/api/1/players/usernames'                                   => ['test1', 'test2']
-
-//- PUT     '/api/1/players/2'          {username: 'notAUsername'}       => {id: 2, username: 'notAUsername', level: 3}
-
-//- GET     '/api/1/players/usernames'                                   => ['test1', 'notAUsername']
-
-//- DELETE  '/api/1/players/1'          {}                               => {id: 1, username: 'test1', level: 1}
-
-//- GET     '/api/1/players/usernames'                                   => ['notAUsername']
-//- ```
-
-//- ___
-//- ## Configuration
-
-//- First of all, the configuration process is absolutly optional.
-
-//- If you don't give Nodulator a config, it will assume you want to use [SqlMem](#sqlmem) DB system, with no persistance at all. Usefull for heavy tests periods.
-
-//- If you prefere to use a persistant system, here is the procedure :
-
-//- ```coffeescript
-//- Nodulator = require 'nodulator'
-
-//- Nodulator.Config
-//-   dbType: 'Mongo'     # You can select 'SqlMem' or 'Mongo' or 'Mysql'
-//-   dbAuth:             # Fields needed if Mongo or Mysql
-//-     host: 'localhost'
-//-     database: 'test'
-//-     port: 27017       # From there, can be ignored. Default values taken
-//-     user: 'test'      # |
-//-     pass: 'test'      # |_
-//- ```
-
-//- You can also provide a 'store' property in order to use `Redis` to manage sessions:
-
-//- ```coffeescript
-//- Nodulator = require 'nodulator'
-
-//- Nodulator.Config
-//-   store:
-//-     type: 'redis'
-//-     host: 'localhost'     # <- default value, can be ignored
-//- ```
-
-//- If ommited, sessions will be memory based (not recommended)
-
-
-//- `Nodulator` provides 2 main Objects :
-
-//- ```coffeescript
-//- Nodulator.Resource
-//- Nodulator.Route
-//- ```
-
-//- ___
-//- ## Resource
-
-//- #### Basics
-
-//- A `Resource` is a class permitting to retrive and save a model from a DB.
-
-//- Here is an exemple of creating a `Resource`
-
-//- ```coffeescript
-//- PlayerResource = Nodulator.Resource 'player'
-
-//- PlayerResource.Init()
-//- ```
-
-//- Here, it creates a `PlayerResource`, linked with a `players` table in DB (if any)
-
-//- Note the 's' concatenated with the `Resource` name. Its the real `Resource.name` of a resource
-
-//- For the same name without the 's', there is a `Resource.lname` property.
-
-//- ##### /!\ Never forget to call Init() /!\
-
-//- It's needed in order to prepare the `Resource`. All the `Nodulator`'s magic is inside this call.
-
-//- If you forget it :
-//- - The `Resource` will NOT be linked to `Route` (if any)
-//- - It will NOT prepare `Account` system (if any)
-//- - It will NOT prepare inheritance system so you won't be able to inherit from it
-//- - It will NOT be linked to a corresponding table in DB
-//- - Nothing will work or happend. Ever.
-
-//- ##### /!\ Please read this section again /!\ (beware of infinite loops :p)
-
-//- You can pass several params to `Nodulator.Resource` :
-
-//- ```coffeescript
-//- Nodulator.Resource name [, Route] [, config]
-//- ```
-
-//- You can attach a [Route](#route) and/or a config object to a `Resource`.
-
-
-//- #### Class methods
-
-//- Each `Resource` provides some 'Class methods' to manage the specific model in db :
-
-//- ```coffeescript
-//- PlayerResource.Fetch(id, done)
-//- PlayerResource.FetchBy(constraints, done)
-//- PlayerResource.List(id, done)
-//- PlayerResource.ListBy(constraints, done)
-//- PlayerResource.Deserialize(blob, done)
-//- PlayerResource.Create(blob, done)
-//- ```
-
-//- The `Fetch` method take an id and return a `PlayerResource` intance to `done` callback :
-
-//- ```coffeescript
-//- PlayerResource.Fetch 1, (err, player) ->
-//-   return console.error err if err?
-
-//-   [...] # Do something with player instance
-//- ```
-
-//- You can also call `FetchBy` method to give a specific field to retrive.
-//- It can be unique, or the first occurence in DB will return (depends on DB implementations)
-
-//- You can list every models from this `Resource` thanks to `List` call :
-
-//- ```coffeescript
-//- PlayerResource.List (err, players) ->
-//-   return console.error err if err?
-
-//-   [...] # players is an array of PlayerResource instance
-//- ```
-
-//- Like `FetchBy`, you can `ListBy` a specific field.
-
-//- The `Deserialize` method allow to get an instance of a given `Resource`.
-
-//- Never use `new` operator directly on a `Resource`, else you might bypass the relationning system.
-
-//- `Deserialize` method is used to make pre-processing work (like fetching related models) before instantiation.
-
-//- `Create` method is an alias to `Deserialize` followed by a `Save`.
-
-//- #### Instance methods
-
-//- A player instance has some methods :
-
-//- ```
-//- player.Save(done)
-//-     Save the model in DB. The callback take 2 arguments : (err, instance) ->
-
-//- player.Delete(done)
-//-     Delete the model from the DB. The callback take 1 argument : (err) ->
-
-//- player.Serialize()
-//-     Get every object properties, and return it in a new object.
-//-     Generaly used to get what to be saved in DB.
-
-//- player.ToJSON()
-//-     By default, it calls Serialize().
-//-     Generaly used to get what to send to client.
-//- ```
-
-//- #### Schema and Validation
-
-//- By default, every `Resource` is schema less. It means that you can put almost anything into your `Resource`.
-
-//- It can obviously be schema less only for DB systems that allows it. When using MySQL for exemple, you'll have
-//- to define a schema and validation rules if you don't want your server to answer raw SQL errors for non existant fields
-
-//- To make a `Resource` to respect a given schema, you just have to define a `schema` field into `Resource` configuration
-
-//- ```coffeescript
-//- config =
-//-   schema:
-//-     foo:
-//-       type: 'int'
-//-     bar:
-//-       type: 'string'
-//-       optional: true
-//- ```
-
-//- Differents types are
-//- - bool
-//- - int
-//- - string
-//- - date
-//- - email
-
-//- By default, each fields is required, but you can make one field optional with the `optional` field. It will never complain if this field is not present, but if it is,
-//- it will check for its validity:
-//- - For every `post` routes (if any) it will check for every schema fields validity (each one in the model definition, and returns an error if any is missing or invalid)
-//- - For every `put`  routes (if any) it will check for each request fields validity (each one in the client request, and returns an error if any is invalid)
-
-//- You can specify a type directly with a string, assuming that the given property will be required.
-
-//- ```coffeescript
-//- config =
-//-   schema:
-//-     foo: 'int'
-//-     bar: 'string'
-//- ```
-
-
-//- #### Model association
-
-//- You can make associations between `Resource`. For making a `Resource` to be automaticaly fetched when querying another, you can add it to its schema :
-
-//- ```coffeescript
-//- config =
-//-   schema:
-//-     foo:
-//-       type: 'int'
-//-     barId:
-//-       type: 'int'
-//-     bar:
-//-       type: BarResource
-//-       localKey: 'barId'
-
-//- class TestResource extends Nodulator.Resource 'test', config
-
-//- TestResource.Init()
-
-//- # Fetch TestResource with id == 1
-//- TestResource.Fetch 1, (err, test) ->
-//-   # Will print for exemple : {id: 1, foo: 12, barId: 1, bar: {id:1, barProperty: 'test'}}
-//-   console.log test
-//- ```
-
-//- ____
-//- ## Overriding and Inheritance
-
-//- You can inherit from a `Resource` to override or enhance its default behaviour, or to make a complex class inheritance system built on `Resource`
-
-//- #### Override default behaviour
-//- In CoffeeScript its pretty easy:
-
-//- ```coffeescript
-//- class UnitResource extends Nodulator.Resource 'unit'
-
-//-   # We create a new instance method
-//-   LevelUp: (done) ->
-//-     @level++
-//-     @Save done
-
-//-   # We override default 'List' method
-//-   @List: (done) ->
-//-     @ListBy {life: 10}, (err, units) ->
-//-       return done err if err?
-
-//-       done null, units
-
-//-   UnitResource.Init()
-//- ```
-
-//- #### Abstract class
-
-//- You can define an abstract class, that won't be attached to any model in DB or any `Route`
-
-//- ```coffeescript
-//- class UnitResource extends Nodulator.Resource 'unit', {abstract: true}
-//-   [...]
-
-//- UnitResource.Init();
-//- ```
-
-//- Of course, abstract classes are only designed to be inherited. (Please note that they can't have a `Route` attached)
-
-//- #### Complex inheritance system
-
-//- Given the last exemple, here is a class that inherits from `UnitResource`
-
-//- ```coffeescript
-//- # Note the call to 'Extend()' method
-//- class PlayerResource extends UnitResource.Extend 'player'
-
-//-   # Give PlayerResource a new beheviour
-//-   NewBehaviour: (args, done) ->
-//-     [...]
-
-//-   # Overriding existing UnitResource LevelUp()
-//-   LevelUp: (done) ->
-//-     [...]
-
-//- PlayerResource.Init();
-//- ```
-
-//- You can call the Extend() method either from a full `Resource` or from an `abstract` one.
-
-//- Please note that if both parent and child are full `Resource`, both will have corresponding model available from ORM (here `units` and `players`)
-
-//- So be carefull when creating extended `Resource`, and think about `abstract` !
-
-//- ___
-//- ## Route
-
-//- #### Route Object
-
-//- `Nodulator` provides a `Route` object, to be attached to a `Resource` object in order to describe routing process.
-
-//- ```coffeescript
-//- class UnitResource extends Nodulator.Resource 'unit', Nodulator.Route
-//- ```
-
-//- There is no need of `Init()` here. Every `Route` is initiated and configured when its attached `Resource` is.
-
-//- Default `Nodulator.Route` do nothing. You have to inherit from it to describe routes :
-
-//- ```coffeescript
-//- class UnitRoute extends Nodulator.Route
-
-//-   # Override the Config() method
-//-   Config: ->
-
-//-     # And never forget to call the super()
-//-     super()
-
-//-     # Here we define: GET => /api/1/{resource_name}/:id
-//-     @Get '/:id', (req, res) =>
-
-//-       # The @resource field points to attached Resource
-//-       @resource.Fetch req.params.id, (err, unit) ->
-//-         return res.status(500).send err if err?
-
-//-         res.status(200).send unit.ToJSON()
-
-//-     # Here we define: POST => /api/1/{resource_name}
-//-     @Post (req, res) ->
-//-       res.status(200).end()
-//- ```
-
-//- This `Route`, attached to a `Resource` (here `UnitResource`) add 2 endpoints :
-
-//- ```
-//- GET  => /api/1/units/:id
-//- POST => /api/1/units
-//- ```
-
-//- Each `Route` have to implement a `Config()` method, calling `super()` and defining routes thanks to 'verbs' route calls (@Get(), @Post(), @Put(), @Delete(), @All()).
-
-//- Here are all 'verb' route calls definition :
-
-//- ```coffeescript
-//- Nodulator.Route.All     [endPoint = '/'], [middleware, [middleware, ...]], callback
-//- Nodulator.Route.Get     [endPoint = '/'], [middleware, [middleware, ...]], callback
-//- Nodulator.Route.Post    [endPoint = '/'], [middleware, [middleware, ...]], callback
-//- Nodulator.Route.Put     [endPoint = '/'], [middleware, [middleware, ...]], callback
-//- Nodulator.Route.Delete  [endPoint = '/'], [middleware, [middleware, ...]], callback
-//- ```
-
-//- #### Default Route Object
-
-//- Nodulator provides also a standard route system for lazy : `Nodulator.Route.DefaultRoute`.
-//- It setups 5 routes (exemple when attached to a PlayerResource) :
-
-//- ```
-//- GET     => /api/1/players       => List
-//- GET     => /api/1/players/:id   => Get One
-//- POST    => /api/1/players       => Create
-//- PUT     => /api/1/players/:id   => Update
-//- DELETE  => /api/1/players/:id   => Delete
-//- ```
-
-//- #### Route Inheritance
-
-//- You can inherit from any route object :
-
-//- ```coffeescript
-//- class Test1Route extends Nodulator.Route
-//- class Test2Route extends Nodulator.Route.DefaultRoute
-//- class Test3Route extends Test2Route
-//- class Test4Route extends Test3Route
-//- ```
-//- And you can override existing route by providing same association verb + url. Exemple :
-
-//- ```coffeescript
-//- class TestRoute extends Nodulator.Route.DefaultRoute
-//-   Config: ->
-//-     super()
-
-//-     # Here we override the default GET => /api/1/{resource_name}/:id
-//-     @Get '/:id', (req, res) =>
-//-       [...]
-//- ```
-
-//- ___
-//- ## Db Systems
-
-//- #### Abstraction
-
-//- We defined a driver interface for some DB implementations.
-
-//- It's based on SQL `Table` concept. (see [lib/connectors/sql/index.coffee](https://github.com/Champii/Nodulator/blob/master/lib/connectors/sql/index.coffee))
-
-//- ```coffeescript
-//- Table.Find(id, done)
-//- Table.FindWhere(fields, where, done)
-//- Table.Select(fields, where, options, done)
-//- Table.Save(blob, done)
-//- Table.Insert(blob, done)
-//- Table.Update(blob, where, done)
-//- Table.Delete(id, done)
-//- ```
-
-//- Every `Resource` have an associated `Table` instance that links to the good table/document in the good DB driver system
-
-//- #### Mysql
-
-//- Built-in `MySQL` implementation ([node-mysql](https://github.com/felixge/node-mysql/)) for `Nodulator`
-
-//- Check [lib/connectors/sql/Mysql.coffee](https://github.com/Champii/Nodulator/blob/master/lib/connectors/sql/Mysql.coffee)
-
-//- #### MongoDB
-
-//- Built-in `MongoDB` implementation ([mongous](https://github.com/amark/mongous)) for `Nodulator`
-
-//- Check [lib/connectors/sql/Mongo.coffee](https://github.com/Champii/Nodulator/blob/master/lib/connectors/sql/Mongo.coffee)
-
-//- #### SqlMem
-
-//- Special DB driver, built on RAM.
-
-//- It provides same options as others systems do, but nothing is stored. When you stop the server, everything is deleted.
-
-//- Check [lib/connectors/sql/SqlMem.coffee](https://github.com/Champii/Nodulator/blob/master/lib/connectors/sql/SqlMem.coffee)
-
-//- ___
-//- ## Other stuff
-
-//- #### Bus
-
-//- There is a `Nodulator.bus` object that is basicaly an `EventEmitter`. Every objects in `Nodulator` use this bus.
-
-//- Here are the emitted events:
-
-//- - On a new `Resource` being inserted in DB, sends it after a `Serialize()` call
-//-   - `Nodulator.bus.emit 'new_' + resource_name, @Serialize()`
-
-//- - On a `Resource` being updated in DB, sends it after a `Serialize()` call
-//-   - `Nodulator.bus.emit 'update_' + resource_name, @Serialize()`
-
-//- - On a `Resource` being deleted from DB, sends it after a `Serialize()` call
-//-   - `Nodulator.bus.emit 'delete_' + resource_name, @Serialize()`
-
-//- Exemple
-
-//- ```coffeescript
-//- PlayerResource = Nodulator.Resource 'player'
-
-//- Nodulator.on 'new_player', (player) ->
-//-   [...] # Do something with this brand new player
-//- ```
-
-//- You can override default `Bus` by setting new class to Nodulator.Bus :
-
-//- ```coffeescript
-//- Nodulator = require 'nodulator'
-//- NewBus = require './NewBus'
-
-//- Nodulator.Bus = NewBus
-//- ```
-
-//- Always set new `Bus` before any new `Resource` call or any added `Module`
-
-//- ___
-//- ## Modules
-
-//- #### Usage
-
-//- To inject a module into `Nodulator`, preceed this way :
-
-//- ```coffeescript
-//- Nodulator = require 'nodulator'
-//- ModuleName = require 'nodulator-ModuleName'
-
-//- Nodulator.Use ModuleName
-//- ```
-
-//- Replace `ModuleName` with the module's name you want to load
-
-//- #### Module Hacking
-
-//- If you want to create a new module for `Nodulator`, you have to export a single function, taking `Nodulator` as parameter :
-
-//- ```coffeescript
-//- module.exports = (Nodulator) ->
-//-   [...] # Your module here
-//- ```
-
-//- You can extend anything you want, as the whole `Nodulator` object is passed to your function.
-
-//- Be carefull to `server/loadOrder.json`.
-
-//- Watch how [other modules](#compatible-modules-and-dependencies) are made !
-
-//- ___
-//- ## Project Generation
-//- You can get global `Nodulator` :
-
-//- ```
-//- $> npm install -g nodulator
-//- $> Nodulator
-//- Usage: Nodulator (init) | ((install |  install-dev | remove) moduleName1 [, moduleName2 [, ...]])
-//- ```
-
-//- Nodulator provides a way of installing `Nodulator`, modules and dependencies easely
-//- ```
-//- # If no arguments, install or remove Nodulator
-//- $> Nodulator install
-//- $> Nodulator install-dev
-//- $> Nodulator remove
-
-//- # Will install nodulator-angular and every dependencies (if any)
-//- $> Nodulator install angular
-
-//- # Will install nodulator-angular, nodulator-account, and all their dependencies (if any)
-//- $> Nodulator install angular account
-
-//- # Will create local link instead of a full install of nodulator-angular and every dependencies (if any)
-//- # It's used to avoid reinstalling locally a Nodulator package under development
-//- $> Nodulator install-dev angular
-
-//- # Will remove nodulator-socket
-//- $> Nodulator remove socket
-//- ```
-
-//- Then you can launch the `init` process :
-//- ```
-//- $> Nodulator init
-//- ```
-
-//- It creates the following structure if non-existant :
-//- ```
-//- main.coffee
-//- package.json
-//- settings/
-//- server/
-//- ├── index.coffee
-//- ├── loadOrder.json
-//- ├── processors/
-//- │   └── index.coffee
-//- └── resources/
-//-     └── index.coffee
-//- ```
-
-//- And then find for every `Nodulator` modules installed, and call their respective `init` method.
-
-//- It generate a `main.coffee` and a `package.json` with every modules pre-loaded.
-
-//- The `server` folder is auto-loaded (check `server/index.coffee` and every `index.coffee` in subfolders).
-
-//- Folders load order is defined in `server/loadOrder.json`, and is automaticaly managed by new modules installed (they care of the order)
-
-//- You can immediately start to write `Resource` in `server/resources` !
-
-//- ___
-//- ## Developers
-
-//- Never forget that I'm always available at champii.akronym@gmail.com for any questions
-
-//- ___
-//- ## Contributors
-
-//- - [Champii](https://github.com/champii)
-//- - [SkinyMonkey](https://github.com/skinymonkey)
-
-//- ___
-//- ## DOC
-
-//- ```
-//- Nodulator
-
-//-   Properties :
-//-     Nodulator.app       => the express app
-//-     Nodulator.express   => the express module
-//-     Nodulator.passport  => the passport module
-//-     Nodulator.server    => the http server
-//-     Nodulator.authApp   => if this app handle passport authentication
-//-     Nodulator.appRoot   => the app root path
-//-     Nodulator.bus       => official bus (EventEmitter)
-//-     Nodulator.Route     => Route object
-
-//-   Nodulator.Resource(resourceName, [Route], [config])
-
-//-     Create the resource Class
-
-//-   Nodulator.Config(config)
-
-//-     Change config
-
-//-   Nodulator.Use(module)
-
-//-     Inject a module inside Nodulator
-
-//-   Nodulator._ListEndpoints(done)
-
-//-     DEBUG PURPOSE
-//-     List every api endpoint added by application
-
-//- Resource
-
-//- (Uppercase for Class, lowercase for instance)
-
-//-   Resource.Fetch(id, done)
-
-//-     Take an id and return it from the DB in done callback: (err, resource) ->
-
-//-   Resource.FetchBy(constraints, done)
-
-//-     Take an object representing contraints, and return first row from the DB in done callback: (err, resource) ->
-
-//-   Resource.List(done)
-
-//-     Return every records in DB for this resource and give them to done: (err, resources) ->
-
-//-   Resource.ListBy(constraints, done)
-
-//-     Take an object representing constraints, and return every row from the DB in done callback: (err, resources) ->
-
-//-   Resource.Deserialize(blob, done)
-
-//-     Method that take the blob returned from DB to make a new instance
-
-//-   Resource.Create(blob, done)
-
-//-     Alias for Deserialize and Save
-
-//-   resource.Save(done)
-
-//-     Save the instance in DB
-
-//-     If the resource doesn't exists, it create and give it an id
-//-     It return to done the current instance
-
-
-//-   resource.Delete(done)
-
-//-     Delete the record in DB, and return affected rows in done
-
-//-   resource.Serialize()
-
-//-     Return every properties defined in the schema,
-//-     else if no schema is defined it will take every properties not stating with '_' (the private ones)
-//-     This method is used to get what must be saved in DB
-
-//-   resource.ToJSON()
-
-//-     This method is used to get what must be send to client
-//-     Call @Serialize() by default, but can be overrided
-
-//- Route
-
-//-   route.Get     [url = ''], [middleware, [middleware, [...]]], done)
-//-   route.All     [url = ''], [middleware, [middleware, [...]]], done)
-//-   route.Post    [url = ''], [middleware, [middleware, [...]]], done)
-//-   route.Put     [url = ''], [middleware, [middleware, [...]]], done)
-//-   route.Delete  [url = ''], [middleware, [middleware, [...]]], done)
-
-//-     Create a route.
-
-//-     'url' will be concatenated with '/api/{VERSION}/{RESOURCE_NAME}'. Optional
-//-     'middleware' are optionals
-//-     'done' is the express app callback: (req, res, next) ->
-
-//-   route.Config()
-
-//-     Called when a Route is associated with a Resource.
-//-     This call prepare every routes, and must be inherited.
-
-//- ```
-
-//- ___
-//- ## ToDo
-
-//- By order of priority
-
-//- - Better tests
-//- - Tests for validation
-//- - Tests for model association
-//- - Better error management
-//- - Log system
-//- - Abstract class can retrieve every child `Resource`
-//- - Remove an existing route
-
-
-//- ___
-//- ## ChangeLog
-//- XX/XX/XX: current (not released yet)
-//-   - Nothing
-
-//- 04/05/15: v0.0.18
-//-   - You can specify a 'store' general config property in order to switch to redis-based sessions
-
-//- 03/05/15: v0.0.17
-//-   - You can now specify a property type in schema without wrapping it in a object like {type: "string"}
-
-//- 15/04/15: v0.0.16
-//-   - Removed redis references for sessions
-
-//- 14/04/15: v0.0.15
-//-   - Minor changes in `Route` to fit [Nodulator-Account](https://github.com/Champii/Nodulator-Account) new release
-
-//- 10/04/15: v0.0.14
-//-   - Resource 'user' is no longer a reserved word
-//-   - Resources with name finishing with 'y' are now correctly put in plurial form in route name
-
-//- 09/04/15: v0.0.13
-//-   - Better model association and validation
-//-   - Pre-fetched resources in `Route.All()` are now put in `@instance` instead of `req[@resource.lname]`
-//-   - Updated README
-//-   - Updated Mongo driver
-
-//- 20/01/15: v0.0.12
-//-   - Fixed bug on FetchBy
-
-//- 20/01/15: v0.0.11
-//-   - Fixed tests
-//-   - Added travis support for tests
-//-   - Added model associations
-//-   - Added schema and model validation
-//-   - Changed `FetchBy` and `ListBy` prototype. Now take an object instead of a key/value pair.
-//-   - Added `Create()` method into `Resource`
-//-   - Added `limit` and `offset` to both Mysql and SqlMem
-
-//- 07/01/15: v0.0.10
-//-   - Added Philosophy section
-//-   - Added multiple package name support in package generation
-//-   - Fixed some bugs with modules
-
-//- 03/01/15: v0.0.9
-//-   - Separated `AccountResource` into a new module [Nodulator-Account](https://github.com/Champii/Nodulator-Account)
-//-   - Changed README
-
-//- 02/01/15: v0.0.8
-//-   - Fixed Route middleware issue
-
-//- 02/01/15: v0.0.7
-//-   - Separated `Socket` into a new module [Nodulator-Socket](https://github.com/Champii/Nodulator-Socket)
-//-   - Added new methods for `@Get()`, `@Post()`, `@Delete()`, `@Put()`, `@All()` in `Route`
-//-   - Replace old method `@All()` into `@_All()`. Is now a private call.
-//-   - Improved README (added [Modules](#modules) section)
-//-   - Global `Nodulator` now manage dependencies installation
+    style.
+      body {
+      width: 100%;
+      border: 1px solid #ddd;
+      outline: 1300px solid #fff;
+      margin: 16px auto;
+      }
+      body .markdown-body
+      {
+      padding: 30px;
+      }
+      @font-face {
+      font-family: octicons-anchor;
+      src: url(data:font/woff;charset=utf-8;base64,d09GRgABAAAAAAYcAA0AAAAACjQAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAABGRlRNAAABMAAAABwAAAAca8vGTk9TLzIAAAFMAAAARAAAAFZG1VHVY21hcAAAAZAAAAA+AAABQgAP9AdjdnQgAAAB0AAAAAQAAAAEACICiGdhc3AAAAHUAAAACAAAAAj//wADZ2x5ZgAAAdwAAADRAAABEKyikaNoZWFkAAACsAAAAC0AAAA2AtXoA2hoZWEAAALgAAAAHAAAACQHngNFaG10eAAAAvwAAAAQAAAAEAwAACJsb2NhAAADDAAAAAoAAAAKALIAVG1heHAAAAMYAAAAHwAAACABEAB2bmFtZQAAAzgAAALBAAAFu3I9x/Nwb3N0AAAF/AAAAB0AAAAvaoFvbwAAAAEAAAAAzBdyYwAAAADP2IQvAAAAAM/bz7t4nGNgZGFgnMDAysDB1Ml0hoGBoR9CM75mMGLkYGBgYmBlZsAKAtJcUxgcPsR8iGF2+O/AEMPsznAYKMwIkgMA5REMOXicY2BgYGaAYBkGRgYQsAHyGMF8FgYFIM0ChED+h5j//yEk/3KoSgZGNgYYk4GRCUgwMaACRoZhDwCs7QgGAAAAIgKIAAAAAf//AAJ4nHWMMQrCQBBF/0zWrCCIKUQsTDCL2EXMohYGSSmorScInsRGL2DOYJe0Ntp7BK+gJ1BxF1stZvjz/v8DRghQzEc4kIgKwiAppcA9LtzKLSkdNhKFY3HF4lK69ExKslx7Xa+vPRVS43G98vG1DnkDMIBUgFN0MDXflU8tbaZOUkXUH0+U27RoRpOIyCKjbMCVejwypzJJG4jIwb43rfl6wbwanocrJm9XFYfskuVC5K/TPyczNU7b84CXcbxks1Un6H6tLH9vf2LRnn8Ax7A5WQAAAHicY2BkYGAA4teL1+yI57f5ysDNwgAC529f0kOmWRiYVgEpDgYmEA8AUzEKsQAAAHicY2BkYGB2+O/AEMPCAAJAkpEBFbAAADgKAe0EAAAiAAAAAAQAAAAEAAAAAAAAKgAqACoAiAAAeJxjYGRgYGBhsGFgYgABEMkFhAwM/xn0QAIAD6YBhwB4nI1Ty07cMBS9QwKlQapQW3VXySvEqDCZGbGaHULiIQ1FKgjWMxknMfLEke2A+IJu+wntrt/QbVf9gG75jK577Lg8K1qQPCfnnnt8fX1NRC/pmjrk/zprC+8D7tBy9DHgBXoWfQ44Av8t4Bj4Z8CLtBL9CniJluPXASf0Lm4CXqFX8Q84dOLnMB17N4c7tBo1AS/Qi+hTwBH4rwHHwN8DXqQ30XXAS7QaLwSc0Gn8NuAVWou/gFmnjLrEaEh9GmDdDGgL3B4JsrRPDU2hTOiMSuJUIdKQQayiAth69r6akSSFqIJuA19TrzCIaY8sIoxyrNIrL//pw7A2iMygkX5vDj+G+kuoLdX4GlGK/8Lnlz6/h9MpmoO9rafrz7ILXEHHaAx95s9lsI7AHNMBWEZHULnfAXwG9/ZqdzLI08iuwRloXE8kfhXYAvE23+23DU3t626rbs8/8adv+9DWknsHp3E17oCf+Z48rvEQNZ78paYM38qfk3v/u3l3u3GXN2Dmvmvpf1Srwk3pB/VSsp512bA/GG5i2WJ7wu430yQ5K3nFGiOqgtmSB5pJVSizwaacmUZzZhXLlZTq8qGGFY2YcSkqbth6aW1tRmlaCFs2016m5qn36SbJrqosG4uMV4aP2PHBmB3tjtmgN2izkGQyLWprekbIntJFing32a5rKWCN/SdSoga45EJykyQ7asZvHQ8PTm6cslIpwyeyjbVltNikc2HTR7YKh9LBl9DADC0U/jLcBZDKrMhUBfQBvXRzLtFtjU9eNHKin0x5InTqb8lNpfKv1s1xHzTXRqgKzek/mb7nB8RZTCDhGEX3kK/8Q75AmUM/eLkfA+0Hi908Kx4eNsMgudg5GLdRD7a84npi+YxNr5i5KIbW5izXas7cHXIMAau1OueZhfj+cOcP3P8MNIWLyYOBuxL6DRylJ4cAAAB4nGNgYoAALjDJyIAOWMCiTIxMLDmZedkABtIBygAAAA==) format('woff');
+      }
+      .markdown-body {
+      -ms-text-size-adjust: 100%;
+      -webkit-text-size-adjust: 100%;
+      color: #AAA;
+      overflow: hidden;
+      font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      word-wrap: break-word;
+      }
+      .markdown-body a {
+      background: transparent;
+      }
+      .markdown-body a:active,
+      .markdown-body a:hover {
+      outline: 0;
+      }
+      .markdown-body strong {
+      font-weight: bold;
+      }
+      .markdown-body h1 {
+      font-size: 2em;
+      margin: 0.67em 0;
+      }
+      .markdown-body img {
+      border: 0;
+      }
+      .markdown-body hr {
+      -moz-box-sizing: content-box;
+      box-sizing: content-box;
+      height: 0;
+      }
+      .markdown-body pre {
+      overflow: auto;
+      }
+      .markdown-body code,
+      .markdown-body kbd,
+      .markdown-body pre {
+      font-family: monospace, monospace;
+      font-size: 1em;
+      }
+      .markdown-body input {
+      color: inherit;
+      font: inherit;
+      margin: 0;
+      }
+      .markdown-body html input[disabled] {
+      cursor: default;
+      }
+      .markdown-body input {
+      line-height: normal;
+      }
+      .markdown-body input[type="checkbox"] {
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+      padding: 0;
+      }
+      .markdown-body table {
+      border-collapse: collapse;
+      border-spacing: 0;
+      }
+      .markdown-body td,
+      .markdown-body th {
+      padding: 0;
+      }
+      .markdown-body * {
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+      }
+      .markdown-body input {
+      font: 13px/1.4 Helvetica, arial, freesans, clean, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
+      }
+      .markdown-body a {
+      color: #4183c4;
+      text-decoration: none;
+      }
+      .markdown-body a:hover,
+      .markdown-body a:focus,
+      .markdown-body a:active {
+      text-decoration: underline;
+      }
+      .markdown-body hr {
+      height: 0;
+      margin: 15px 0;
+      overflow: hidden;
+      background: transparent;
+      border: 0;
+      border-bottom: 1px solid #ddd;
+      }
+      .markdown-body hr:before {
+      display: table;
+      content: "";
+      }
+      .markdown-body hr:after {
+      display: table;
+      clear: both;
+      content: "";
+      }
+      .markdown-body h1,
+      .markdown-body h2,
+      .markdown-body h3,
+      .markdown-body h4,
+      .markdown-body h5,
+      .markdown-body h6 {
+      margin-top: 15px;
+      margin-bottom: 15px;
+      line-height: 1.1;
+      }
+      .markdown-body h1 {
+      font-size: 30px;
+      }
+      .markdown-body h2 {
+      font-size: 21px;
+      }
+      .markdown-body h3 {
+      font-size: 16px;
+      }
+      .markdown-body h4 {
+      font-size: 14px;
+      }
+      .markdown-body h5 {
+      font-size: 12px;
+      }
+      .markdown-body h6 {
+      font-size: 11px;
+      }
+      .markdown-body blockquote {
+      margin: 0;
+      }
+      .markdown-body ul,
+      .markdown-body ol {
+      padding: 0;
+      margin-top: 0;
+      margin-bottom: 0;
+      }
+      .markdown-body ol ol,
+      .markdown-body ul ol {
+      list-style-type: lower-roman;
+      }
+      .markdown-body ul ul ol,
+      .markdown-body ul ol ol,
+      .markdown-body ol ul ol,
+      .markdown-body ol ol ol {
+      list-style-type: lower-alpha;
+      }
+      .markdown-body dd {
+      margin-left: 0;
+      }
+      .markdown-body code {
+      font: 12px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+      }
+      .markdown-body pre {
+      margin-top: 0;
+      margin-bottom: 0;
+      font: 12px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+      }
+      .markdown-body .octicon {
+      font: normal normal 16px octicons-anchor;
+      line-height: 1;
+      display: inline-block;
+      text-decoration: none;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      }
+      .markdown-body .octicon-link:before {
+      content: '\f05c';
+      }
+      .markdown-body>*:first-child {
+      margin-top: 0 !important;
+      }
+      .markdown-body>*:last-child {
+      margin-bottom: 0 !important;
+      }
+      .markdown-body .anchor {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      display: block;
+      padding-right: 6px;
+      padding-left: 30px;
+      margin-left: -30px;
+      }
+      .markdown-body .anchor:focus {
+      outline: none;
+      }
+      .markdown-body h1,
+      .markdown-body h2,
+      .markdown-body h3,
+      .markdown-body h4,
+      .markdown-body h5,
+      .markdown-body h6 {
+      position: relative;
+      margin-top: 1em;
+      margin-bottom: 16px;
+      font-weight: bold;
+      line-height: 1.4;
+      }
+      .markdown-body h1 .octicon-link,
+      .markdown-body h2 .octicon-link,
+      .markdown-body h3 .octicon-link,
+      .markdown-body h4 .octicon-link,
+      .markdown-body h5 .octicon-link,
+      .markdown-body h6 .octicon-link {
+      display: none;
+      color: #000;
+      vertical-align: middle;
+      }
+      .markdown-body h1:hover .anchor,
+      .markdown-body h2:hover .anchor,
+      .markdown-body h3:hover .anchor,
+      .markdown-body h4:hover .anchor,
+      .markdown-body h5:hover .anchor,
+      .markdown-body h6:hover .anchor {
+      padding-left: 8px;
+      margin-left: -30px;
+      line-height: 1;
+      text-decoration: none;
+      }
+      .markdown-body h1:hover .anchor .octicon-link,
+      .markdown-body h2:hover .anchor .octicon-link,
+      .markdown-body h3:hover .anchor .octicon-link,
+      .markdown-body h4:hover .anchor .octicon-link,
+      .markdown-body h5:hover .anchor .octicon-link,
+      .markdown-body h6:hover .anchor .octicon-link {
+      display: inline-block;
+      }
+      .markdown-body h1 {
+      padding-bottom: 0.3em;
+      font-size: 2.25em;
+      line-height: 1.2;
+      border-bottom: 1px solid #eee;
+      }
+      .markdown-body h2 {
+      padding-bottom: 0.3em;
+      font-size: 1.75em;
+      line-height: 1.225;
+      border-bottom: 1px solid #eee;
+      }
+      .markdown-body h3 {
+      font-size: 1.5em;
+      line-height: 1.43;
+      }
+      .markdown-body h4 {
+      font-size: 1.25em;
+      }
+      .markdown-body h5 {
+      font-size: 1em;
+      }
+      .markdown-body h6 {
+      font-size: 1em;
+      color: #777;
+      }
+      .markdown-body p,
+      .markdown-body blockquote,
+      .markdown-body ul,
+      .markdown-body ol,
+      .markdown-body dl,
+      .markdown-body table,
+      .markdown-body pre {
+      margin-top: 0;
+      margin-bottom: 16px;
+      }
+      .markdown-body hr {
+      height: 4px;
+      padding: 0;
+      margin: 16px 0;
+      background-color: #e7e7e7;
+      border: 0 none;
+      }
+      .markdown-body ul,
+      .markdown-body ol {
+      padding-left: 2em;
+      }
+      .markdown-body ul ul,
+      .markdown-body ul ol,
+      .markdown-body ol ol,
+      .markdown-body ol ul {
+      margin-top: 0;
+      margin-bottom: 0;
+      }
+      .markdown-body li>p {
+      margin-top: 16px;
+      }
+      .markdown-body dl {
+      padding: 0;
+      }
+      .markdown-body dl dt {
+      padding: 0;
+      margin-top: 16px;
+      font-size: 1em;
+      font-style: italic;
+      font-weight: bold;
+      }
+      .markdown-body dl dd {
+      padding: 0 16px;
+      margin-bottom: 16px;
+      }
+      .markdown-body blockquote {
+      padding: 0 15px;
+      color: #777;
+      border-left: 4px solid #ddd;
+      }
+      .markdown-body blockquote>:first-child {
+      margin-top: 0;
+      }
+      .markdown-body blockquote>:last-child {
+      margin-bottom: 0;
+      }
+      .markdown-body table {
+      display: block;
+      width: 100%;
+      overflow: auto;
+      word-break: normal;
+      word-break: keep-all;
+      }
+      .markdown-body table th {
+      font-weight: bold;
+      }
+      .markdown-body table th,
+      .markdown-body table td {
+      padding: 6px 13px;
+      border: 1px solid #ddd;
+      }
+      .markdown-body table tr {
+      background-color: #fff;
+      border-top: 1px solid #ccc;
+      }
+      .markdown-body table tr:nth-child(2n) {
+      background-color: #f8f8f8;
+      }
+      .markdown-body img {
+      max-width: 100%;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+      }
+      .markdown-body code {
+      padding: 0;
+      padding-top: 0.2em;
+      padding-bottom: 0.2em;
+      margin: 0;
+      font-size: 85%;
+      background-color: rgba(0,0,0,0.04);
+      border-radius: 3px;
+      }
+      .markdown-body code:before,
+      .markdown-body code:after {
+      letter-spacing: -0.2em;
+      content: "\00a0";
+      }
+      .markdown-body pre>code {
+      padding: 0;
+      margin: 0;
+      font-size: 100%;
+      word-break: normal;
+      white-space: pre;
+      background: transparent;
+      border: 0;
+      }
+      .markdown-body .highlight {
+      margin-bottom: 16px;
+      }
+      .markdown-body .highlight pre,
+      .markdown-body pre {
+      padding: 16px;
+      overflow: auto;
+      font-size: 85%;
+      line-height: 1.45;
+      background-color: #f7f7f7;
+      border-radius: 3px;
+      }
+      .markdown-body .highlight pre {
+      margin-bottom: 0;
+      word-break: normal;
+      }
+      .markdown-body pre {
+      word-wrap: normal;
+      }
+      .markdown-body pre code {
+      display: inline;
+      max-width: initial;
+      padding: 0;
+      margin: 0;
+      overflow: initial;
+      line-height: inherit;
+      word-wrap: normal;
+      background-color: transparent;
+      border: 0;
+      }
+      .markdown-body pre code:before,
+      .markdown-body pre code:after {
+      content: normal;
+      }
+      .markdown-body .highlight {
+      background: #fff;
+      }
+      .markdown-body .highlight .h {
+      color: #333;
+      font-style: normal;
+      font-weight: normal;
+      }
+      .markdown-body .highlight .mf,
+      .markdown-body .highlight .mh,
+      .markdown-body .highlight .mi,
+      .markdown-body .highlight .mo,
+      .markdown-body .highlight .il,
+      .markdown-body .highlight .m {
+      color: #945277;
+      }
+      .markdown-body .highlight .s,
+      .markdown-body .highlight .sb,
+      .markdown-body .highlight .sc,
+      .markdown-body .highlight .sd,
+      .markdown-body .highlight .s2,
+      .markdown-body .highlight .se,
+      .markdown-body .highlight .sh,
+      .markdown-body .highlight .si,
+      .markdown-body .highlight .sx,
+      .markdown-body .highlight .s1 {
+      color: #df5000;
+      }
+      .markdown-body .highlight .kc,
+      .markdown-body .highlight .kd,
+      .markdown-body .highlight .kn,
+      .markdown-body .highlight .kp,
+      .markdown-body .highlight .kr,
+      .markdown-body .highlight .kt,
+      .markdown-body .highlight .k,
+      .markdown-body .highlight .o {
+      font-weight: bold;
+      }
+      .markdown-body .highlight .kt {
+      color: #458;
+      }
+      .markdown-body .highlight .c,
+      .markdown-body .highlight .cm,
+      .markdown-body .highlight .c1 {
+      color: #998;
+      font-style: italic;
+      }
+      .markdown-body .highlight .cp,
+      .markdown-body .highlight .cs,
+      .markdown-body .highlight .cp .h {
+      color: #999;
+      font-weight: bold;
+      }
+      .markdown-body .highlight .cs {
+      font-style: italic;
+      }
+      .markdown-body .highlight .n {
+      color: #333;
+      }
+      .markdown-body .highlight .na,
+      .markdown-body .highlight .nv,
+      .markdown-body .highlight .vc,
+      .markdown-body .highlight .vg,
+      .markdown-body .highlight .vi {
+      color: #008080;
+      }
+      .markdown-body .highlight .nb {
+      color: #0086B3;
+      }
+      .markdown-body .highlight .nc {
+      color: #458;
+      font-weight: bold;
+      }
+      .markdown-body .highlight .no {
+      color: #094e99;
+      }
+      .markdown-body .highlight .ni {
+      color: #800080;
+      }
+      .markdown-body .highlight .ne {
+      color: #990000;
+      font-weight: bold;
+      }
+      .markdown-body .highlight .nf {
+      color: #945277;
+      font-weight: bold;
+      }
+      .markdown-body .highlight .nn {
+      color: #555;
+      }
+      .markdown-body .highlight .nt {
+      color: #000080;
+      }
+      .markdown-body .highlight .err {
+      color: #a61717;
+      background-color: #e3d2d2;
+      }
+      .markdown-body .highlight .gd {
+      color: #000;
+      background-color: #fdd;
+      }
+      .markdown-body .highlight .gd .x {
+      color: #000;
+      background-color: #faa;
+      }
+      .markdown-body .highlight .ge {
+      font-style: italic;
+      }
+      .markdown-body .highlight .gr {
+      color: #aa0000;
+      }
+      .markdown-body .highlight .gh {
+      color: #999;
+      }
+      .markdown-body .highlight .gi {
+      color: #000;
+      background-color: #dfd;
+      }
+      .markdown-body .highlight .gi .x {
+      color: #000;
+      background-color: #afa;
+      }
+      .markdown-body .highlight .go {
+      color: #888;
+      }
+      .markdown-body .highlight .gp {
+      color: #555;
+      }
+      .markdown-body .highlight .gs {
+      font-weight: bold;
+      }
+      .markdown-body .highlight .gu {
+      color: #800080;
+      font-weight: bold;
+      }
+      .markdown-body .highlight .gt {
+      color: #aa0000;
+      }
+      .markdown-body .highlight .ow {
+      font-weight: bold;
+      }
+      .markdown-body .highlight .w {
+      color: #bbb;
+      }
+      .markdown-body .highlight .sr {
+      color: #017936;
+      }
+      .markdown-body .highlight .ss {
+      color: #8b467f;
+      }
+      .markdown-body .highlight .bp {
+      color: #999;
+      }
+      .markdown-body .highlight .gc {
+      color: #999;
+      background-color: #EAF2F5;
+      }
+      .markdown-body kbd {
+      background-color: #e7e7e7;
+      background-image: -webkit-linear-gradient(#fefefe, #e7e7e7);
+      background-image: linear-gradient(#fefefe, #e7e7e7);
+      background-repeat: repeat-x;
+      display: inline-block;
+      padding: 3px 5px;
+      font: 11px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+      line-height: 10px;
+      color: #000;
+      border: 1px solid #cfcfcf;
+      border-radius: 2px;
+      }
+      .markdown-body .highlight .pl-coc,
+      .markdown-body .highlight .pl-entm,
+      .markdown-body .highlight .pl-eoa,
+      .markdown-body .highlight .pl-mai .pl-sf,
+      .markdown-body .highlight .pl-pdv,
+      .markdown-body .highlight .pl-sc,
+      .markdown-body .highlight .pl-sr,
+      .markdown-body .highlight .pl-v,
+      .markdown-body .highlight .pl-vpf {
+      color: #0086b3;
+      }
+      .markdown-body .highlight .pl-eoac,
+      .markdown-body .highlight .pl-mdht,
+      .markdown-body .highlight .pl-mi1,
+      .markdown-body .highlight .pl-mri,
+      .markdown-body .highlight .pl-va,
+      .markdown-body .highlight .pl-vpu {
+      color: #008080;
+      }
+      .markdown-body .highlight .pl-c,
+      .markdown-body .highlight .pl-pdc {
+      color: #b4b7b4;
+      font-style: italic;
+      }
+      .markdown-body .highlight .pl-k,
+      .markdown-body .highlight .pl-ko,
+      .markdown-body .highlight .pl-kolp,
+      .markdown-body .highlight .pl-mc,
+      .markdown-body .highlight .pl-mr,
+      .markdown-body .highlight .pl-ms,
+      .markdown-body .highlight .pl-s,
+      .markdown-body .highlight .pl-sok,
+      .markdown-body .highlight .pl-st {
+      color: #6e5494;
+      }
+      .markdown-body .highlight .pl-ef,
+      .markdown-body .highlight .pl-enf,
+      .markdown-body .highlight .pl-enm,
+      .markdown-body .highlight .pl-entc,
+      .markdown-body .highlight .pl-eoi,
+      .markdown-body .highlight .pl-sf,
+      .markdown-body .highlight .pl-smc {
+      color: #d12089;
+      }
+      .markdown-body .highlight .pl-ens,
+      .markdown-body .highlight .pl-eoai,
+      .markdown-body .highlight .pl-kos,
+      .markdown-body .highlight .pl-mh .pl-pdh,
+      .markdown-body .highlight .pl-mp,
+      .markdown-body .highlight .pl-pde,
+      .markdown-body .highlight .pl-stp {
+      color: #458;
+      }
+      .markdown-body .highlight .pl-enti {
+      color: #d12089;
+      font-weight: bold;
+      }
+      .markdown-body .highlight .pl-cce,
+      .markdown-body .highlight .pl-enc,
+      .markdown-body .highlight .pl-kou,
+      .markdown-body .highlight .pl-mq {
+      color: #f93;
+      }
+      .markdown-body .highlight .pl-mp1 .pl-sf {
+      color: #458;
+      font-weight: bold;
+      }
+      .markdown-body .highlight .pl-cos,
+      .markdown-body .highlight .pl-ent,
+      .markdown-body .highlight .pl-md,
+      .markdown-body .highlight .pl-mdhf,
+      .markdown-body .highlight .pl-ml,
+      .markdown-body .highlight .pl-pdc1,
+      .markdown-body .highlight .pl-pds,
+      .markdown-body .highlight .pl-s1,
+      .markdown-body .highlight .pl-scp,
+      .markdown-body .highlight .pl-sol {
+      color: #df5000;
+      }
+      .markdown-body .highlight .pl-c1,
+      .markdown-body .highlight .pl-cn,
+      .markdown-body .highlight .pl-pse,
+      .markdown-body .highlight .pl-pse .pl-s2,
+      .markdown-body .highlight .pl-vi {
+      color: #a31515;
+      }
+      .markdown-body .highlight .pl-mb,
+      .markdown-body .highlight .pl-pdb {
+      color: #df5000;
+      font-weight: bold;
+      }
+      .markdown-body .highlight .pl-mi,
+      .markdown-body .highlight .pl-pdi {
+      color: #6e5494;
+      font-style: italic;
+      }
+      .markdown-body .highlight .pl-ms1 {
+      background-color: #f5f5f5;
+      }
+      .markdown-body .highlight .pl-mdh,
+      .markdown-body .highlight .pl-mdi {
+      font-weight: bold;
+      }
+      .markdown-body .highlight .pl-mdr {
+      color: #0086b3;
+      font-weight: bold;
+      }
+      .markdown-body .highlight .pl-s2 {
+      color: #333;
+      }
+      .markdown-body .highlight .pl-ii {
+      background-color: #df5000;
+      color: #fff;
+      }
+      .markdown-body .highlight .pl-ib {
+      background-color: #f93;
+      }
+      .markdown-body .highlight .pl-id {
+      background-color: #a31515;
+      color: #fff;
+      }
+      .markdown-body .highlight .pl-iu {
+      background-color: #b4b7b4;
+      }
+      .markdown-body .highlight .pl-mo {
+      color: #969896;
+      }
+      .markdown-body .task-list-item {
+      list-style-type: none;
+      }
+      .markdown-body .task-list-item+.task-list-item {
+      margin-top: 3px;
+      }
+      .markdown-body .task-list-item input {
+      float: left;
+      margin: 0.3em 0 0.25em -1.6em;
+      vertical-align: middle;
+      }
+    article.markdown-body
+      h1
+        a#user-content-nodulator.anchor(href='#nodulator', aria-hidden='true')
+          span.octicon.octicon-link
+        | Nodulator
+      p
+        a(href='https://travis-ci.org/Champii/Nodulator')
+          img(src='https://camo.githubusercontent.com/f158d32804c1a372ca8c4294dd4f7ed0a783c5ec/68747470733a2f2f7472617669732d63692e6f72672f4368616d7069692f4e6f64756c61746f722e7376673f6272616e63683d6d6173746572', alt='Build Status', data-canonical-src='https://travis-ci.org/Champii/Nodulator.svg?branch=master', style='max-width:100%;')
+        |  (Master)
+      p
+        a(href='https://travis-ci.org/Champii/Nodulator')
+          img(src='https://camo.githubusercontent.com/f766d5900eacf3b717e9d92b96573ca1cf8e46ba/68747470733a2f2f7472617669732d63692e6f72672f4368616d7069692f4e6f64756c61746f722e7376673f6272616e63683d646576656c6f70', alt='Build Status', data-canonical-src='https://travis-ci.org/Champii/Nodulator.svg?branch=develop', style='max-width:100%;')
+        |  (Develop)
+      p
+        a(href='https://nodei.co/npm/nodulator/')
+          img(src='https://camo.githubusercontent.com/69999e0448dd2a82854268eff683150029ceab0d/68747470733a2f2f6e6f6465692e636f2f6e706d2f6e6f64756c61746f722e706e673f646f776e6c6f6164733d7472756526646f776e6c6f616452616e6b3d747275652673746172733d74727565', alt='NPM', data-canonical-src='https://nodei.co/npm/nodulator.png?downloads=true&downloadRank=true&stars=true', style='max-width:100%;')
+      p
+        a(href='https://nodei.co/npm/nodulator/')
+          img(src='https://camo.githubusercontent.com/92042a2eb939a4cb5b9d43d8ac73682ba61fb130/68747470733a2f2f6e6f6465692e636f2f6e706d2d646c2f6e6f64756c61746f722e706e673f6d6f6e7468733d31', alt='NPM', data-canonical-src='https://nodei.co/npm-dl/nodulator.png?months=1', style='max-width:100%;')
+      h5
+        a#user-content-under-heavy-development.anchor(href='#under-heavy-development', aria-hidden='true')
+          span.octicon.octicon-link
+        | Under heavy development
+      hr
+      h2
+        a#user-content-concept.anchor(href='#concept', aria-hidden='true')
+          span.octicon.octicon-link
+        | Concept
+      p
+        code Nodulator
+        |  is designed to make it more easy to create highly modulable applications, built with REST APIs and with integrated ORM in CoffeeScript.
+      p
+        | You must understand
+        a(href='https://github.com/strongloop/express') express
+        |  basics for routing
+      p
+        | Open
+        a(href='https://github.com/Champii/Nodulator/blob/master/exemple.coffee') exemple.coffee
+        |  to see a full working exemple
+      p
+        | Released under
+        a(href='https://github.com/Champii/Nodulator/blob/master/LICENSE.txt') GPLv2
+      hr
+      h2
+        a#user-content-jump-to.anchor(href='#jump-to', aria-hidden='true')
+          span.octicon.octicon-link
+        | Jump To
+      ul
+        li
+          a(href='#philosophy') Philosophy
+        li
+          a(href='#features') Features
+        li
+          a(href='#compatible-modules') Compatible modules
+        li
+          a(href='#installation') Installation
+        li
+          a(href='#quick-start') Quick Start
+        li
+          a(href='#configuration') Configuration
+        li
+          a(href='#resource') Resource
+          ul
+            li
+              a(href='#basics') Basics
+            li
+              a(href='#class-methods') Class methods
+            li
+              a(href='#instance-methods') Instance methods
+            li
+              a(href='#schema-and-validation') Schema and Validation
+            li
+              a(href='#model-association') Model association
+        li
+          a(href='#overriding-and-inheritance') Overriding and Inheritance
+          ul
+            li
+              a(href='#override-default-behaviour') Override default behaviour
+            li
+              a(href='#abstract-class') Abstract Class
+            li
+              a(href='#complex-inheritance-system') Complex inheritance system
+        li
+          a(href='#route') Route
+          ul
+            li
+              a(href='#route-object') Route Object
+            li
+              a(href='#single-route-object') SingleRoute
+            li
+              a(href='#multi-route-object') MultiRoute
+            li
+              a(href='#route-inheritance') Route Inheritance
+        li
+          a(href='#db-systems') DB Systems
+          ul
+            li
+              a(href='#abstraction') Abstraction
+            li
+              a(href='#mysql') Mysql
+            li
+              a(href='#mongodb') MongoDB
+            li
+              a(href='#sqlmem') SqlMem
+        li
+          a(href='#other-stuff') Other Stuff
+          ul
+            li
+              a(href='#bus') Bus
+        li
+          a(href='#modules') Modules
+          ul
+            li
+              a(href='#usage') Usage
+            li
+              a(href='#module-hacking') Module Hacking
+        li
+          a(href='#project-generation') Project Generation
+        li
+          a(href='#developers') Developers
+        li
+          a(href='#contributors') Contributors
+        li
+          a(href='#doc') DOC
+        li
+          a(href='#todo') TODO
+        li
+          a(href='#changelog') Changelog
+      hr
+      h2
+        a#user-content-philosophy.anchor(href='#philosophy', aria-hidden='true')
+          span.octicon.octicon-link
+        | Philosophy
+      p
+        code Nodulator
+        |  is a project that is trying to make a big overlay to every traditionnal packages used to make REST client/server applications in CoffeeScript.
+        | Its main goal is to give developers a complex REST routing system, an ORM and high-level modules, encapsulating every classic behaviour needed to create complex projects.
+      p
+        | Its core provides everything needed to build powerfull and highly modulable REST APIs, and allow the developer to reuse his code through every projects.
+      p
+        | With this framework, you will never loose 10 or 20 hours anymore boostraping a project from scratch or looking for the right technology to implement.
+        | You will never have headache anymore trying to combine
+        code socket.io
+        |  and
+        code passport
+        |  to keep track of your session with your sockets (for exemple),
+        | or you will never have to consider assets management,
+        | and with the integrated
+        a(href='#project-generation') Project Generation
+        |  you will never need to manage your
+        code Nodulator
+        |  modules dependencies.
+      p
+        | You need to add authentication logic to your open/public API ? Look for
+        a(href='https://github.com/Champii/Nodulator-Account') Nodulator-Account
+        |  !
+      p
+        | You need to add socket.io support ? Look for
+        a(href='https://github.com/Champii/Nodulator-Socket') Nodulator-Socket
+        |  !
+      p
+        | If you don&apos;t find your desired module, just
+        a(href='#modules') build it
+        |  !
+      p
+        code Nodulator
+        |  is like a lego game, instead of learning how to use a given technology and how to combine it with thoses you often use,
+        | it allows you to manipulate simple concepts like adding a
+        code Account
+        |  concept to your application(for exemple), and so adding authentication and permission logic to your app.
+      p
+        | Also, each brick or layer of a
+        code Nodulator
+        |  application is highly linked to every others.
+        | For exemple, when you add
+        code Nodulator-Account
+        |  module to your app, if you have already included
+        code Nodulator-Angular
+        |  it will automaticaly add everything needed
+        | to handle angular authentication (it will add a separate view, some directives and a user service). Have you added
+        code Nodulator-Socket
+        |  ?
+        | So
+        code Nodulator-Angular
+        |  will also be highly linked to your server&apos;s models, by providing a socket interface to your server
+        code Resource
+        | .
+      p
+        | Check the
+        a(href='#jump-to') Jump To
+        |  section !
+      hr
+      h2
+        a#user-content-features.anchor(href='#features', aria-hidden='true')
+          span.octicon.octicon-link
+        | Features
+      ul
+        li Integrated ORM
+        li Integrated Routing system (with express, and highly linked with ORM)
+        li Multiple DB Systems
+        li Complex inheritance system
+        li Modulable
+        li Project generation
+        li Schema-less/Schema-full models
+        li Model validation
+        li Model association and automatic retrieval
+      hr
+      h3
+        a#user-content-compatible-modules.anchor(href='#compatible-modules', aria-hidden='true')
+          span.octicon.octicon-link
+        | Compatible modules
+      ul
+        li
+          a(href='https://github.com/Champii/Nodulator-Assets') Nodulator-Assets
+          | :
+          ul
+            li Automatic assets management
+        li
+          a(href='https://github.com/Champii/Nodulator-Socket') Nodulator-Socket
+          | :
+          ul
+            li Socket.io implementation for Nodulator
+        li
+          a(href='https://github.com/Champii/Nodulator-Angular') Nodulator-Angular
+          | :
+          ul
+            li Angular implementation for Nodulator
+            li Inheritance system
+            li Integrated and linked SocketIO
+            li Assets management
+        li
+          a(href='https://github.com/Champii/Nodulator-Account') Nodulator-Account
+          | :
+          ul
+            li Authentication with passport
+            li Permissions management
+            li Sessions
+            li Nodulator-Angular integration
+      hr
+      h2
+        a#user-content-installation.anchor(href='#installation', aria-hidden='true')
+          span.octicon.octicon-link
+        | Installation
+      p Just run :
+      pre.
+
+      p
+        | Or check the
+        a(href='#project-generation') Project Generation
+        |  section
+      p
+        | After you can require
+        code Nodulator
+        |  as a module :
+      .highlight.highlight-coffeescript
+        pre.
+          \n
+      hr
+      h2
+        a#user-content-quick-start.anchor(href='#quick-start', aria-hidden='true')
+          span.octicon.octicon-link
+        | Quick Start
+      p
+        | Here is the quickiest way to play around
+        code Nodulator
+      .highlight.highlight-coffeescript
+        pre.
+          \n
+
+
+
+
+
+
+
+                                   ,
+
+
+                          .ListUsernames
+                             res.status(          ).send err            err
+
+                  res.status(          ).send usernames
+
+
+
+
+                        ()
+
+
+                                   ,
+
+
+
+
+                          .LevelUp
+                             res.status(          ).send err            err
+
+                  res.status(          ).send resource.ToJSON()
+
+
+                                                                , PlayerRoute
+
+
+
+
+                         done
+
+
+
+
+                           done err            err
+
+                done           , _(players).pluck
+
+
+          PlayerResource.Init()
+
+      p
+        | Go inside your project folder, copy this POC in a
+        code test.coffee
+        |  file and type in:
+      p
+        code $&gt; coffee test.coffee
+      p
+        | It will run your project on port
+        code 3000
+        |  by default
+      p
+        | Then open your favorite REST API Client (
+        a(href='https://www.google.fr/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&cad=rja&uact=8&ved=0CCMQFjAA&url=https%3A%2F%2Fchrome.google.com%2Fwebstore%2Fdetail%2Fpostman-rest-client%2Ffdmmgilgnpjigdojojpjoooidkmcomcm%3Fhl%3Den&ei=Tu6iVMqpJZDaatmGgOAL&usg=AFQjCNHaecLwAKk91gpdCY_y1x_ViIrHwQ&sig2=3FcPD7i2Id8La26xJt4PJA&bvm=bv.82001339,d.d2s') Postman for Chrome
+        |  is my favorite)
+      p and try the following routes :
+      pre.
+
+      hr
+      h2
+        a#user-content-configuration.anchor(href='#configuration', aria-hidden='true')
+          span.octicon.octicon-link
+        | Configuration
+      p First of all, the configuration process is absolutly optional.
+      p
+        | If you don&apos;t give Nodulator a config, it will assume you want to use
+        a(href='#sqlmem') SqlMem
+        |  DB system, with no persistance at all. Usefull for heavy tests periods.
+      p If you prefere to use a persistant system, here is the procedure :
+      .highlight.highlight-coffeescript
+        pre.
+          \n
+
+          Nodulator.Config
+
+
+
+
+
+
+
+      p
+        | You can also provide a &apos;store&apos; property in order to use
+        code Redis
+        |  to manage sessions:
+      .highlight.highlight-coffeescript
+        pre.
+          \n
+
+          Nodulator.Config
+
+
+
+      p If ommited, sessions will be memory based (not recommended)
+      p
+        code Nodulator
+        |  provides 2 main Objects :
+      .highlight.highlight-coffeescript
+        pre.
+          \nNodulator.Resource
+          Nodulator.Route
+      hr
+      h2
+        a#user-content-resource.anchor(href='#resource', aria-hidden='true')
+          span.octicon.octicon-link
+        | Resource
+      h4
+        a#user-content-basics.anchor(href='#basics', aria-hidden='true')
+          span.octicon.octicon-link
+        | Basics
+      p
+        | A
+        code Resource
+        |  is a class permitting to retrive and save a model from a DB.
+      p
+        | Here is an exemple of creating a
+        code Resource
+      .highlight.highlight-coffeescript
+        pre.
+          \n Nodulator.Resource
+
+          PlayerResource.Init()
+      p
+        | Here, it creates a
+        code PlayerResource
+        | , linked with a
+        code players
+        |  table in DB (if any)
+      p
+        | Note the &apos;s&apos; concatenated with the
+        code Resource
+        |  name. Its the real
+        code Resource.name
+        |  of a resource
+      p
+        | For the same name without the &apos;s&apos;, there is a
+        code Resource.lname
+        |  property.
+      h5
+        a#user-content--never-forget-to-call-init-.anchor(href='#-never-forget-to-call-init-', aria-hidden='true')
+          span.octicon.octicon-link
+        | /!\ Never forget to call Init() /!\
+      p
+        | It&apos;s needed in order to prepare the
+        code Resource
+        | . All the
+        code Nodulator
+        | &apos;s magic is inside this call.
+      p If you forget it :
+      ul
+        li
+          | The
+          code Resource
+          |  will NOT be linked to
+          code Route
+          |  (if any)
+        li
+          | It will NOT prepare
+          code Account
+          |  system (if any)
+        li It will NOT prepare inheritance system so you won&apos;t be able to inherit from it
+        li It will NOT be linked to a corresponding table in DB
+        li Nothing will work or happend. Ever.
+      h5
+        a#user-content--please-read-this-section-again--beware-of-infinite-loops-p.anchor(href='#-please-read-this-section-again--beware-of-infinite-loops-p', aria-hidden='true')
+          span.octicon.octicon-link
+        | /!\ Please read this section again /!\ (beware of infinite loops :p)
+      p
+        | You can pass several params to
+        code Nodulator.Resource
+        |  :
+      .highlight.highlight-coffeescript
+        pre.
+          \nNodulator.Resource name [, Route] [, config]
+      p
+        | You can attach a
+        a(href='#route') Route
+        |  and/or a config object to a
+        code Resource
+        | .
+      h4
+        a#user-content-class-methods.anchor(href='#class-methods', aria-hidden='true')
+          span.octicon.octicon-link
+        | Class methods
+      p
+        | Each
+        code Resource
+        |  provides some &apos;Class methods&apos; to manage the specific model in db :
+      .highlight.highlight-coffeescript
+        pre.
+          \nPlayerResource.Fetch(id, done)
+          PlayerResource.FetchBy(constraints, done)
+          PlayerResource.List(id, done)
+          PlayerResource.ListBy(constraints, done)
+          PlayerResource.Deserialize(blob, done)
+          PlayerResource.Create(blob, done)
+      p
+        | The
+        code Fetch
+        |  method take an id and return a
+        code PlayerResource
+        |  intance to
+        code done
+        |  callback :
+      .highlight.highlight-coffeescript
+        pre.
+          \nPlayerResource.Fetch           ,
+                                 .           err            err
+
+            [          ]
+      p
+        | You can also call
+        code FetchBy
+        |  method to give a specific field to retrive.
+        | It can be unique, or the first occurence in DB will return (depends on DB implementations)
+      p
+        | You can list every models from this
+        code Resource
+        |  thanks to
+        code List
+        |  call :
+      .highlight.highlight-coffeescript
+        pre.
+          \nPlayerResource.List
+                                 .           err            err
+
+            [          ]
+      p
+        | Like
+        code FetchBy
+        | , you can
+        code ListBy
+        |  a specific field.
+      p
+        | The
+        code Deserialize
+        |  method allow to get an instance of a given
+        code Resource
+        | .
+      p
+        | Never use
+        code new
+        |  operator directly on a
+        code Resource
+        | , else you might bypass the relationning system.
+      p
+        code Deserialize
+        |  method is used to make pre-processing work (like fetching related models) before instantiation.
+      p
+        code Create
+        |  method is an alias to
+        code Deserialize
+        |  followed by a
+        code Save
+        | .
+      h4
+        a#user-content-instance-methods.anchor(href='#instance-methods', aria-hidden='true')
+          span.octicon.octicon-link
+        | Instance methods
+      p A player instance has some methods :
+      pre.
+
+      h4
+        a#user-content-schema-and-validation.anchor(href='#schema-and-validation', aria-hidden='true')
+          span.octicon.octicon-link
+        | Schema and Validation
+      p
+        | By default, every
+        code Resource
+        |  is schema less. It means that you can put almost anything into your
+        code Resource
+        | .
+      p
+        | It can obviously be schema less only for DB systems that allows it. When using MySQL for exemple, you&apos;ll have
+        | to define a schema and validation rules if you don&apos;t want your server to answer raw SQL errors for non existant fields
+      p
+        | To make a
+        code Resource
+        |  to respect a given schema, you just have to define a
+        code schema
+        |  field into
+        code Resource
+        |  configuration
+      .highlight.highlight-coffeescript
+        pre.
+          \n
+
+
+
+                           [          ]
+
+
+
+
+
+
+
+
+      p Differents types are
+      ul
+        li bool
+        li int
+        li string
+        li date
+        li email
+        li array
+      p
+        | By default, each fields is required, but you can make one field optional with the
+        code optional
+        |  field to
+        code true
+        |  or presence of
+        code default
+        |  field. It will never complain if this field is not present, but if it is,
+        | it will check for its validity.
+      p
+        | If you specify a
+        code default
+        |  field, the
+        code Resource
+        |  will auto-set its property if not given.
+      p
+        | You can specify a type directly with a string, assuming that the given property will be required:
+      .highlight.highlight-coffeescript
+        pre.
+          \n
+
+
+      h4
+        a#user-content-model-association.anchor(href='#model-association', aria-hidden='true')
+          span.octicon.octicon-link
+        | Model association
+      p
+        | You can make associations between
+        code Resource
+        | . For making a
+        code Resource
+        |  to be automaticaly fetched when querying another, you can add it to its schema :
+      .highlight.highlight-coffeescript
+        pre.
+          \n
+
+
+
+
+
+                           BarResource
+
+
+                                                                , config
+
+          TestResource.Init()
+
+
+          TestResource.Fetch           ,
+
+                      .           test
+      p
+        | If you want to retrive a collection of resource, you can wrap types in arrays instead:
+      .highlight.highlight-coffeescript
+        pre.
+          \n
+
+                           [          ]
+
+                           [BarResource]
+
+
+                                                                , config
+
+          TestResource.Init()
+
+
+          TestResource.Fetch           ,
+
+                      .           test
+      hr
+      h2
+        a#user-content-overriding-and-inheritance.anchor(href='#overriding-and-inheritance', aria-hidden='true')
+          span.octicon.octicon-link
+        | Overriding and Inheritance
+      p
+        | You can inherit from a
+        code Resource
+        |  to override or enhance its default behaviour, or to make a complex class inheritance system built on
+        code Resource
+      h4
+        a#user-content-override-default-behaviour.anchor(href='#override-default-behaviour', aria-hidden='true')
+          span.octicon.octicon-link
+        | Override default behaviour
+      p In CoffeeScript its pretty easy:
+      .highlight.highlight-coffeescript
+        pre.
+          \n
+
+
+
+
+                         done
+
+
+
+                         {                     },
+                           done err            err
+
+                done           , units
+
+            UnitResource.Init()
+      h4
+        a#user-content-abstract-class.anchor(href='#abstract-class', aria-hidden='true')
+          span.octicon.octicon-link
+        | Abstract class
+      p
+        | You can define an abstract class, that won&apos;t be attached to any model in DB or any
+        code Route
+      .highlight.highlight-coffeescript
+        pre.
+          \n                                            , {                     }
+            [          ]
+
+          UnitResource.Init();
+      p
+        | Of course, abstract classes are only designed to be inherited. (Please note that they can&apos;t have a
+        code Route
+        |  attached)
+      h4
+        a#user-content-complex-inheritance-system.anchor(href='#complex-inheritance-system', aria-hidden='true')
+          span.octicon.octicon-link
+        | Complex inheritance system
+      p
+        | Given the last exemple, here is a class that inherits from
+        code UnitResource
+      .highlight.highlight-coffeescript
+        pre.
+          \n
+
+
+
+              [          ]
+
+
+
+              [          ]
+
+          PlayerResource.Init();
+      p
+        | You can call the Extend() method either from a full
+        code Resource
+        |  or from an
+        code abstract
+        |  one.
+      p
+        | Please note that if both parent and child are full
+        code Resource
+        | , both will have corresponding model available from ORM (here
+        code units
+        |  and
+        code players
+        | )
+      p
+        | So be carefull when creating extended
+        code Resource
+        | , and think about
+        code abstract
+        |  !
+      hr
+      h2
+        a#user-content-route.anchor(href='#route', aria-hidden='true')
+          span.octicon.octicon-link
+        | Route
+      h4
+        a#user-content-route-object.anchor(href='#route-object', aria-hidden='true')
+          span.octicon.octicon-link
+        | Route Object
+      p
+        code Nodulator
+        |  provides a
+        code Route
+        |  object, to be attached to a
+        code Resource
+        |  object in order to describe routing process.
+      .highlight.highlight-coffeescript
+        pre.
+          \n                                            , Nodulator.Route
+      p
+        | There is no need of
+        code Init()
+        |  here. Every
+        code Route
+        |  is initiated and configured when its attached
+        code Resource
+        |  is.
+      p
+        | Default
+        code Nodulator.Route
+        |  do nothing. You have to inherit from it to describe routes :
+      .highlight.highlight-coffeescript
+        pre.
+          \n
+
+
+
+
+
+                        ()
+
+
+                                   ,
+
+
+                          .Fetch req.params.id,
+                             res.status(          ).send err            err
+
+                  res.status(          ).send unit.ToJSON()
+
+
+
+                res.status(          ).end()
+      p
+        | This
+        code Route
+        | , attached to a
+        code Resource
+        |  (here
+        code UnitResource
+        | ) add 2 endpoints :
+      pre.
+
+      p
+        | Each
+        code Route
+        |  have to implement a
+        code Config()
+        |  method, calling
+        code super()
+        |  and defining routes thanks to &apos;verbs&apos; route calls (@Get(), @Post(), @Put(), @Delete(), @All()).
+      p Here are all &apos;verb&apos; route calls definition :
+      .highlight.highlight-coffeescript
+        pre.
+          \nNodulator.Route.All     [                     ], [middleware, [middleware,           ]], callback
+          Nodulator.Route.Get     [                     ], [middleware, [middleware,           ]], callback
+          Nodulator.Route.Post    [                     ], [middleware, [middleware,           ]], callback
+          Nodulator.Route.Put     [                     ], [middleware, [middleware,           ]], callback
+          Nodulator.Route.Delete  [                     ], [middleware, [middleware,           ]], callback
+      h4
+        a#user-content-single-route-object.anchor(href='#single-route-object', aria-hidden='true')
+          span.octicon.octicon-link
+        | Single Route Object
+      p
+        | Nodulator provides a predefined route system for lazy, adapted for Singleton
+        code Resource
+        | :
+        code Nodulator.Route.SingleRoute
+        | .
+        | It setups 2 routes (exemple when attached to a
+        code PlayerResource
+        | ) :
+      pre.
+
+      p
+        | This route system needs to have a resource with
+        code id == 1
+        |  in your actual DB before startup time to work.
+      p
+        | If you don&apos;t have a
+        code config.schema
+        |  property set in your
+        code Resource
+        | , it will create one for you at startup time.
+      p
+        | Else,
+        code Nodulator
+        |  will throw an error and shutdown.
+      p
+        | If you use
+        code SqlMem
+        |  DB system, you must add a &apos;default&apos; value to each resource fields in order to add it at startup.
+      h4
+        a#user-content-multi-route-object.anchor(href='#multi-route-object', aria-hidden='true')
+          span.octicon.octicon-link
+        | Multi Route Object
+      p
+        | Nodulator provides also a standard route system for lazy :
+        code Nodulator.Route.MultiRoute
+        | .
+        | It allows you to handle your resources like its a big collection.
+        |  It setups 5 routes (exemple when attached to a
+        code PlayerResource
+        | ) :
+      pre.
+
+      h4
+        a#user-content-route-inheritance.anchor(href='#route-inheritance', aria-hidden='true')
+          span.octicon.octicon-link
+        | Route Inheritance
+      p You can inherit from any route object :
+      .highlight.highlight-coffeescript
+        pre.
+          \n
+
+
+
+      p
+        | And you can override existing route by providing same association verb + url. Exemple :
+      .highlight.highlight-coffeescript
+        pre.
+          \n
+
+                        ()
+
+
+                                   ,
+                [          ]
+      hr
+      h2
+        a#user-content-db-systems.anchor(href='#db-systems', aria-hidden='true')
+          span.octicon.octicon-link
+        | Db Systems
+      h4
+        a#user-content-abstraction.anchor(href='#abstraction', aria-hidden='true')
+          span.octicon.octicon-link
+        | Abstraction
+      p We defined a driver interface for some DB implementations.
+      p
+        | It&apos;s based on SQL
+        code Table
+        |  concept. (see
+        a(href='https://github.com/Champii/Nodulator/blob/master/lib/connectors/sql/index.coffee') lib/connectors/sql/index.coffee
+        | )
+      .highlight.highlight-coffeescript
+        pre.
+          \nTable.Find(id, done)
+          Table.FindWhere(fields, where, done)
+          Table.Select(fields, where, options, done)
+          Table.Save(blob, done)
+          Table.Insert(blob, done)
+          Table.Update(blob, where, done)
+          Table.Delete(id, done)
+      p
+        | Every
+        code Resource
+        |  have an associated
+        code Table
+        |  instance that links to the good table/document in the good DB driver system
+      h4
+        a#user-content-mysql.anchor(href='#mysql', aria-hidden='true')
+          span.octicon.octicon-link
+        | Mysql
+      p
+        | Built-in
+        code MySQL
+        |  implementation (
+        a(href='https://github.com/felixge/node-mysql/') node-mysql
+        | ) for
+        code Nodulator
+      p
+        | Check
+        a(href='https://github.com/Champii/Nodulator/blob/master/lib/connectors/sql/Mysql.coffee') lib/connectors/sql/Mysql.coffee
+      h4
+        a#user-content-mongodb.anchor(href='#mongodb', aria-hidden='true')
+          span.octicon.octicon-link
+        | MongoDB
+      p
+        | Built-in
+        code MongoDB
+        |  implementation (
+        a(href='https://github.com/amark/mongous') mongous
+        | ) for
+        code Nodulator
+      p
+        | Check
+        a(href='https://github.com/Champii/Nodulator/blob/master/lib/connectors/sql/Mongo.coffee') lib/connectors/sql/Mongo.coffee
+      h4
+        a#user-content-sqlmem.anchor(href='#sqlmem', aria-hidden='true')
+          span.octicon.octicon-link
+        | SqlMem
+      p Special DB driver, built on RAM.
+      p
+        | It provides same options as others systems do, but nothing is stored. When you stop the server, everything is deleted.
+      p
+        | Check
+        a(href='https://github.com/Champii/Nodulator/blob/master/lib/connectors/sql/SqlMem.coffee') lib/connectors/sql/SqlMem.coffee
+      hr
+      h2
+        a#user-content-other-stuff.anchor(href='#other-stuff', aria-hidden='true')
+          span.octicon.octicon-link
+        | Other stuff
+      h4
+        a#user-content-bus.anchor(href='#bus', aria-hidden='true')
+          span.octicon.octicon-link
+        | Bus
+      p
+        | There is a
+        code Nodulator.bus
+        |  object that is basicaly an
+        code EventEmitter
+        | . Every objects in
+        code Nodulator
+        |  use this bus.
+      p Here are the emitted events:
+      ul
+        li
+          p
+            | On a new
+            code Resource
+            |  being inserted in DB, sends it after a
+            code Serialize()
+            |  call
+          ul
+            li
+              code Nodulator.bus.emit &apos;new_&apos; + resource_name, @Serialize()
+        li
+          p
+            | On a
+            code Resource
+            |  being updated in DB, sends it after a
+            code Serialize()
+            |  call
+          ul
+            li
+              code Nodulator.bus.emit &apos;update_&apos; + resource_name, @Serialize()
+        li
+          p
+            | On a
+            code Resource
+            |  being deleted from DB, sends it after a
+            code Serialize()
+            |  call
+          ul
+            li
+              code Nodulator.bus.emit &apos;delete_&apos; + resource_name, @Serialize()
+      p Exemple
+      .highlight.highlight-coffeescript
+        pre.
+          \n Nodulator.Resource
+
+          Nodulator.on           ,
+            [          ]
+      p
+        | You can override default
+        code Bus
+        |  by setting new class to Nodulator.Bus :
+      .highlight.highlight-coffeescript
+        pre.
+          \n
+
+
+                     NewBus
+      p
+        | Always set new
+        code Bus
+        |  before any new
+        code Resource
+        |  call or any added
+        code Module
+      hr
+      h2
+        a#user-content-modules.anchor(href='#modules', aria-hidden='true')
+          span.octicon.octicon-link
+        | Modules
+      h4
+        a#user-content-usage.anchor(href='#usage', aria-hidden='true')
+          span.octicon.octicon-link
+        | Usage
+      p
+        | To inject a module into
+        code Nodulator
+        | , preceed this way :
+      .highlight.highlight-coffeescript
+        pre.
+          \n
+
+
+          Nodulator.Use ModuleName
+      p
+        | Replace
+        code ModuleName
+        |  with the module&apos;s name you want to load
+      h4
+        a#user-content-module-hacking.anchor(href='#module-hacking', aria-hidden='true')
+          span.octicon.octicon-link
+        | Module Hacking
+      p
+        | If you want to create a new module for
+        code Nodulator
+        | , you have to export a single function, taking
+        code Nodulator
+        |  as parameter :
+      .highlight.highlight-coffeescript
+        pre.
+          \n
+            [          ]
+      p
+        | You can extend anything you want, as the whole
+        code Nodulator
+        |  object is passed to your function.
+      p
+        | Be carefull to
+        code server/loadOrder.json
+        | .
+      p
+        | Watch how
+        a(href='#compatible-modules-and-dependencies') other modules
+        |  are made !
+      hr
+      h2
+        a#user-content-project-generation.anchor(href='#project-generation', aria-hidden='true')
+          span.octicon.octicon-link
+        | Project Generation
+      p
+        | You can get global
+        code Nodulator
+        |  :
+      pre.
+
+      p
+        | Nodulator provides a way of installing
+        code Nodulator
+        | , modules and dependencies easely
+      pre.
+
+      p
+        | Then you can launch the
+        code init
+        |  process :
+      pre.
+
+      p It creates the following structure if non-existant :
+      pre.
+
+      p
+        | And then find for every
+        code Nodulator
+        |  modules installed, and call their respective
+        code init
+        |  method.
+      p
+        | It generate a
+        code main.coffee
+        |  and a
+        code package.json
+        |  with every modules pre-loaded.
+      p
+        | The
+        code server
+        |  folder is auto-loaded (check
+        code server/index.coffee
+        |  and every
+        code index.coffee
+        |  in subfolders).
+      p
+        | Folders load order is defined in
+        code server/loadOrder.json
+        | , and is automaticaly managed by new modules installed (they care of the order)
+      p
+        | You can immediately start to write
+        code Resource
+        |  in
+        code server/resources
+        |  !
+      hr
+      h2
+        a#user-content-developers.anchor(href='#developers', aria-hidden='true')
+          span.octicon.octicon-link
+        | Developers
+      p
+        | Never forget that I&apos;m always available at
+        a(href='mailto:champii.akronym@gmail.com') champii.akronym@gmail.com
+        |  for any questions
+      hr
+      h2
+        a#user-content-contributors.anchor(href='#contributors', aria-hidden='true')
+          span.octicon.octicon-link
+        | Contributors
+      ul
+        li
+          a(href='https://github.com/champii') Champii
+        li
+          a(href='https://github.com/skinymonkey') SkinyMonkey
+      hr
+      h2
+        a#user-content-doc.anchor(href='#doc', aria-hidden='true')
+          span.octicon.octicon-link
+        | DOC
+      pre.
+
+      hr
+      h2
+        a#user-content-todo.anchor(href='#todo', aria-hidden='true')
+          span.octicon.octicon-link
+        | ToDo
+      p By order of priority
+      ul
+        li Better tests
+        li Tests for validation
+        li Tests for model association
+        li Better error management
+        li Log system
+        li
+          | Abstract class can retrieve every child
+          code Resource
+        li Remove an existing route
+        li Type inference in schema for default field
+        li Route instanciation without resources
+      hr
+      h2
+        a#user-content-changelog.anchor(href='#changelog', aria-hidden='true')
+          span.octicon.octicon-link
+        | ChangeLog
+      p XX/XX/XX: current (not released yet)
+      ul
+        li
+          | Added
+          code SingleRoute
+          |  object, for manipulating Singleton
+          code Resource
+        li
+          | Removed
+          code req.instances
+          |  from every
+          code Route
+        li
+          | Added tests for
+          code SingleRoute
+        li
+          | Route proxy methods for
+          code @_All()
+          |  are now generated at runtime
+        li
+          | Renamed
+          code DefaultRoute
+          |  to
+          code MultiRoute
+        li
+          | Added a
+          code default
+          |  field to config schema
+        li
+          code Resource.Init()
+          |  now returns the
+          code Resource
+          |  itself, for chaining purpose.
+        li Added tests for resource association
+        li Tests are now executed in specific order
+        li
+          | You can now give an array as schema type for a field, in order to retrive multiple resources based on id
+        li Added Javascript support ch
+      p 04/05/15: v0.0.18
+      ul
+        li
+          | You can specify a &apos;store&apos; general config property in order to switch to redis-based sessions
+      p 03/05/15: v0.0.17
+      ul
+        li
+          | You can now specify a property type in schema without wrapping it in a object like {type: &quot;string&quot;}
+      p 15/04/15: v0.0.16
+      ul
+        li Removed redis references for sessions
+      p 14/04/15: v0.0.15
+      ul
+        li
+          | Minor changes in
+          code Route
+          |  to fit
+          a(href='https://github.com/Champii/Nodulator-Account') Nodulator-Account
+          |  new release
+      p 10/04/15: v0.0.14
+      ul
+        li Resource &apos;user&apos; is no longer a reserved word
+        li
+          | Resources with name finishing with &apos;y&apos; are now correctly put in plurial form in route name
+      p 09/04/15: v0.0.13
+      ul
+        li Better model association and validation
+        li
+          | Pre-fetched resources in
+          code Route.All()
+          |  are now put in
+          code @instance
+          |  instead of
+          code req[@resource.lname]
+        li Updated README
+        li Updated Mongo driver
+      p 20/01/15: v0.0.12
+      ul
+        li Fixed bug on FetchBy
+      p 20/01/15: v0.0.11
+      ul
+        li Fixed tests
+        li Added travis support for tests
+        li Added model associations
+        li Added schema and model validation
+        li
+          | Changed
+          code FetchBy
+          |  and
+          code ListBy
+          |  prototype. Now take an object instead of a key/value pair.
+        li
+          | Added
+          code Create()
+          |  method into
+          code Resource
+        li
+          | Added
+          code limit
+          |  and
+          code offset
+          |  to both Mysql and SqlMem
+      p 07/01/15: v0.0.10
+      ul
+        li Added Philosophy section
+        li Added multiple package name support in package generation
+        li Fixed some bugs with modules
+      p 03/01/15: v0.0.9
+      ul
+        li
+          | Separated
+          code AccountResource
+          |  into a new module
+          a(href='https://github.com/Champii/Nodulator-Account') Nodulator-Account
+        li Changed README
+      p 02/01/15: v0.0.8
+      ul
+        li Fixed Route middleware issue
+      p 02/01/15: v0.0.7
+      ul
+        li
+          | Separated
+          code Socket
+          |  into a new module
+          a(href='https://github.com/Champii/Nodulator-Socket') Nodulator-Socket
+        li
+          | Added new methods for
+          code @Get()
+          | ,
+          code @Post()
+          | ,
+          code @Delete()
+          | ,
+          code @Put()
+          | ,
+          code @All()
+          |  in
+          code Route
+        li
+          | Replace old method
+          code @All()
+          |  into
+          code @_All()
+          | . Is now a private call.
+        li
+          | Improved README (added
+          a(href='#modules') Modules
+          |  section)
+        li
+          | Global
+          code Nodulator
+          |  now manage dependencies installation

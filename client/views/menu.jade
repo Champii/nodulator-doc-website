@@ -1,0 +1,30 @@
+nav.navbar.navbar-trans.navbar-fixed-top(role='navigation')
+  .container
+    .navbar-header
+      button.navbar-toggle(type='button', data-toggle='collapse', data-target='#navbar-collapsible')
+        span.sr-only Toggle navigation
+        span.icon-bar
+        span.icon-bar
+        span.icon-bar
+      a.navbar-brand.text-danger(href='#', ng-click="GoTo('home')") NODULATOR.JS
+    #navbar-collapsible.navbar-collapse.collapse
+      ul.nav.navbar-nav.navbar-left
+        li
+          a(href='#section1', ng-click="GoTo('home')") Home
+        li
+          a(href='#section2', ng-click="GoTo('home')") Presentation
+        li
+          a(href='#section3', ng-click="GoTo('home')") Getting started
+        li
+          a(href='#section4') Doc (soon)
+          //- a(href='#section4', ng-click="GoTo('doc')") Doc (soon)
+        li
+          a(href='https://github.com/Champii/Nodulator') Github
+        li
+          a(href='mailto:contact@champii.io') Contact
+        li
+          | &nbsp;
+      //- ul.nav.navbar-nav.navbar-right
+      //-   li
+      //-     a(href='#', data-toggle='modal', data-target='#myModal')
+      //-       i.fa.fa-heart-o.fa-lg

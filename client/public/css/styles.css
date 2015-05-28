@@ -1,8 +1,8 @@
 @import url(http://fonts.googleapis.com/css?family=Lato:300,400);
 @import url(http://fonts.googleapis.com/css?family=Bitter:400);
 
-html,body {
-	height:100%;
+html, body {
+  height:100%;
     /*background:center no-repeat fixed url('http://36nukx10904q2nqzfr2ammzk.wpengine.netdna-cdn.com/wp-content/uploads/2013/03/Fastest-Growing-Tech-Careers.jpg');*/
     /*background:center no-repeat fixed url('http://www.deluxevectors.com/images/sample/red-technology-background.jpg');*/
     background:center no-repeat fixed url('http://www.seadogswim.org/css/pro/cust_stock_bg/trails_red.jpg');
@@ -149,9 +149,14 @@ section {
 }
 
 #section4 {
-	background-color: #f6f6f6;
-	color:#444;
+	background-color: rgba(0,0,0,0.9);
+  color:#fff;
+  font-family: 'Bitter', serif;
 }
+/*#section4 {
+  background-color: #f6f6f6;
+  color:#444;
+}*/
 
 #section2 {
   background-color: #fff;
@@ -162,7 +167,7 @@ section {
 }
 
 #section3 {
-	background-color: rgba(0,0,0,0.9);
+  background-color: rgba(0,0,0,0.9);
 }
 
 #section5 {
@@ -200,4 +205,9 @@ footer .nav>li>a {
 footer .nav>li>a:hover {
     background-color:transparent;
 	color:#fff;
+}
+
+/*highlight*/
+.hl {
+  color: #f44d3c;
 }
