@@ -64,325 +64,557 @@ span
   //-           h3.text-center
   //-     // /row
   section#section2.container-fluid
-    .container.v-center
+    div
+      h1.text-center Getting Started
+      h3.text-center Few code is better than long text.
+      hr
+    .container
       .row
         .col-sm-4
           .row
             .col-sm-12.text-center
               .panel.panel-default.slideInLeft.animate
                 .panel-heading
-                  h3 Philosophy
-                    .panel-body
-                  p Nodulator is a NodeJS framework designed to make it more easy to create highly modulable REST API applications with integrated ORM in CoffeeScript and Javascript.
-                  p In a few lines of code, you can create complex project architectures with high performance and reusability.
-                  p It tries make a big overlay to every traditionnal packages used to make REST client/server applications in CoffeeScript.
-                  p Its main goal is to give developers a complex REST routing system, an ORM and high-level modules, encapsulating every classic behaviour needed to create complex projects.
-                  p Its core provides everything needed to build powerfull REST APIs, and allow the developer to reuse his code through every projects.
+                  h3 Easy to Setup
+                .panel-body
+                  p In a terminal
+                  pre.prettyprint.text-left(class="lang-bash")
+                    | $> npm install nodulator
+
                   hr
+                  | Basic exemple with a Resource and a Route
+                  codetoggle
+                    div(ng-show="language == 'coffee'")
+                      | Nodulator = require 'nodulator'
+                      | MultiRoute = Nodulator.Route.MultiRoute
+                      | &nbsp;
+                      | # Make usable shema-less models over API  with one call
+                      | Players = Nodulator.Resource('player', MultiRoute).Init()
+                    div(ng-show="language == 'js'")
+                      | var Nodulator = require('nodulator');
+                      | var MultiRoute = Nodulator.Route.MultiRoute;
+                      | &nbsp;
+                      | // Make usable shema-less models  over API with one call
+                      | var Players = Nodulator.Resource('player', MultiRoute).Init();
+                  p See Routing section ->
                   hr
+                  | Project generation
+                  pre.prettyprint.text-left(class="lang-bash")
+                    | $> sudo npm install -g nodulator
+                    | $> Nodulator install
+                    | $> Nodulator init
+                  | Create
+                  pre.text-left
+                    | main.coffee
+                    | package.json
+                    | settings/
+                    | server/
+                    | ├── index.coffee
+                    | ├── loadOrder.json
+                    | ├── processors/
+                    | │   └── index.coffee
+                    | └── resources/
+                    |     └── index.coffee
+                  p Add your resources directly in /server/resources/
+                  hr
+                  | Modules
+                  pre.prettyprint.text-left(class="lang-bash")
+                    | $> Nodulator install assets
+                    | $> Nodulator init
+                  p Install
+                    a(href="https://github.com/Champii/Nodulator-Assets")  Nodulator-Assets
+                    |  and init client arborescence.
+
+
         .col-sm-4.text-center
           .row
             .col-sm-12.text-center
               .panel.panel-default.slideInUp.animate
                 .panel-heading
-                  h3 Modular
-                    .panel-body
-                  p There is plenty of modules made for Nodulator. Watch for all the functionalities they can provide to your project:
-                  p - Nodulator-Assets: Automatic assets management, just append folders' path to the default module configuration and enjoy watching your assets be automaticaly added to your client page.
-                  p - Nodulator-Account: Extends basic Resource to support and manage every authentication part of your application with PassportJS.
-                  p - Nodulator-Angular: Add AngularJS support client-side with a bunch of Coffeescript classes, and link them with your server in order to facilitate model exchanges.
-                  p - Nodulator-Socket: Add SocketIO support, and binds a lot of usual socket fonctionalities to the client.
+                  h3 ORM
+                .panel-body
+                  p Fully agnostic ORM
+                  codetoggle
+                    div(ng-show="language == 'coffee'")
+                      | Players.Create
+                      |   name: 'player1'
+                      |   level: 1
+                      | , (err, player) ->
+                      |   # Deal with that new 'player'
+                      | &nbsp;
+                    div(ng-show="language == 'js'")
+                      | Players.Create({
+                      |   name: 'player1',
+                      |   level: 1
+                      | }, function (err, player) {
+                      |   // Deal with that new 'player'
+                      | });
                   hr
+                  p Easy to use API
+                  codetoggle
+                    div(ng-show="language == 'coffee'")
+                      | # Fetch player with id = 1
+                      | Players.Fetch 1, (err, player) ->
+                      |   player.level++
+                      |   player.Save (err) ->
+                      | &nbsp;
+                    div(ng-show="language == 'js'")
+                      | // Fetch player with id = 1
+                      | Players.Fetch(1, function (err, player) {
+                      |   player.level++;
+                      |   player.Save(function (err) {});
+                      | });
                   hr
+                  p Can be extended
+                  codetoggle
+                    div(ng-show="language == 'coffee'")
+                      | Nodulator = require 'nodulator'
+                      | &nbsp;
+                      | class Players extends Nodulator.Resource 'player'
+                      | &nbsp;
+                      |   Level: (done) ->
+                      |     @level++
+                      |     @Save done
+                      | &nbsp;
+                      | &nbsp;
+                      | Players.Init()
+                    div(ng-show="language == 'js'")
+                      | var Nodulator = require('nodulator');
+                      | &nbsp;
+                      | Players = Nodulator.Resource('player');
+                      | &nbsp;
+                      | Players.prototype.Level = function (done) {
+                      |   this.level++;
+                      |   this.Save(done);
+                      | };
+                      | &nbsp;
+                      | Players.Init()
+                  hr
+                  | Schema-full exemple with type validation
+                  codetoggle
+                    div(ng-show="language == 'coffee'")
+                      | Nodulator = require 'nodulator'
+                      | &nbsp;
+                      | fooConfig =
+                      |   schema:
+                      |     field1: 'string'
+                      |     field2: 'int'
+                      | &nbsp;
+                      | FooResource = Nodulator.Resource 'foo', fooConfig
+                      | FooResource.Init()
+                    div(ng-show="language == 'js'")
+                      | var Nodulator = require('nodulator');
+                      | &nbsp;
+                      | var fooConfig = {
+                      |   schema: {
+                      |     field1: 'string',
+                      |     field2: 'int'
+                      |   }
+                      | };
+                      | &nbsp;
+                      | var FooResource = Nodulator.Resource('foo', fooConfig);
+                      | FooResource.Init()
+
         .col-sm-4.text-center
           .row
             .col-sm-12.text-center
               .panel.panel-default.slideInRight.animate
                 .panel-heading
-                  h3 Database agnostic
-                    .panel-body
-                  p Nodulator natively support MySQL and MongoDB.
-                  p It is designed to possibly switch from one to another transparently during developement processes.
-                  p Also, there is a Dummy-DB included for developement facilities, that is flushed upon every server restart. This is the default behaviour.
-                  p You can add your own Database support easely thanks to differents levels of abstraction.
-                  p For exemple, adding Amazon S3 support by default is actually under discussion.
+                  h3 Routing
+                .panel-body
+                  | SingleRoute
+                  codetoggle
+                    div(ng-show="language == 'coffee'")
+                      | Nodulator = require 'nodulator'
+                      | SingleRoute = Nodulator.Route.SingleRoute
+                      | &nbsp;
+                      | Players = Nodulator.Resource('player', SingleRoute).Init()
+                    div(ng-show="language == 'js'")
+                      | var Nodulator = require('nodulator');
+                      | var SingleRoute = Nodulator.Route.SingleRoute;
+                      | &nbsp;
+                      | var Players = Nodulator.Resource('player', SingleRoute).Init();
+                  p This exemple create a server and listen for the following routes.
+                  p It creates a route to access element with id = 1 only, creating a Singleton model over API
+                  pre.text-left
+                    | GET     => /api/1/player   => Fetch
+                    | PUT     => /api/1/player   => Update
+
+                  span
+                    | By default on
+                    a(href="http://localhost:3000")  http://localhost:3000
                   hr
+                  | MultiRoute
+                  codetoggle
+                    div(ng-show="language == 'coffee'")
+                      | Nodulator = require 'nodulator'
+                      | MultiRoute = Nodulator.Route.MultiRoute
+                      | &nbsp;
+                      | Players = Nodulator.Resource('player', MultiRoute).Init()
+                    div(ng-show="language == 'js'")
+                      | var Nodulator = require('nodulator');
+                      | var MultiRoute = Nodulator.Route.MultiRoute;
+                      | &nbsp;
+                      | var Players = Nodulator.Resource('player', MultiRoute).Init();
+                  | This previous exemple create a server and listen for the following routes:
+                  pre.text-left
+                    | GET     => /api/1/players       => List all
+                    | GET     => /api/1/players/:id   => Get One
+                    | POST    => /api/1/players       => Create
+                    | PUT     => /api/1/players/:id   => Update
+                    | DELETE  => /api/1/players/:id   => Delete
                   hr
+                  | Custom route
+                  codetoggle
+                    div(ng-show="language == 'coffee'")
+                      | Nodulator = require 'Nodulator'
+                      | &nbsp;
+                      | class PlayerRoute extends Nodulator.Route
+                      | &nbsp;
+                      |   Config: ->
+                      |     @Get '/:id', (req, res) =>
+                      |       @resource.Fetch req.params.id, (err, resource) =>
+                      |         return res.status(500).send err if err?
+                      | &nbsp;
+                      |         res.status(200).send resource.ToJSON()
+                      | &nbsp;
+                      | Players = Nodulator.Resource('player', PlayerRoute).Init()
 
-      // /row
-      .row
-        br
-    // /container
-  section#section3.container-fluid
-    .row
-      .col-sm-6.col-sm-offset-3.col-md-6.col-md-offset-3
-        h2.text-center.lato Getting Started
-        hr
-        .media
-          h3 Npm installation
-          .media-left
-            pre.prettyprint.linenums.lang-bash.text-left
-              | $> npm install nodulator
+                    div(ng-show="language == 'js'")
+                      | var = Nodulator = require('Nodulator');
+                      | &nbsp;
+                      | var PlayerRoute = Nodulator.Route
+                      | &nbsp;
+                      | PlayerRoute.prototype.Config = function () {
+                      |   this.Get('/:id', function (req, res) {
+                      |     this.resource.Fetch(req.params.id, function (err, resource) {
+                      |         return res.status(500).send err if err?
+                      | &nbsp;
+                      |         res.status(200).send resource.ToJSON()
+                      |     });
+                      |   });
+                      | };
+                      | &nbsp;
+                      | var Players = Nodulator.Resource('player', PlayerRoute).Init()
+                  pre.text-left
+                    | GET     => /api/1/players/:id   => Get One
 
-          .media-body.media-middle
-            p
-              span(class="hl") Nodulator
-              span  can easily be installed by NPM
-        hr
-        .media
-          h3 Easy ORM with Schema-less models
-          .media-left
-            codetoggle
-              div(ng-show="language == 'coffee'")
-                | Nodulator = require 'nodulator'
-                | &nbsp;
-                | # Make usable models with one call
-                | FooResource = Nodulator.Resource 'foo'
-                | FooResource.Init()
-                | &nbsp;
-                | # The Create() method is used to add rows
-                | FooResource.Create
-                |   field1: 'value1'
-                |   field2: 'value2'
-                | , (err, foo) ->
-                |   return console.error err if err?
-                | &nbsp;
-                |   foo.field1 = 'anotherValue'
-                | &nbsp;
-                |   # After make change to foo instance, save it
-                |   foo.Save (err) ->
-                |     return console.error err if err?
-              div(ng-show="language == 'js'")
-                | var Nodulator = require('nodulator');
-                | &nbsp;
-                | // Make usable models with one call
-                | var FooResource = Nodulator.Resource('foo');
-                | FooResource.Init()
-                | &nbsp;
-                | // The Create() method is used to add rows
-                | FooResource.Create({
-                |   field1: 'value1',
-                |   field2: 'value2'
-                | }, function (err, foo) {
-                |   if (err)
-                |     return console.error(err);
-                | &nbsp;
-                |   foo.field1 = 'anotherValue';
-                | &nbsp;
-                |   // After make change to foo instance, save it
-                |   foo.Save(function (err) {
-                |     if (err)
-                |       return console.error(err);
-                |   });
-                | });
+    //- .container.v-center
+    //-   .row
+    //-     .col-sm-4
+    //-       .row
+    //-         .col-sm-12.text-center
+    //-           .panel.panel-default.slideInLeft.animate
+    //-             .panel-heading
+    //-               h3 Philosophy
+    //-                 .panel-body
+    //-               p Nodulator is a NodeJS framework designed to make it more easy to create highly modulable REST API applications with integrated ORM in CoffeeScript and Javascript.
+    //-               p In a few lines of code, you can create complex project architectures with high performance and reusability.
+    //-               p It tries make a big overlay to every traditionnal packages used to make REST client/server applications in CoffeeScript.
+    //-               p Its main goal is to give developers a complex REST routing system, an ORM and high-level modules, encapsulating every classic behaviour needed to create complex projects.
+    //-               p Its core provides everything needed to build powerfull REST APIs, and allow the developer to reuse his code through every projects.
+    //-               hr
+    //-               hr
+    //-     .col-sm-4.text-center
+    //-       .row
+    //-         .col-sm-12.text-center
+    //-           .panel.panel-default.slideInUp.animate
+    //-             .panel-heading
+    //-               h3 Modular
+    //-                 .panel-body
+    //-               p There is plenty of modules made for Nodulator. Watch for all the functionalities they can provide to your project:
+    //-               p - Nodulator-Assets: Automatic assets management, just append folders' path to the default module configuration and enjoy watching your assets be automaticaly added to your client page.
+    //-               p - Nodulator-Account: Extends basic Resource to support and manage every authentication part of your application with PassportJS.
+    //-               p - Nodulator-Angular: Add AngularJS support client-side with a bunch of Coffeescript classes, and link them with your server in order to facilitate model exchanges.
+    //-               p - Nodulator-Socket: Add SocketIO support, and binds a lot of usual socket fonctionalities to the client.
+    //-               hr
+    //-               hr
+    //-     .col-sm-4.text-center
+    //-       .row
+    //-         .col-sm-12.text-center
+    //-           .panel.panel-default.slideInRight.animate
+    //-             .panel-heading
+    //-               h3 Database agnostic
+    //-                 .panel-body
+    //-               p Nodulator natively support MySQL and MongoDB.
+    //-               p It is designed to possibly switch from one to another transparently during developement processes.
+    //-               p Also, there is a Dummy-DB included for developement facilities, that is flushed upon every server restart. This is the default behaviour.
+    //-               p You can add your own Database support easely thanks to differents levels of abstraction.
+    //-               p For exemple, adding Amazon S3 support by default is actually under discussion.
+    //-               hr
+    //-               hr
+    //-   // /row
+    //-   .row
+    //-     br
+    //- // /container
+  //- section#section3.container-fluid
+  //-   .row
+  //-     .col-sm-6.col-sm-offset-3.col-md-6.col-md-offset-3
+  //-       h2.text-center.lato Getting Started
+  //-       hr
+  //-       .media
+  //-         h3 Npm installation
+  //-         .media-left
+  //-           pre.prettyprint.linenums.lang-bash.text-left
+  //-             | $> npm install nodulator
 
-          .media-body.media-middle
-            p Nodulator have to be required like every other usual packages
-            p Every model management is handled by a
-              b  Resource
-              |  class.
-            p Each time you create a new resource, you
-              b  have to
-              |  call the
-              b  Init()
-              |  method when you want it to be usable first time. It will create the model in database if non existant, associate the route object (if any) and prepare schema, validation and model association.
-            p Here it creates a foo row in selected table/document (see
-              b  Configuration
-              |  section) and change one of its values before save it again.
-            p By default,
-              b  Resources
-              |  are Schema-less and you can add pretty much whatever you want into them. See next exemple for a Schema-full model.
-            p You can use the created element like any javascript object, and call
-              b  Save()
-              |  method for exemple
-            //- img(src='//placehold.it/100')
-        hr
-        .media
-          h3 Schema-full models supported
-          .media-left
-            codetoggle
-              div(ng-show="language == 'coffee'")
-                | Nodulator = require 'nodulator'
-                | &nbsp;
-                | fooConfig =
-                |   schema:
-                |     field1: 'string'
-                |     field2: 'string'
-                | &nbsp;
-                | FooResource = Nodulator.Resource 'foo', fooConfig
-                | FooResource.Init()
-              div(ng-show="language == 'js'")
-                | var Nodulator = require('nodulator');
-                | &nbsp;
-                | var fooConfig = {
-                |   schema: {
-                |     field1: 'string',
-                |     field2: 'string'
-                |   }
-                | };
-                | &nbsp;
-                | var FooResource = Nodulator.Resource('foo', fooConfig);
-                | FooResource.Init()
+  //-         .media-body.media-middle
+  //-           p
+  //-             span(class="hl") Nodulator
+  //-             span  can easily be installed by NPM
+  //-       hr
+  //-       .media
+  //-         h3 Easy ORM with Schema-less models
+  //-         .media-left
+  //-           codetoggle
+  //-             div(ng-show="language == 'coffee'")
+  //-               | Nodulator = require 'nodulator'
+  //-               | &nbsp;
+  //-               | # Make usable models with one call
+  //-               | FooResource = Nodulator.Resource 'foo'
+  //-               | FooResource.Init()
+  //-               | &nbsp;
+  //-               | # The Create() method is used to add rows
+  //-               | blob = {field1: 'value1', field2: 'value2'}
+  //-               | FooResource.Create blob, (err, foo) ->
+  //-               |   return console.error err if err?
+  //-               | &nbsp;
+  //-               |   foo.field1 = 'anotherValue'
+  //-               | &nbsp;
+  //-               |   # After make change to foo instance, save it
+  //-               |   foo.Save (err) ->
+  //-               |     return console.error err if err?
+  //-             div(ng-show="language == 'js'")
+  //-               | var Nodulator = require('nodulator');
+  //-               | &nbsp;
+  //-               | // Make usable models with one call
+  //-               | var FooResource = Nodulator.Resource('foo');
+  //-               | FooResource.Init()
+  //-               | &nbsp;
+  //-               | // The Create() method is used to add rows
+  //-               | FooResource.Create({
+  //-               |   field1: 'value1',
+  //-               |   field2: 'value2'
+  //-               | }, function (err, foo) {
+  //-               |   if (err)
+  //-               |     return console.error(err);
+  //-               | &nbsp;
+  //-               |   foo.field1 = 'anotherValue';
+  //-               | &nbsp;
+  //-               |   // After make change to foo instance, save it
+  //-               |   foo.Save(function (err) {
+  //-               |     if (err)
+  //-               |       return console.error(err);
+  //-               |   });
+  //-               | });
 
-          .media-body.media-middle
-            p Each time you specify a schema property in the config object, your Resource now checks for fields validity and might return some errors if you provide bad types.
-            p Note that you can pass arguments to Nodulator.Resource(). We'll see later that we can add another one to specify routes.
-            p In this mode, if you add a field that doesn't belong to a real field in schema, it might be ignored.
-        hr
-        .media
-          h3 Model association
-          .media-left
-            codetoggle
-              div(ng-show="language == 'coffee'")
-                | async = require 'async'
-                | Nodulator = require 'nodulator'
-                | &nbsp;
-                | BarResource = Nodulator.Resource 'bar'
-                | BarResource.Init()
-                | &nbsp;
-                | fooConfig =
-                |   schema:
-                |     barId: 'int'
-                |     bar:
-                |       type: BarResource
-                |       localKey: 'barId'
-                | &nbsp;
-                | FooResource = Nodulator.Resource 'foo', fooConfig
-                | FooResource.Init()
-                | &nbsp;
-                | # Populate exemple
-                | async.auto
-                |   createBar: (done) ->
-                |       BarResource.Create {barField: 'barValue'}, done
-                | &nbsp;
-                |   createFoo: ['createBar', (done, results) ->
-                |       FooResource.Create {barId: results.createBar.id}, done]
-                | &nbsp;
-                |   foo: ['createFoo', (done, results) ->
-                |       FooResource.Fetch 1, done]
-                | &nbsp;
-                | , (err, results) ->
-                |   return console.error err if err?
-                | &nbsp;
-                |   console.log results.foo
-                |   # Will output :
-                |   # {id: 1, barId: 1, bar: {id: 1, barField: 'barValue'}}
-              div(ng-show="language == 'js'")
-                | var async = require('async');
-                | var Nodulator = require('nodulator');
-                | &nbsp;
-                | var BarResource = Nodulator.Resource('bar');
-                | BarResource.Init()
-                | &nbsp;
-                | fooConfig = {
-                |   schema: {
-                |     barId: 'int',
-                |     bar: {
-                |       type: BarResource,
-                |       localKey: 'barId'
-                |     }
-                |   }
-                | };
-                | &nbsp;
-                | var FooResource = Nodulator.Resource('foo', fooConfig);
-                | FooResource.Init()
-                | &nbsp;
-                | // Populate exemple
-                | async.auto({
-                |   createBar: function (done) {
-                |       BarResource.Create({barField: 'barValue'}, done);
-                |   },
-                | &nbsp;
-                |   createFoo: ['createBar', function (done, results) {
-                |       FooResource.Create({barId: results.createBar.id}, done);
-                |   }],
-                | &nbsp;
-                |   foo: ['createFoo', function (done, results) {
-                |       FooResource.Fetch(1, done);
-                |   }]
-                | &nbsp;
-                | }, function (err, results) {
-                |   if (err)
-                |     return console.error(err);
-                | &nbsp;
-                |   console.log(results.foo);
-                |   // Will output :
-                |   // {id: 1, barId: 1, bar: {id: 1, barField: 'barValue'}}
-                | });
-          .media-body.media-middle
-            p This is a full working association exemple
-            p We create a BarResource that will be the associated model automaticaly retrieved
-            p As usual when we want a newly created Resource to be usable, we call Init().
-            p In the FooResource schema property, you can specify a field conaining the resource id to load.
-            p Then, if you specify a Resource as a type for a schema field, you must also provide a 'localKey' to match the 'id' value to fetch.
-            p In this exemple, when we will fetch a FooResource, it will automaticaly retrieve the BarResource with the 'id' specified into the 'barId' property, and put it in the 'bar' property.
-            p &nbsp;
-            p &nbsp;
-            p &nbsp;
-            p &nbsp;
-            p Watch this 'Populate exemple' to get an exemple of how you can create such models.
-            p &nbsp;
-            p &nbsp;
-            p &nbsp;
-            p &nbsp;
-        hr
-        .media
-          h3 Easy to extend
-          .media-left
-            codetoggle
-              div(ng-show="language == 'coffee'")
-                | Nodulator = require 'nodulator'
-                | &nbsp;
-                | class UnitResource extends Nodulator.Resource 'unit'
-                | &nbsp;
-                |   LevelUp: (done) ->
-                |     @level++
-                |     @Save done
-                | &nbsp;
-                |   @List: (done) ->
-                |     @ListBy {life: 10}, (err, units) ->
-                |       return done err if err?
-                | &nbsp;
-                |       done null, units
-                | &nbsp;
-                | UnitResource.Init()
+  //-         .media-body.media-middle
+  //-           p Nodulator have to be required like every other usual packages
+  //-           p Every model management is handled by a
+  //-             b  Resource
+  //-             |  class.
+  //-           p Each time you create a new resource, you
+  //-             b  have to
+  //-             |  call the
+  //-             b  Init()
+  //-             |  method when you want it to be usable first time. It will create the model in database if non existant, associate the route object (if any) and prepare schema, validation and model association.
+  //-           p Here it creates a foo row in selected table/document (see
+  //-             b  Configuration
+  //-             |  section) and change one of its values before save it again.
+  //-           p By default,
+  //-             b  Resources
+  //-             |  are Schema-less and you can add pretty much whatever you want into them. See next exemple for a Schema-full model.
+  //-           p You can use the created element like any javascript object, and call
+  //-             b  Save()
+  //-             |  method for exemple
+  //-           //- img(src='//placehold.it/100')
+  //-       hr
+  //-       .media
+  //-         h3 Schema-full models supported
+  //-         .media-left
+  //-           codetoggle
+  //-             div(ng-show="language == 'coffee'")
+  //-               | Nodulator = require 'nodulator'
+  //-               | &nbsp;
+  //-               | fooConfig =
+  //-               |   schema:
+  //-               |     field1: 'string'
+  //-               |     field2: 'string'
+  //-               | &nbsp;
+  //-               | FooResource = Nodulator.Resource 'foo', fooConfig
+  //-               | FooResource.Init()
+  //-             div(ng-show="language == 'js'")
+  //-               | var Nodulator = require('nodulator');
+  //-               | &nbsp;
+  //-               | var fooConfig = {
+  //-               |   schema: {
+  //-               |     field1: 'string',
+  //-               |     field2: 'string'
+  //-               |   }
+  //-               | };
+  //-               | &nbsp;
+  //-               | var FooResource = Nodulator.Resource('foo', fooConfig);
+  //-               | FooResource.Init()
 
-              div(ng-show="language == 'js'")
-                | var Nodulator = require('nodulator');
-                | &nbsp;
-                | var UnitResource = Nodulator.Resource('unit');
-                | &nbsp;
-                | UnitResource.prototype.LevelUp = function (done) {
-                |   this.level++;
-                |   this.Save(done);
-                | };
-                | &nbsp;
-                | UnitResource.List = function (done) {
-                |   this.ListBy({life: 10}, function (err, units) {
-                |     if (err)
-                |       return done(err);
-                | &nbsp;
-                |     done(null, units);
-                |   });
-                | };
-                | &nbsp;
-                | UnitResource.Init();
+  //-         .media-body.media-middle
+  //-           p Each time you specify a schema property in the config object, your Resource now checks for fields validity and might return some errors if you provide bad types.
+  //-           p Note that you can pass arguments to Nodulator.Resource(). We'll see later that we can add another one to specify routes.
+  //-           p In this mode, if you add a field that doesn't belong to a real field in schema, it might be ignored.
+  //-       hr
+  //-       .media
+  //-         h3 Model association
+  //-         .media-left
+  //-           codetoggle
+  //-             div(ng-show="language == 'coffee'")
+  //-               | async = require 'async'
+  //-               | Nodulator = require 'nodulator'
+  //-               | &nbsp;
+  //-               | BarResource = Nodulator.Resource 'bar'
+  //-               | BarResource.Init()
+  //-               | &nbsp;
+  //-               | fooConfig =
+  //-               |   schema:
+  //-               |     barId: 'int'
+  //-               |     bar:
+  //-               |       type: BarResource
+  //-               |       localKey: 'barId'
+  //-               | &nbsp;
+  //-               | FooResource = Nodulator.Resource 'foo', fooConfig
+  //-               | FooResource.Init()
+  //-               | &nbsp;
+  //-               | # Populate exemple
+  //-               | async.auto
+  //-               |   createBar: (done) ->
+  //-               |       BarResource.Create {barField: 'barValue'}, done
+  //-               | &nbsp;
+  //-               |   createFoo: ['createBar', (done, results) ->
+  //-               |       FooResource.Create {barId: results.createBar.id}, done]
+  //-               | &nbsp;
+  //-               |   foo: ['createFoo', (done, results) ->
+  //-               |       FooResource.Fetch 1, done]
+  //-               | &nbsp;
+  //-               | , (err, results) ->
+  //-               |   return console.error err if err?
+  //-               | &nbsp;
+  //-               |   console.log results.foo
+  //-               |   # Will output :
+  //-               |   # {id: 1, barId: 1, bar: {id: 1, barField: 'barValue'}}
+  //-             div(ng-show="language == 'js'")
+  //-               | var async = require('async');
+  //-               | var Nodulator = require('nodulator');
+  //-               | &nbsp;
+  //-               | var BarResource = Nodulator.Resource('bar');
+  //-               | BarResource.Init()
+  //-               | &nbsp;
+  //-               | fooConfig = {
+  //-               |   schema: {
+  //-               |     barId: 'int',
+  //-               |     bar: {
+  //-               |       type: BarResource,
+  //-               |       localKey: 'barId'
+  //-               |     }
+  //-               |   }
+  //-               | };
+  //-               | &nbsp;
+  //-               | var FooResource = Nodulator.Resource('foo', fooConfig);
+  //-               | FooResource.Init()
+  //-               | &nbsp;
+  //-               | // Populate exemple
+  //-               | async.auto({
+  //-               |   createBar: function (done) {
+  //-               |       BarResource.Create({barField: 'barValue'}, done);
+  //-               |   },
+  //-               | &nbsp;
+  //-               |   createFoo: ['createBar', function (done, results) {
+  //-               |       FooResource.Create({barId: results.createBar.id}, done);
+  //-               |   }],
+  //-               | &nbsp;
+  //-               |   foo: ['createFoo', function (done, results) {
+  //-               |       FooResource.Fetch(1, done);
+  //-               |   }]
+  //-               | &nbsp;
+  //-               | }, function (err, results) {
+  //-               |   if (err)
+  //-               |     return console.error(err);
+  //-               | &nbsp;
+  //-               |   console.log(results.foo);
+  //-               |   // Will output :
+  //-               |   // {id: 1, barId: 1, bar: {id: 1, barField: 'barValue'}}
+  //-               | });
+  //-         .media-body.media-middle
+  //-           p This is a full working association exemple
+  //-           p We create a BarResource that will be the associated model automaticaly retrieved
+  //-           p As usual when we want a newly created Resource to be usable, we call Init().
+  //-           p In the FooResource schema property, you can specify a field conaining the resource id to load.
+  //-           p Then, if you specify a Resource as a type for a schema field, you must also provide a 'localKey' to match the 'id' value to fetch.
+  //-           p In this exemple, when we will fetch a FooResource, it will automaticaly retrieve the BarResource with the 'id' specified into the 'barId' property, and put it in the 'bar' property.
+  //-           p &nbsp;
+  //-           p &nbsp;
+  //-           p &nbsp;
+  //-           p &nbsp;
+  //-           p Watch this 'Populate exemple' to get an exemple of how you can create such models.
+  //-           p &nbsp;
+  //-           p &nbsp;
+  //-           p &nbsp;
+  //-           p &nbsp;
+  //-       hr
+  //-       .media
+  //-         h3 Easy to extend
+  //-         .media-left
+  //-           codetoggle
+  //-             div(ng-show="language == 'coffee'")
+  //-               | Nodulator = require 'nodulator'
+  //-               | &nbsp;
+  //-               | class UnitResource extends Nodulator.Resource 'unit'
+  //-               | &nbsp;
+  //-               |   LevelUp: (done) ->
+  //-               |     @level++
+  //-               |     @Save done
+  //-               | &nbsp;
+  //-               |   @List: (done) ->
+  //-               |     @ListBy {life: 10}, (err, units) ->
+  //-               |       return done err if err?
+  //-               | &nbsp;
+  //-               |       done null, units
+  //-               | &nbsp;
+  //-               | UnitResource.Init()
 
-          .media-body.media-middle
-            p All you have to do is to append new methods to your class and use it like any other.
-            p Here we extend the UnitResource to add:
-            p <- an Instance method (LevelUp())
-            p &nbsp;
-            p <- and a Class method (@List())
-            p This one is just an alias for @ListBy with specific values.
-            p &nbsp;
-            p Every 'done' callback take two parameters: (err, result) ->
-            p And we call Init() when we are ready to start using this Resource.
-        hr
-        .media
-          h3 Our site is still under construct. Check our
-            a(href='https://github.com/Champii/Nodulator')  github
-            |  for more informations.
+  //-             div(ng-show="language == 'js'")
+  //-               | var Nodulator = require('nodulator');
+  //-               | &nbsp;
+  //-               | var UnitResource = Nodulator.Resource('unit');
+  //-               | &nbsp;
+  //-               | UnitResource.prototype.LevelUp = function (done) {
+  //-               |   this.level++;
+  //-               |   this.Save(done);
+  //-               | };
+  //-               | &nbsp;
+  //-               | UnitResource.List = function (done) {
+  //-               |   this.ListBy({life: 10}, function (err, units) {
+  //-               |     if (err)
+  //-               |       return done(err);
+  //-               | &nbsp;
+  //-               |     done(null, units);
+  //-               |   });
+  //-               | };
+  //-               | &nbsp;
+  //-               | UnitResource.Init();
+
+  //-         .media-body.media-middle
+  //-           p All you have to do is to append new methods to your class and use it like any other.
+  //-           p Here we extend the UnitResource to add:
+  //-           p <- an Instance method (LevelUp())
+  //-           p &nbsp;
+  //-           p <- and a Class method (@List())
+  //-           p This one is just an alias for @ListBy with specific values.
+  //-           p &nbsp;
+  //-           p Every 'done' callback take two parameters: (err, result) ->
+  //-           p And we call Init() when we are ready to start using this Resource.
+  //-       hr
+  //-       .media
+  //-         h3 Our site is still under construct. Check our
+  //-           a(href='https://github.com/Champii/Nodulator')  github
+  //-           |  for more informations.
         //- hr
         //- .media
         //-   h3 Boom
