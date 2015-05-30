@@ -78,19 +78,19 @@ span
                   h3 Easy to Setup
                 .panel-body
                   p In a terminal
-                  pre.prettyprint.text-left(class="lang-bash")
+                  bash
                     | $> npm install nodulator
 
                   hr
                   | Basic exemple with a Resource and a Route
                   codetoggle
-                    div(ng-show="language == 'coffee'")
+                    coffee
                       | Nodulator = require 'nodulator'
                       | MultiRoute = Nodulator.Route.MultiRoute
                       | &nbsp;
                       | # Make usable shema-less models over API  with one call
                       | Players = Nodulator.Resource('player', MultiRoute).Init()
-                    div(ng-show="language == 'js'")
+                    js
                       | var Nodulator = require('nodulator');
                       | var MultiRoute = Nodulator.Route.MultiRoute;
                       | &nbsp;
@@ -99,7 +99,7 @@ span
                   p See Routing section ->
                   hr
                   | Project generation
-                  pre.prettyprint.text-left(class="lang-bash")
+                  bash
                     | $> sudo npm install -g nodulator
                     | $> Nodulator install
                     | $> Nodulator init
@@ -118,7 +118,7 @@ span
                   p Add your resources directly in /server/resources/
                   hr
                   | Modules
-                  pre.prettyprint.text-left(class="lang-bash")
+                  bash
                     | $> Nodulator install assets
                     | $> Nodulator init
                   p Install
@@ -135,14 +135,14 @@ span
                 .panel-body
                   p Fully agnostic ORM
                   codetoggle
-                    div(ng-show="language == 'coffee'")
+                    coffee
                       | Players.Create
                       |   name: 'player1'
                       |   level: 1
                       | , (err, player) ->
                       |   # Deal with that new 'player'
                       | &nbsp;
-                    div(ng-show="language == 'js'")
+                    js
                       | Players.Create({
                       |   name: 'player1',
                       |   level: 1
@@ -152,13 +152,13 @@ span
                   hr
                   p Easy to use API
                   codetoggle
-                    div(ng-show="language == 'coffee'")
+                    coffee
                       | # Fetch player with id = 1
                       | Players.Fetch 1, (err, player) ->
                       |   player.level++
                       |   player.Save (err) ->
                       | &nbsp;
-                    div(ng-show="language == 'js'")
+                    js
                       | // Fetch player with id = 1
                       | Players.Fetch(1, function (err, player) {
                       |   player.level++;
@@ -167,7 +167,7 @@ span
                   hr
                   p Can be extended
                   codetoggle
-                    div(ng-show="language == 'coffee'")
+                    coffee
                       | Nodulator = require 'nodulator'
                       | &nbsp;
                       | class Players extends Nodulator.Resource 'player'
@@ -178,7 +178,7 @@ span
                       | &nbsp;
                       | &nbsp;
                       | Players.Init()
-                    div(ng-show="language == 'js'")
+                    js
                       | var Nodulator = require('nodulator');
                       | &nbsp;
                       | Players = Nodulator.Resource('player');
@@ -192,7 +192,7 @@ span
                   hr
                   | Schema-full exemple with type validation
                   codetoggle
-                    div(ng-show="language == 'coffee'")
+                    coffee
                       | Nodulator = require 'nodulator'
                       | &nbsp;
                       | fooConfig =
@@ -202,7 +202,7 @@ span
                       | &nbsp;
                       | FooResource = Nodulator.Resource 'foo', fooConfig
                       | FooResource.Init()
-                    div(ng-show="language == 'js'")
+                    js
                       | var Nodulator = require('nodulator');
                       | &nbsp;
                       | var fooConfig = {
@@ -224,12 +224,12 @@ span
                 .panel-body
                   | SingleRoute
                   codetoggle
-                    div(ng-show="language == 'coffee'")
+                    coffee
                       | Nodulator = require 'nodulator'
                       | SingleRoute = Nodulator.Route.SingleRoute
                       | &nbsp;
                       | Players = Nodulator.Resource('player', SingleRoute).Init()
-                    div(ng-show="language == 'js'")
+                    js
                       | var Nodulator = require('nodulator');
                       | var SingleRoute = Nodulator.Route.SingleRoute;
                       | &nbsp;
@@ -246,12 +246,12 @@ span
                   hr
                   | MultiRoute
                   codetoggle
-                    div(ng-show="language == 'coffee'")
+                    coffee
                       | Nodulator = require 'nodulator'
                       | MultiRoute = Nodulator.Route.MultiRoute
                       | &nbsp;
                       | Players = Nodulator.Resource('player', MultiRoute).Init()
-                    div(ng-show="language == 'js'")
+                    js
                       | var Nodulator = require('nodulator');
                       | var MultiRoute = Nodulator.Route.MultiRoute;
                       | &nbsp;
@@ -266,7 +266,7 @@ span
                   hr
                   | Custom route
                   codetoggle
-                    div(ng-show="language == 'coffee'")
+                    coffee
                       | Nodulator = require 'Nodulator'
                       | &nbsp;
                       | class PlayerRoute extends Nodulator.Route
@@ -280,7 +280,7 @@ span
                       | &nbsp;
                       | Players = Nodulator.Resource('player', PlayerRoute).Init()
 
-                    div(ng-show="language == 'js'")
+                    js
                       | var = Nodulator = require('Nodulator');
                       | &nbsp;
                       | var PlayerRoute = Nodulator.Route
@@ -367,7 +367,7 @@ span
   //-         h3 Easy ORM with Schema-less models
   //-         .media-left
   //-           codetoggle
-  //-             div(ng-show="language == 'coffee'")
+  //-             coffee
   //-               | Nodulator = require 'nodulator'
   //-               | &nbsp;
   //-               | # Make usable models with one call
@@ -384,7 +384,7 @@ span
   //-               |   # After make change to foo instance, save it
   //-               |   foo.Save (err) ->
   //-               |     return console.error err if err?
-  //-             div(ng-show="language == 'js'")
+  //-             js
   //-               | var Nodulator = require('nodulator');
   //-               | &nbsp;
   //-               | // Make usable models with one call
@@ -433,7 +433,7 @@ span
   //-         h3 Schema-full models supported
   //-         .media-left
   //-           codetoggle
-  //-             div(ng-show="language == 'coffee'")
+  //-             coffee
   //-               | Nodulator = require 'nodulator'
   //-               | &nbsp;
   //-               | fooConfig =
@@ -443,7 +443,7 @@ span
   //-               | &nbsp;
   //-               | FooResource = Nodulator.Resource 'foo', fooConfig
   //-               | FooResource.Init()
-  //-             div(ng-show="language == 'js'")
+  //-             js
   //-               | var Nodulator = require('nodulator');
   //-               | &nbsp;
   //-               | var fooConfig = {
@@ -465,7 +465,7 @@ span
   //-         h3 Model association
   //-         .media-left
   //-           codetoggle
-  //-             div(ng-show="language == 'coffee'")
+  //-             coffee
   //-               | async = require 'async'
   //-               | Nodulator = require 'nodulator'
   //-               | &nbsp;
@@ -499,7 +499,7 @@ span
   //-               |   console.log results.foo
   //-               |   # Will output :
   //-               |   # {id: 1, barId: 1, bar: {id: 1, barField: 'barValue'}}
-  //-             div(ng-show="language == 'js'")
+  //-             js
   //-               | var async = require('async');
   //-               | var Nodulator = require('nodulator');
   //-               | &nbsp;
@@ -562,7 +562,7 @@ span
   //-         h3 Easy to extend
   //-         .media-left
   //-           codetoggle
-  //-             div(ng-show="language == 'coffee'")
+  //-             coffee
   //-               | Nodulator = require 'nodulator'
   //-               | &nbsp;
   //-               | class UnitResource extends Nodulator.Resource 'unit'
@@ -579,7 +579,7 @@ span
   //-               | &nbsp;
   //-               | UnitResource.Init()
 
-  //-             div(ng-show="language == 'js'")
+  //-             js
   //-               | var Nodulator = require('nodulator');
   //-               | &nbsp;
   //-               | var UnitResource = Nodulator.Resource('unit');

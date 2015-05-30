@@ -2,4 +2,4 @@ div
   span(ng-class="{selected: language == 'coffee'}", class="codetoggle", ng-click="Toggle('coffee')") Coffee
   span(ng-class="{selected: language == 'js'}", class="codetoggle", ng-click="Toggle('js')") Js
   br
-  pre.prettyprint.text-left(class="lang-{{language}}", ng-transclude)
+  div(ng-transclude)

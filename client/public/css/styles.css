@@ -169,7 +169,7 @@ section {
 }
 
 #section2 .container{
-  width: 1700px;
+  min-width: 1700px;
 }
 
 #section3 {
@@ -216,4 +216,19 @@ footer .nav>li>a:hover {
 /*highlight*/
 .hl {
   color: #f44d3c;
+}
+
+code {
+  font-family: monospace,monospace;
+}
+.hljs {
+  color: #C8C8C8;
+}
+
+[language="bash"] .hljs {
+  color: #CCCCCC;
+}
+
+[hljs] pre {
+  padding: 0px;
 }
