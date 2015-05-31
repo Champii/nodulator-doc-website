@@ -8,6 +8,7 @@ $(function () {
 
   /* smooth scrolling sections */
   $('a[href*=#]:not([href=#])').click(function() {
+      $("#navbar-collapsible li.active").removeClass('active')
       if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
         var target = $(this.hash);
         target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
@@ -35,4 +36,3 @@ $(function () {
       }
   });
 })
-
