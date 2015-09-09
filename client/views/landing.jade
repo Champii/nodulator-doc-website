@@ -85,11 +85,10 @@ span
                   | Basic exemple with a Resource and a Route
                   codetoggle
                     livescript
-                      | N = require 'nodulator'
-                      | MultiRoute = N.Route.MultiRoute
+                      | {{MultiRoute}:Route}:N = require \nodulator
                       | &nbsp;
                       | # Make usable shema-less models over API  with one call
-                      | Players = N.Resource 'player', MultiRoute
+                      | Players = N.Resource \player MultiRoute
                     coffee
                       | N = require 'nodulator'
                       | MultiRoute = N.Route.MultiRoute
@@ -142,11 +141,11 @@ span
                   p Fully agnostic ORM
                   codetoggle
                     livescript
-                      | Players.Create
-                      |   name: 'player1'
+                      | Players.Create do
+                      |   name: \player1
                       |   level: 1
-                      | , (err, player) ->
-                      |   # Deal with that new 'player'
+                      |   (err, player) ->
+                      |     # Deal with that new 'player'
                       | &nbsp;
                     coffee
                       | Players.Create
@@ -167,7 +166,7 @@ span
                   codetoggle
                     livescript
                       | # Fetch player with id = 1
-                      | Players.Fetch 1, (err, player) ->
+                      | Players.Fetch 1 (err, player) ->
                       |   player.level++
                       |   player.Save (err) ->
                       | &nbsp;
@@ -187,9 +186,9 @@ span
                   p Can be extended
                   codetoggle
                     livescript
-                      | N = require 'nodulator'
+                      | N = require \nodulator
                       | &nbsp;
-                      | class Players extends N.Resource 'player'
+                      | class Players extends N.Resource \player
                       | &nbsp;
                       |   Level: (done) ->
                       |     @level++
@@ -215,14 +214,14 @@ span
                   | Schema-full exemple with type validation
                   codetoggle
                     livescript
-                      | N = require 'nodulator'
+                      | N = require \nodulator
                       | &nbsp;
                       | fooConfig =
                       |   schema:
-                      |     field1: 'string'
-                      |     field2: 'int'
+                      |     field1: \string
+                      |     field2: \int
                       | &nbsp;
-                      | FooResource = N.Resource 'foo', fooConfig
+                      | FooResource = N.Resource \foo fooConfig
                     coffee
                       | N = require 'nodulator'
                       | &nbsp;
@@ -254,10 +253,9 @@ span
                   | SingleRoute
                   codetoggle
                     livescript
-                      | N = require 'nodulator'
-                      | SingleRoute = N.Route.SingleRoute
+                      | {{SingleRoute}:Route}:N = require \nodulator
                       | &nbsp;
-                      | Players = N.Resource 'player', SingleRoute
+                      | Players = N.Resource \player SingleRoute
                     coffee
                       | N = require 'nodulator'
                       | SingleRoute = N.Route.SingleRoute
@@ -281,10 +279,9 @@ span
                   | MultiRoute
                   codetoggle
                     livescript
-                      | N = require 'nodulator'
-                      | MultiRoute = N.Route.MultiRoute
+                      | {{MultiRoute}:Route}:N = require \nodulator
                       | &nbsp;
-                      | Players = N.Resource 'player', MultiRoute
+                      | Players = N.Resource \player MultiRoute
                     coffee
                       | N = require 'nodulator'
                       | MultiRoute = N.Route.MultiRoute
@@ -306,16 +303,16 @@ span
                   | Custom route
                   codetoggle
                     livescript
-                      | N = require 'N'
+                      | {Route}:N = require \nodulator
                       | &nbsp;
-                      | class PlayerRoute extends N.Route
+                      | class PlayerRoute extends Route
                       | &nbsp;
                       |   Config: ->
-                      |     @Get '/:id' ~> @resource.Fetch it.params.id
+                      |     @Get \/:id ~> @resource.Fetch it.params.id
                       | &nbsp;
-                      | Players = N.Resource 'player', PlayerRoute
+                      | Players = N.Resource \player PlayerRoute
                     coffee
-                      | N = require 'N'
+                      | N = require 'nodulator'
                       | &nbsp;
                       | class PlayerRoute extends N.Route
                       | &nbsp;
@@ -325,7 +322,7 @@ span
                       | Players = N.Resource 'player', PlayerRoute
 
                     js
-                      | var = N = require('N');
+                      | var = N = require('nodulator');
                       | &nbsp;
                       | var PlayerRoute = N.Route
                       | &nbsp;
