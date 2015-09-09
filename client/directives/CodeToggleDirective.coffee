@@ -1,6 +1,6 @@
 class CodeToggleDirective extends Nodulator.Directive 'codetoggle', '$interpolate', {transclude: true}
 
-  language: 'coffee'
+  language: 'livescript'
 
   Toggle: (@language) ->
 
@@ -19,6 +19,13 @@ class JsDirective extends Nodulator.Directive 'js', {transclude: true}
     @contentJs = @element.find('.hide span')[0].innerText
 
 JsDirective.Init()
+
+class LivescriptDirective extends Nodulator.Directive 'livescript', {transclude: true}
+
+  _Init: ->
+    @contentLivescript = @element.find('.hide span')[0].innerText
+
+LivescriptDirective.Init()
 
 class BashDirective extends Nodulator.Directive 'bash', {transclude: true, scope: {}}
 

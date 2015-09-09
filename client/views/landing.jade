@@ -84,18 +84,24 @@ span
                   hr
                   | Basic exemple with a Resource and a Route
                   codetoggle
-                    coffee
-                      | Nodulator = require 'nodulator'
-                      | MultiRoute = Nodulator.Route.MultiRoute
+                    livescript
+                      | N = require 'nodulator'
+                      | MultiRoute = N.Route.MultiRoute
                       | &nbsp;
                       | # Make usable shema-less models over API  with one call
-                      | Players = Nodulator.Resource('player', MultiRoute).Init()
+                      | Players = N.Resource 'player', MultiRoute
+                    coffee
+                      | N = require 'nodulator'
+                      | MultiRoute = N.Route.MultiRoute
+                      | &nbsp;
+                      | # Make usable shema-less models over API  with one call
+                      | Players = N.Resource 'player', MultiRoute
                     js
-                      | var Nodulator = require('nodulator');
-                      | var MultiRoute = Nodulator.Route.MultiRoute;
+                      | var N = require('nodulator');
+                      | var MultiRoute = N.Route.MultiRoute;
                       | &nbsp;
                       | // Make usable shema-less models  over API with one call
-                      | var Players = Nodulator.Resource('player', MultiRoute).Init();
+                      | var Players = N.Resource('player', MultiRoute);
                   p See Routing section ->
                   hr
                   | Project generation
@@ -135,6 +141,13 @@ span
                 .panel-body
                   p Fully agnostic ORM
                   codetoggle
+                    livescript
+                      | Players.Create
+                      |   name: 'player1'
+                      |   level: 1
+                      | , (err, player) ->
+                      |   # Deal with that new 'player'
+                      | &nbsp;
                     coffee
                       | Players.Create
                       |   name: 'player1'
@@ -152,6 +165,12 @@ span
                   hr
                   p Easy to use API
                   codetoggle
+                    livescript
+                      | # Fetch player with id = 1
+                      | Players.Fetch 1, (err, player) ->
+                      |   player.level++
+                      |   player.Save (err) ->
+                      | &nbsp;
                     coffee
                       | # Fetch player with id = 1
                       | Players.Fetch 1, (err, player) ->
@@ -167,43 +186,54 @@ span
                   hr
                   p Can be extended
                   codetoggle
-                    coffee
-                      | Nodulator = require 'nodulator'
+                    livescript
+                      | N = require 'nodulator'
                       | &nbsp;
-                      | class Players extends Nodulator.Resource 'player'
+                      | class Players extends N.Resource 'player'
                       | &nbsp;
                       |   Level: (done) ->
                       |     @level++
                       |     @Save done
+                    coffee
+                      | N = require 'nodulator'
                       | &nbsp;
+                      | class Players extends N.Resource 'player'
                       | &nbsp;
-                      | Players.Init()
+                      |   Level: (done) ->
+                      |     @level++
+                      |     @Save done
                     js
-                      | var Nodulator = require('nodulator');
+                      | var N = require('nodulator');
                       | &nbsp;
-                      | Players = Nodulator.Resource('player');
+                      | Players = N.Resource('player');
                       | &nbsp;
                       | Players.prototype.Level = function (done) {
                       |   this.level++;
                       |   this.Save(done);
                       | };
-                      | &nbsp;
-                      | Players.Init()
                   hr
                   | Schema-full exemple with type validation
                   codetoggle
-                    coffee
-                      | Nodulator = require 'nodulator'
+                    livescript
+                      | N = require 'nodulator'
                       | &nbsp;
                       | fooConfig =
                       |   schema:
                       |     field1: 'string'
                       |     field2: 'int'
                       | &nbsp;
-                      | FooResource = Nodulator.Resource 'foo', fooConfig
-                      | FooResource.Init()
+                      | FooResource = N.Resource 'foo', fooConfig
+                    coffee
+                      | N = require 'nodulator'
+                      | &nbsp;
+                      | fooConfig =
+                      |   schema:
+                      |     field1: 'string'
+                      |     field2: 'int'
+                      | &nbsp;
+                      | FooResource = N.Resource 'foo', fooConfig
                     js
-                      | var Nodulator = require('nodulator');
+                      | var N = require('nodulator');
                       | &nbsp;
                       | var fooConfig = {
                       |   schema: {
@@ -212,8 +242,7 @@ span
                       |   }
                       | };
                       | &nbsp;
-                      | var FooResource = Nodulator.Resource('foo', fooConfig);
-                      | FooResource.Init()
+                      | var FooResource = N.Resource('foo', fooConfig);
 
         .col-sm-4.text-center
           .row
@@ -224,16 +253,21 @@ span
                 .panel-body
                   | SingleRoute
                   codetoggle
+                    livescript
+                      | N = require 'nodulator'
+                      | SingleRoute = N.Route.SingleRoute
+                      | &nbsp;
+                      | Players = N.Resource 'player', SingleRoute
                     coffee
-                      | Nodulator = require 'nodulator'
-                      | SingleRoute = Nodulator.Route.SingleRoute
+                      | N = require 'nodulator'
+                      | SingleRoute = N.Route.SingleRoute
                       | &nbsp;
-                      | Players = Nodulator.Resource('player', SingleRoute).Init()
+                      | Players = N.Resource 'player', SingleRoute
                     js
-                      | var Nodulator = require('nodulator');
-                      | var SingleRoute = Nodulator.Route.SingleRoute;
+                      | var N = require('nodulator');
+                      | var SingleRoute = N.Route.SingleRoute;
                       | &nbsp;
-                      | var Players = Nodulator.Resource('player', SingleRoute).Init();
+                      | var Players = N.Resource 'player', SingleRoute
                   p This exemple create a server and listen for the following routes.
                   p It creates a route to access element with id = 1 only, creating a Singleton model over API
                   pre.text-left
@@ -246,16 +280,21 @@ span
                   hr
                   | MultiRoute
                   codetoggle
+                    livescript
+                      | N = require 'nodulator'
+                      | MultiRoute = N.Route.MultiRoute
+                      | &nbsp;
+                      | Players = N.Resource 'player', MultiRoute
                     coffee
-                      | Nodulator = require 'nodulator'
-                      | MultiRoute = Nodulator.Route.MultiRoute
+                      | N = require 'nodulator'
+                      | MultiRoute = N.Route.MultiRoute
                       | &nbsp;
-                      | Players = Nodulator.Resource('player', MultiRoute).Init()
+                      | Players = N.Resource 'player', MultiRoute
                     js
-                      | var Nodulator = require('nodulator');
-                      | var MultiRoute = Nodulator.Route.MultiRoute;
+                      | var N = require('nodulator');
+                      | var MultiRoute = N.Route.MultiRoute;
                       | &nbsp;
-                      | var Players = Nodulator.Resource('player', MultiRoute).Init();
+                      | var Players = N.Resource('player', MultiRoute);
                   | This previous exemple create a server and listen for the following routes:
                   pre.text-left
                     | GET     => /api/1/players       => List all
@@ -266,36 +305,37 @@ span
                   hr
                   | Custom route
                   codetoggle
-                    coffee
-                      | Nodulator = require 'Nodulator'
+                    livescript
+                      | N = require 'N'
                       | &nbsp;
-                      | class PlayerRoute extends Nodulator.Route
+                      | class PlayerRoute extends N.Route
                       | &nbsp;
                       |   Config: ->
-                      |     @Get '/:id', (req, res) =>
-                      |       @resource.Fetch req.params.id, (err, resource) =>
-                      |         return res.status(500).send err if err?
+                      |     @Get '/:id' ~> @resource.Fetch it.params.id
                       | &nbsp;
-                      |         res.status(200).send resource.ToJSON()
+                      | Players = N.Resource 'player', PlayerRoute
+                    coffee
+                      | N = require 'N'
                       | &nbsp;
-                      | Players = Nodulator.Resource('player', PlayerRoute).Init()
+                      | class PlayerRoute extends N.Route
+                      | &nbsp;
+                      |   Config: ->
+                      |     @Get '/:id', (req) => @resource.Fetch req.params.id
+                      | &nbsp;
+                      | Players = N.Resource 'player', PlayerRoute
 
                     js
-                      | var = Nodulator = require('Nodulator');
+                      | var = N = require('N');
                       | &nbsp;
-                      | var PlayerRoute = Nodulator.Route
+                      | var PlayerRoute = N.Route
                       | &nbsp;
                       | PlayerRoute.prototype.Config = function () {
-                      |   this.Get('/:id', function (req, res) {
-                      |     this.resource.Fetch(req.params.id, function (err, resource) {
-                      |         return res.status(500).send err if err?
-                      | &nbsp;
-                      |         res.status(200).send resource.ToJSON()
-                      |     });
+                      |   this.Get('/:id', function (req) {
+                      |     return this.resource.Fetch(req.params.id);
                       |   });
                       | };
                       | &nbsp;
-                      | var Players = Nodulator.Resource('player', PlayerRoute).Init()
+                      | var Players = N.Resource('player', PlayerRoute);
                   pre.text-left
                     | GET     => /api/1/players/:id   => Get One
 
