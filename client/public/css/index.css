@@ -57,7 +57,7 @@ html body {
 .pagebody {
   background-color: rgb(75,75,75);
   width: 100%;
-  height: 100%;
+  /*height: 100%;*/
   padding-left: 250px;
   color: rgb(17, 17, 18);
   min-height: 900px;
@@ -66,7 +66,7 @@ html body {
 .content {
   min-height: 900px;
   margin-bottom: 0;
-  height: 100%;
+  /*height: 100%;*/
 
 }
 
@@ -75,9 +75,9 @@ html body {
 
 }
 
-#welcome h1 {
-  /*letter-spacing: 50px;*/
-
+#section4 p {
+  width: 800px;
+  letter-spacing: 1px;
 }
 
 .codetoggle {

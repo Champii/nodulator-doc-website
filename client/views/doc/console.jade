@@ -1,0 +1,68 @@
+div
+  h2 9) Console
+
+  p The Console allows you to dive into an existing and/or running, with a lite LiveScript REPL based on the nodejs one.
+  p It is actually only available in LiveScript (Deal With It)
+  br
+  p The Console should be run from the project root and from a project created using
+    a(href="#/doc/projectgeneration") Nodulator Project Generation
+    | , in order to find automaticaly the DB settings and the path to existing Resources
+  p
+    bash
+      | $> Nodulator console
+      | N > _
+  br
+  br
+  p If you didnt created your project with Nodulator, you can also give arguments to the console to tell it where to find the files it needs
+    bash
+      | $> Nodulator console pathToConfig pathToResources
+      | N > _
+
+  br
+  p The console preload every Resource found in the folder given, and make them available in the global context. For exemple with saying, a N.Resource('player') loaded:
+    livescript
+      | N > player = Players.Create name: \test
+      | {id: 1, name: 'test'}
+      | N > player.name = \test2
+      | 'test2'
+      | N > player.Save!
+      | {id: 1, name: 'test2'}
+      | N > _
+      
+  p As shown in the previous exemple, every Nodulator related call that return a Promise is made Synchrone to print the result in place of the promise.
+  p Also, you can use every part of Nodulator except for the Routes. They are desactivated in this mode to not intefere with any running route instance and are useless. 
+    | However, the Nodulator-Account is linked so you can also access your Account-Resource.
+  
+
+  h3 Exemple
+  br
+  p
+    livescript
+      | N > players = Players.List!
+      | [{id: 1, name: 'test1'}
+      |  {id: 2, name: 'test2'}
+      |  {id: 3, name: 'test3'}]
+      | N > names = players |> map (.id)
+      | [1, 2, 3]
+      | N > Stats = N.Resource \stat schema: 
+      |                                stat: {type: 'int', default: 0}
+      |                                playerId: \int
+      |                                Player: 
+      |                                  type: Players
+      |                                  localKey: \playerId
+      | [...]
+      | N > stats = Stats.Create names |> map -> playerId: it
+      | [{id: 1, playerId: 1, stat: 0},
+      | [{id: 2, playerId: 2, stat: 0},
+      | [{id: 3, playerId: 3, stat: 0}]
+      | N > _
+  
+
+
+  //- codetoggle
+  //-   livescript
+  //-     include ../../../../exemples/ls/resourcesave.ls
+  //-   coffee
+  //-     include ../../../../exemples/coffee/resourcesave.coffee
+  //-   js
+  //-     include ../../../../exemples/js/resourcesave.js
