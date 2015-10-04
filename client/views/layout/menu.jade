@@ -1,32 +1,36 @@
 nav.navbar.navbar-trans.navbar-fixed-top(role='navigation')
+  a.navbar-brand(href='#/home/welcome', ng-click="GoTo('home')") 
+    span.text-danger N
+    | odulator 
+    span.text-danger (.js)
   .container
-    .navbar-header
-      button.navbar-toggle(type='button', data-toggle='collapse', data-target='#navbar-collapsible')
-        span.sr-only Toggle navigation
-        span.icon-bar
-        span.icon-bar
-        span.icon-bar
-      a.navbar-brand.text-danger(href='#', ng-click="GoTo('home')") NODULATOR.JS
-    #navbar-collapsible.navbar-collapse.collapse
-      ul.nav.navbar-nav.navbar-left
-        li
-          a(href='#home', ng-click="GoTo('home')") Home
-        li
-          a(href='#gettingstarted', ng-click="GoTo('gettingstarted')") Getting started
-        li
-          a(href='#section3', ng-click="GoTo('home')") Modules (soon)
-        li
-          //- a(href='#section4') Documentation (soon)
-          a(href='#section4', ng-click="GoTo('doc')") Documentation
-        li
-          a(href='#section5') Tutorials (soon)
-        li
-          a(href='https://github.com/Champii/Nodulator') Github
-        li
-          a(href='mailto:contact@champii.io') Contact
-        li
-          | &nbsp;
-      //- ul.nav.navbar-nav.navbar-right
+    center
+      .navbar-header
+      //- button.navbar-toggle(type='button', data-toggle='collapse', data-target='#navbar-collapsible')
+      //-   span.sr-only Toggle navigation
+      //-   span.icon-bar
+      //-   span.icon-bar
+      //-   span.icon-bar
+      #navbar-collapsible.navbar-collapse.collapse
+        ul.nav.navbar-nav.navbar-left
+          li(ng-class="{active: location === '/' || (location === '/home' && sub === 'welcome')}")
+            a(href='#/home/welcome') Home
+          li(ng-class="{active: location === '/home' && sub === 'gettingstarted'}")
+            a(href='#/home/gettingstarted') Getting started
+          //- li
+          //-   a(href='#section3', ng-click="GoTo('home')") Modules (soon)
+          li(ng-class="{active: location === '/doc'}")
+            //- a(href='#section4') Documentation (soon)
+            a(href='#/doc/welcome', ng-click="GoTo('doc')") Documentation
+          //- li
+          //-   a(href='#section5') Tutorials (soon)
+          li
+            a(href='https://github.com/Champii/Nodulator') Github
+          li
+            a(href='mailto:contact@champii.io') Contact
+          li
+            | &nbsp;
+        //- ul.nav.navbar-nav.navbar-right
       //-   li
       //-     a(href='#', data-toggle='modal', data-target='#myModal')
       //-       i.fa.fa-heart-o.fa-lg

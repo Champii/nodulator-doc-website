@@ -1,5 +1,5 @@
 div
-  h2 3.1) Basics
+  h2 4.1) Basics
 
   p Resources are at the heart of Nodulator. This object allows you to modelize 
     | and manipulate documents or tables from DB system. 
@@ -13,6 +13,15 @@ div
     js
       include ../../../exemples/js/resourcebasics.js
       
+  br
+      
+  p The arguments a Resource can take are describe here: 
+    bash
+      | N.Resource name, [Route], [Config]
+
+  br
+  p The Route and Config arguments are both optionals and can be swaped
+  
   p This call returns a PlayerResource object that represents your Player model in DB
   p The same object is also available through 'N.Player'. 
     

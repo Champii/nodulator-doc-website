@@ -2,38 +2,88 @@
 
 .sidebar ul { counter-reset:item; }
 .sidebar ul > li { counter-increment:item; }
-.sidebar ul > li:before {content: counter(item); }
+.sidebar ul > li:before {content: counter(item) " "; padding-right: 10px; color: rgb(150, 150, 150) }
+/*.sidebar ul > li:before a.section {content: "+ " counter(item) " "; }*/
 
 .sidebar ul > li > ul { counter-reset:subitem; }
 .sidebar ul > li > ul > li { counter-increment:subitem; }
-.sidebar ul > li > ul > li:before { content: counter(item) "." counter(subitem); }
+.sidebar ul > li > ul > li:before { content: counter(item) "." counter(subitem) " "; }
 
 .sidebar ul > li > ul > li > ul { counter-reset:subsubitem; }
 .sidebar ul > li > ul > li > ul > li { counter-increment:subsubitem; }
-.sidebar ul > li > ul > li > ul > li:before { content: counter(item) "." counter(subitem) "." counter(subsubitem); }
+.sidebar ul > li > ul > li > ul > li:before { content: counter(item) "." counter(subitem) "." counter(subsubitem)  " "; }
 
+.sidebar ul {
+  padding-left: 20px;
+  list-style-type: none;
+}
+
+html body {
+  height: 100%
+}
+.sidebar li {
+  border-size: 1px;
+  padding-top: 5px;
+  padding-left: 0px;
+}
+.sidelist a {
+  color: rgb(231, 231, 231);
+}
+
+.doc {
+  height: 100%;
+}
+
+#section4 {
+  height: 100%;
+  padding: 0;
+  padding-top: 50px;
+  min-height: 900px;
+}
+
+.sidebar h3 {
+  padding-left: 20px;
+  padding-top: 20px;
+}
 .sidebar {
-  position: fixed;
+
+  float: left;
   width: 250px;
-  overflow-y: auto;
-  overflow-x: hidden;
+  height: auto;
+  /*overflow-x: hidden;*/
+  background-color: rgb(75,75,75);
 }
 
 .pagebody {
-  width: 99%;
-  padding-left: 15%;
+  background-color: rgb(75,75,75);
+  width: 100%;
+  height: 100%;
+  padding-left: 250px;
   color: rgb(17, 17, 18);
-  min-height: 700px;
+  min-height: 900px;
 }
 
 .content {
-  min-height: 700px;
+  min-height: 900px;
+  margin-bottom: 0;
+  height: 100%;
+
+}
+
+.navbar #navbar-collapsible {
+  margin-left: 27%;
+
+}
+
+#welcome h1 {
+  /*letter-spacing: 50px;*/
 
 }
 
 .codetoggle {
-  float: left;
+  /*float: left;*/
   padding-left: 10px;
+  /*width: 1000px;*/
 }
 
 .selected {

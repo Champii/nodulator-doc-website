@@ -5,7 +5,7 @@ html, body {
   height:100%;
     /*background:center no-repeat fixed url('http://36nukx10904q2nqzfr2ammzk.wpengine.netdna-cdn.com/wp-content/uploads/2013/03/Fastest-Growing-Tech-Careers.jpg');*/
     /*background:center no-repeat fixed url('http://www.deluxevectors.com/images/sample/red-technology-background.jpg');*/
-    background:center no-repeat fixed url('http://www.seadogswim.org/css/pro/cust_stock_bg/trails_red.jpg');
+    background:center no-repeat fixed url('../img/trails_red.jpg');
     background-size: cover;
     color:#444;
     font-family: 'Lato', sans-serif;
@@ -68,7 +68,8 @@ a:hover {
 
 .navbar-trans .navbar-brand, .navbar-trans >.container-fluid .navbar-brand {
     padding: 14px;
-    color:#f44d3c;
+    color:#7e7e7e;
+    /*color:#f44d3c;*/
 }
 
 .navbar-trans li>a:focus,.navbar-trans li.active {
@@ -148,7 +149,7 @@ section {
     }
 }
 
-#section1, #section3 {
+#welcome, #section3 {
 	background-color: rgba(0,0,0,0.7);
 	color:#fff;
 	font-family: 'Bitter', serif;
@@ -164,11 +165,11 @@ section {
   color:#444;
 }*/
 
-#section2 {
+#gettingstarted {
   background-color: #fff;
 }
 
-#section2 .container{
+#gettingstarted .container{
   min-width: 1700px;
 }
 
@@ -189,7 +190,6 @@ section {
 
 #section7 {
 	background-color: #f44d3c;
-	color: #f6f6f6;
 	min-height:130px;
 	padding-top:40px;
 	padding-bottom:40px;
