@@ -1,0 +1,47 @@
+div
+  h2 3.2.4) Delete
+
+  h3 Arguments
+  
+  p The 'Delete' class method give you ability to remove rows/documents from your DB system.
+  p I takes the following arguments
+    bash
+      | Resource.Delete id|object|array, [callback]
+    
+    p And returns a 
+      a(href="#/resource/promises") Promise 
+      | if no callback is given.
+      
+    p The callback is of form 'function (err, data) {}'
+      
+  h3 Argument type
+  
+  p The first argument can be from 3 types :
+    ul
+      li Id: 
+        ul 
+          li An Integer representing the field id to delete
+          li Returns {}
+      li Object: 
+        ul 
+          li An Object of constraints like {name: 'Fergusson', level: 5}
+          li 
+            b WARNING: It will delete the first found row !
+          li Returns {}
+      li Mixed Array:
+        ul 
+          li An array of Objects and/or ids.
+          li
+            b WARNING: Each time, it will delete the first found row !
+          li Returns {}
+        
+        
+  h3 Exemple
+  
+  codetoggle
+    livescript
+      include ../../../../exemples/ls/resourcedeleteres.ls
+    coffee
+      include ../../../../exemples/coffee/resourcedeleteres.coffee
+    js
+      include ../../../../exemples/js/resourcedeleteres.js

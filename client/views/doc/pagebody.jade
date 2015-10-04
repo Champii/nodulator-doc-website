@@ -1,0 +1,8 @@
+div(class="pagebody")
+  div(ng-switch="location").content.well
+    div(ng-switch-when="/installation")
+      installation
+    div(ng-switch-when="/quickstart")
+      quickstart
+    div(ng-switch-when="/resource")
+      resource

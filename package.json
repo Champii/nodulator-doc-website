@@ -2,6 +2,9 @@
   "name": "app",
   "version": "0.0.1",
   "dependencies": {
-    "angular-highlightjs": "^0.4.1"
+    "angular-highlightjs": "^0.4.1",
+    "nodulator-angular": "file:node_modules/nodulator/src/Modules/Nodulator-Angular",
+    "nodulator-assets": "file:node_modules/nodulator/src/Modules/Nodulator-Assets",
+    "nodulator-socket": "file:node_modules/nodulator/src/Modules/Nodulator-Socket"
   }
 }

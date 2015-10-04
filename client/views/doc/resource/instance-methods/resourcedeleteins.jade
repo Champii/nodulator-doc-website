@@ -1,0 +1,26 @@
+div
+  h2 3.3.2) Delete
+
+  h3 Arguments
+  
+  p The 'Delete' instance method give you ability to remove the given entry.
+  
+  p I takes an optional callback returns nothing
+    bash
+      | resource.Delete [callback]
+    
+    p It returns a 
+      a(href="#/resource/promises") Promise 
+      | if no callback is given.
+      
+    p The callback is of form 'function (err, data)'
+            
+  h3 Exemple
+  
+  codetoggle
+    livescript
+      include ../../../../exemples/ls/resourcedeleteins.ls
+    coffee
+      include ../../../../exemples/coffee/resourcedeleteins.coffee
+    js
+      include ../../../../exemples/js/resourcedeleteins.js

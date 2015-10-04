@@ -1,0 +1,42 @@
+div
+  h2 3.1) Basics
+
+  p Resources are at the heart of Nodulator. This object allows you to modelize 
+    | and manipulate documents or tables from DB system. 
+  p Here is the simpliest way to declare and to use a Resource : 
+
+  codetoggle
+    livescript
+      include ../../../exemples/ls/resourcebasics.ls
+    coffee
+      include ../../../exemples/coffee/resourcebasics.coffee
+    js
+      include ../../../exemples/js/resourcebasics.js
+      
+  p This call returns a PlayerResource object that represents your Player model in DB
+  p The same object is also available through 'N.Player'. 
+    
+  p You can get and manage your models thanks a Resource, with theses Class methods (for exemple with a 'Players' resource, and a 'player' instance):
+    ul
+      li
+        a(href="#/resource/create") Player.Create()
+      li
+        a(href="#/resource/fetch") Player.Fetch()
+      li
+        a(href="#/resource/list") Player.List()
+      li
+        a(href="#/resource/deleteres") Player.Delete()
+        
+    | And theses Instance methods: 
+
+    ul
+      li
+        a(href="#/resource/save") player.Save()
+      li
+        a(href="#/resource/deleteins") player.Delete()
+      li
+        a(href="#/resource/tojson") player.ToJSON()
+      li
+        a(href="#/resource/serialize") player.Serialize()
+      li
+        a(href="#/resource/extendsafe") player.ExtendSafe()

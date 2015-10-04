@@ -1,0 +1,6 @@
+div
+  span(ng-class="{selected: codeToggleService.language == 'livescript'}", class="codetoggle", ng-click="codeToggleService.Toggle('livescript')") Livescript
+  span(ng-class="{selected: codeToggleService.language == 'coffee'}", class="codetoggle", ng-click="codeToggleService.Toggle('coffee')") Coffee
+  span(ng-class="{selected: codeToggleService.language == 'js'}", class="codetoggle", ng-click="codeToggleService.Toggle('js')") Js
+  br
+  div(ng-transclude)

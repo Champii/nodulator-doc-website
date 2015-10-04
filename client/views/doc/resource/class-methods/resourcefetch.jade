@@ -1,0 +1,42 @@
+div
+  h2 3.2.2) Fetch
+
+  h3 Arguments
+  
+  p The 'Fetch' class method give you ability to get rows/documents from your DB system.
+  p I takes the following arguments
+    bash
+      | Resource.Fetch id|object|array, [callback]
+    
+    p And returns a 
+      a(href="#/resource/promises") Promise 
+      | if no callback is given.
+      
+    p The callback is of form 'function (err, data) {}'
+      
+  h3 Argument type
+  
+  p The first argument can be from 3 types of arguments :
+    ul
+      li Id: 
+        ul 
+          li An Integer representing the field id
+          li Returns the fetched row
+      li Object: 
+        ul 
+          li An Object of constraints like {name: 'Fergusson', level: 5}
+          li Returns the first corresponding row
+      li Mixed Array:
+        ul 
+          li An array of Objects and/or ids.
+          li Returns an Array
+      
+  h3 Exemple
+  
+  codetoggle
+    livescript
+      include ../../../../exemples/ls/resourcefetch.ls
+    coffee
+      include ../../../../exemples/coffee/resourcefetch.coffee
+    js
+      include ../../../../exemples/js/resourcefetch.js

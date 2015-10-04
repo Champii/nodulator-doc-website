@@ -1,3 +1,17 @@
+
+
+.sidebar ul { counter-reset:item; }
+.sidebar ul > li { counter-increment:item; }
+.sidebar ul > li:before {content: counter(item); }
+
+.sidebar ul > li > ul { counter-reset:subitem; }
+.sidebar ul > li > ul > li { counter-increment:subitem; }
+.sidebar ul > li > ul > li:before { content: counter(item) "." counter(subitem); }
+
+.sidebar ul > li > ul > li > ul { counter-reset:subsubitem; }
+.sidebar ul > li > ul > li > ul > li { counter-increment:subsubitem; }
+.sidebar ul > li > ul > li > ul > li:before { content: counter(item) "." counter(subitem) "." counter(subsubitem); }
+
 .sidebar {
   position: fixed;
   width: 250px;
@@ -6,10 +20,16 @@
 }
 
 .pagebody {
-  width: 100%;
-  padding-left: 300px;
+  width: 99%;
+  padding-left: 15%;
+  color: rgb(17, 17, 18);
+  min-height: 700px;
 }
 
+.content {
+  min-height: 700px;
+
+}
 
 .codetoggle {
   float: left;
