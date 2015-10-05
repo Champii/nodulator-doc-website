@@ -1,6 +1,9 @@
 div
   h2 9) Console
 
+  h3 Require to have Nodulator installed in the './node_modules/' directory.
+  h3 Use at your own risk
+
   p The Console allows you to dive into an existing and/or running, with a lite LiveScript REPL based on the nodejs one.
   p It is actually only available in LiveScript (Deal With It)
   br
@@ -9,13 +12,13 @@ div
     | , in order to find automaticaly the DB settings and the path to existing Resources
   p
     bash
-      | $> Nodulator console
+      | $> N 
       | N > _
   br
   br
   p If you didnt created your project with Nodulator, you can also give arguments to the console to tell it where to find the files it needs
     bash
-      | $> Nodulator console pathToConfig pathToResources
+      | $> N console pathToConfig pathToResources
       | N > _
 
   br
