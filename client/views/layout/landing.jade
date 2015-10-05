@@ -13,7 +13,7 @@ span
           b  Framework
         |  for Restfull APIs
       p.text-center (And more if affinity)
-      p.text-center v0.1.0
+      p.text-center v0.0.19
         br
         br
         br
@@ -199,7 +199,7 @@ span
                       | &nbsp;
                       | class Players extends N.Resource \player
                       | &nbsp;
-                      |   Level: (done) ->
+                      |   LevelUp: (done) ->
                       |     @level++
                       |     @Save done
                     coffee
@@ -207,7 +207,7 @@ span
                       | &nbsp;
                       | class Players extends N.Resource 'player'
                       | &nbsp;
-                      |   Level: (done) ->
+                      |   LevelUp: (done) ->
                       |     @level++
                       |     @Save done
                     js
@@ -215,7 +215,7 @@ span
                       | &nbsp;
                       | Players = N.Resource('player');
                       | &nbsp;
-                      | Players.prototype.Level = function (done) {
+                      | Players.prototype.LevelUp = function (done) {
                       |   this.level++;
                       |   this.Save(done);
                       | };
