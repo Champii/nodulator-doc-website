@@ -1,3 +1,3 @@
 N = require 'nodulator'
 
-Players = N.Resource 'player'
+Players = N 'player'

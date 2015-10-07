@@ -1,6 +1,6 @@
 N  = require 'nodulator'
 
-Players = N.Resource 'player'
+Players = N 'player'
 
 Players.Create login: 'player1', password: 'test'
 

@@ -97,19 +97,19 @@ span
                       | {{MultiRoute}:Route}:N = require \nodulator
                       | &nbsp;
                       | # Make usable shema-less models over API  with one call
-                      | Players = N.Resource \player MultiRoute
+                      | Players = N \player MultiRoute
                     coffee
                       | N = require 'nodulator'
                       | MultiRoute = N.Route.MultiRoute
                       | &nbsp;
                       | # Make usable shema-less models over API  with one call
-                      | Players = N.Resource 'player', MultiRoute
+                      | Players = N 'player', MultiRoute
                     js
                       | var N = require('nodulator');
                       | var MultiRoute = N.Route.MultiRoute;
                       | &nbsp;
                       | // Make usable shema-less models  over API with one call
-                      | var Players = N.Resource('player', MultiRoute);
+                      | var Players = N('player', MultiRoute);
                   p See Routing section ->
                   hr
                   | Project generation
@@ -197,7 +197,7 @@ span
                     livescript
                       | N = require \nodulator
                       | &nbsp;
-                      | class Players extends N.Resource \player
+                      | class Players extends N \player
                       | &nbsp;
                       |   LevelUp: (done) ->
                       |     @level++
@@ -205,7 +205,7 @@ span
                     coffee
                       | N = require 'nodulator'
                       | &nbsp;
-                      | class Players extends N.Resource 'player'
+                      | class Players extends N 'player'
                       | &nbsp;
                       |   LevelUp: (done) ->
                       |     @level++
@@ -213,7 +213,7 @@ span
                     js
                       | var N = require('nodulator');
                       | &nbsp;
-                      | Players = N.Resource('player');
+                      | Players = N('player');
                       | &nbsp;
                       | Players.prototype.LevelUp = function (done) {
                       |   this.level++;
@@ -230,7 +230,7 @@ span
                       |     field1: \string
                       |     field2: \int
                       | &nbsp;
-                      | FooResource = N.Resource \foo fooConfig
+                      | FooResource = N \foo fooConfig
                     coffee
                       | N = require 'nodulator'
                       | &nbsp;
@@ -239,7 +239,7 @@ span
                       |     field1: 'string'
                       |     field2: 'int'
                       | &nbsp;
-                      | FooResource = N.Resource 'foo', fooConfig
+                      | FooResource = N 'foo', fooConfig
                     js
                       | var N = require('nodulator');
                       | &nbsp;
@@ -250,7 +250,7 @@ span
                       |   }
                       | };
                       | &nbsp;
-                      | var FooResource = N.Resource('foo', fooConfig);
+                      | var FooResource = N('foo', fooConfig);
 
         .col-sm-4.text-center
           .row
@@ -264,17 +264,17 @@ span
                     livescript
                       | {{SingleRoute}:Route}:N = require \nodulator
                       | &nbsp;
-                      | Players = N.Resource \player SingleRoute
+                      | Players = N \player SingleRoute
                     coffee
                       | N = require 'nodulator'
                       | SingleRoute = N.Route.SingleRoute
                       | &nbsp;
-                      | Players = N.Resource 'player', SingleRoute
+                      | Players = N 'player', SingleRoute
                     js
                       | var N = require('nodulator');
                       | var SingleRoute = N.Route.SingleRoute;
                       | &nbsp;
-                      | var Players = N.Resource 'player', SingleRoute
+                      | var Players = N 'player', SingleRoute
                   p This exemple create a server and listen for the following routes.
                   p It creates a route to access element with id = 1 only, creating a Singleton model over API
                   pre.text-left
@@ -290,17 +290,17 @@ span
                     livescript
                       | {{MultiRoute}:Route}:N = require \nodulator
                       | &nbsp;
-                      | Players = N.Resource \player MultiRoute
+                      | Players = N \player MultiRoute
                     coffee
                       | N = require 'nodulator'
                       | MultiRoute = N.Route.MultiRoute
                       | &nbsp;
-                      | Players = N.Resource 'player', MultiRoute
+                      | Players = N 'player', MultiRoute
                     js
                       | var N = require('nodulator');
                       | var MultiRoute = N.Route.MultiRoute;
                       | &nbsp;
-                      | var Players = N.Resource('player', MultiRoute);
+                      | var Players = N('player', MultiRoute);
                   | This previous exemple create a server and listen for the following routes:
                   pre.text-left
                     | GET     => /api/1/players       => List all
@@ -319,7 +319,7 @@ span
                       |   Config: ->
                       |     @Get \/:id ~> @resource.Fetch it.params.id
                       | &nbsp;
-                      | Players = N.Resource \player PlayerRoute
+                      | Players = N \player PlayerRoute
                     coffee
                       | N = require 'nodulator'
                       | &nbsp;
@@ -328,7 +328,7 @@ span
                       |   Config: ->
                       |     @Get '/:id', (req) => @resource.Fetch req.params.id
                       | &nbsp;
-                      | Players = N.Resource 'player', PlayerRoute
+                      | Players = N 'player', PlayerRoute
 
                     js
                       | var = N = require('nodulator');
@@ -341,7 +341,7 @@ span
                       |   });
                       | };
                       | &nbsp;
-                      | var Players = N.Resource('player', PlayerRoute);
+                      | var Players = N('player', PlayerRoute);
                   pre.text-left
                     | GET     => /api/1/players/:id   => Get One
 

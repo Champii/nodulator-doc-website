@@ -24,7 +24,7 @@ div
       | N > _
 
   br
-  p The console preload every Resource found in the folder given, and make them available in the global context. For exemple with saying, a N.Resource('player') loaded:
+  p The console preload every Resource found in the folder given, and make them available in the global context. For exemple with saying, a N ('player') loaded:
     livescript
       | N > player = Players.Create name: \test
       | {id: 1, name: 'test'}
@@ -49,7 +49,7 @@ div
       |  {id: 3, name: 'test3'}]
       | N > names = players |> map (.id)
       | [1, 2, 3]
-      | N > Stats = N.Resource \stat schema: 
+      | N > Stats = N  \stat schema: 
       |                                stat: {type: 'int', default: 0}
       |                                playerId: \int
       |                                Player: 

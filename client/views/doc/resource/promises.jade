@@ -1,0 +1,27 @@
+div
+  h2 4.4.1) Promises
+
+  br
+  p Every Resources calls can return a Promise using the 
+    a(href="https://github.com/kriskowal/q") q
+    |  package. 
+    
+  p As every Resource can take a Promise and a 
+    a(href="#/doc/resource/callback") CallBack
+    | , they will return a Promise only if you don't provide a Callback.
+
+  p Promises are binary. That means that they are successful or failed. 
+    | You can so define a '.fail()' callback to handle the failure, or a '.then()' to handle a success.
+    | As promises are chainables, you can so chain Nodulator calls with multiple '.then()' by returning a Promise.
+    | The '.fail()' call can only be defined once, and will be triggered for every chained '.then()' that return an error
+
+  h3 Exemples 
+  
+  br
+  codetoggle
+    livescript
+      include ../../../exemples/ls/promises.ls
+    coffee
+      include ../../../exemples/coffee/promises.coffee
+    js
+      include ../../../exemples/js/promises.js

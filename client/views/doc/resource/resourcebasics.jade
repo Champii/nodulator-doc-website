@@ -14,27 +14,30 @@ div
       include ../../../exemples/js/resourcebasics.js
       
   br
+  p But you can also just call the Resource and get the created resource throught 'N.' :
+    livescript
+      | N  \player
+      | N.Players.Create name: \test
+  br
       
   p The arguments a Resource can take are describe here: 
-    bash
-      | N.Resource name, [Route], [Config]
+    bash N  name, [Route], [Config]
 
   br
   p The Route and Config arguments are both optionals and can be swaped
-  
-  p This call returns a PlayerResource object that represents your Player model in DB
-  p The same object is also available through 'N.Player'. 
+      
+  p This call returns a Players Resource object that represents your models in DB
     
   p You can get and manage your models thanks a Resource, with theses Class methods (for exemple with a 'Players' resource, and a 'player' instance):
     ul
       li
-        a(href="#/doc/resource/create") Player.Create()
+        a(href="#/doc/resource/create") Players.Create()
       li
-        a(href="#/doc/resource/fetch") Player.Fetch()
+        a(href="#/doc/resource/fetch") Players.Fetch()
       li
-        a(href="#/doc/resource/list") Player.List()
+        a(href="#/doc/resource/list") Players.List()
       li
-        a(href="#/doc/resource/deleteres") Player.Delete()
+        a(href="#/doc/resource/deleteres") Players.Delete()
         
     | And theses Instance methods: 
 

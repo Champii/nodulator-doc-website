@@ -1,3 +1,3 @@
 var N = require('nodulator');
 
-var Players = N.Resource('player');
+var Players = N('player');
