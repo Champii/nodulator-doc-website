@@ -50,11 +50,11 @@ div
       | N > names = players |> map (.id)
       | [1, 2, 3]
       | N > Stats = N  \stat schema: 
-      |                                stat: {type: 'int', default: 0}
-      |                                playerId: \int
-      |                                Player: 
-      |                                  type: Players
-      |                                  localKey: \playerId
+      |                        stat: {type: 'int', default: 0}
+      |                        playerId: \int
+      |                        Player: 
+      |                          type: Players
+      |                          localKey: \playerId
       | [...]
       | N > stats = Stats.Create names |> map -> playerId: it
       | [{id: 1, playerId: 1, stat: 0},

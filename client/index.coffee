@@ -1,1 +1,1 @@
-app = angular.module 'app', ['hljs']
+app = angular.module 'app', ['hljs', 'ngSanitize']

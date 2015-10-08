@@ -37,30 +37,70 @@ html body {
 #section4 {
   height: 100%;
   padding: 0;
-  padding-top: 50px;
-  min-height: 900px;
+  padding-top: 44px;
+  /*min-height: 900px;*/
+  font-family: Lato, sans-serif!important;
 }
 
 .sidebar h3 {
   padding-left: 20px;
-  padding-top: 20px;
+  /*padding-top: 20px;*/
 }
+
 .sidebar {
 
+  position: absolute;
   float: left;
-  width: 250px;
-  height: auto;
+  width: 15%;
+  height: 100%;
+  min-width: 250px;
   /*overflow-x: hidden;*/
   background-color: rgb(75,75,75);
+  /*background-color: rgb(75,75,75);*/
+}
+
+.terminal-container-wait {
+  background: #383734;
+  height: 100%;
+}
+.terminal-container {
+  height: 100%;
+}
+.terminal-container-global {
+  /*float: right;*/
+  background: #383734;
+  width: calc(85% / 2);
+  height: 100%;
+  position: fixed;
+  right: 0px;
+  top: 44px
+}
+
+.docbody {
+  float: right;
+  width: 85%;
+  height: 100%;
+}
+
+.terminal-iframe {
+  width: 100%;
+  height: 100%;
 }
 
 .pagebody {
+  float: left;
   background-color: rgb(75,75,75);
-  width: 100%;
-  /*height: 100%;*/
-  padding-left: 250px;
-  color: rgb(17, 17, 18);
-  min-height: 900px;
+  width: 50%;
+  /*width: 100%*/
+  height: 100%;
+  /*padding-left: 250px;*/
+  color: rgb(82, 74, 74);
+  /*color: rgb(17, 17, 18);*/
+  min-height: 850px;
+}
+.pagebody a {
+  color: #F44D3C;
+  padding: 20px;
 }
 
 .content {
@@ -76,7 +116,8 @@ html body {
 }
 
 #section4 p {
-  width: 800px;
+  width: 100%;
+
   letter-spacing: 1px;
 }
 
@@ -89,4 +130,19 @@ html body {
 .selected {
   font-weight: bold;
   color: #f44d3c;
+}
+
+.hljs {
+  color: #00CCFF;
+}
+
+.hljs-built_in {
+  color: #82281D;
+}
+
+.hljs-function {
+  color: #1EF109;
+}
+.hljs-string {
+  color: #447BFF;
 }

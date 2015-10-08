@@ -1,4 +1,4 @@
-class PageManagerDirective extends Nodulator.Directive 'pagemanager', '$rootScope', '$location'
+class PageManagerDirective extends Nodulator.Directive 'pagemanager', '$rootScope', '$location', '$timeout'
 
   Init: ->
     @$rootScope.$on '$locationChangeSuccess', =>
@@ -8,6 +8,10 @@ class PageManagerDirective extends Nodulator.Directive 'pagemanager', '$rootScop
       for i in _path
         path.push i if i.length
 
+      @$timeout =>
+        $('.sidebar').height $('.pagebody > div').height()
+        console.log 'Yeay', $('.pagebody > div').height()
+      , 0
       @$rootScope.location = '/' + path[0]
       @$rootScope.sub = path[1] || null
       @$rootScope.args = path[2..] || null

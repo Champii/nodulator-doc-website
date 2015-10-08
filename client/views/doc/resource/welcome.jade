@@ -1,7 +1,155 @@
 div 
-  h2 1) Welcome !
+  h1.text-center
+    u(style="color: #6b6b6b")
+      span(class="hl")
+        b N
+      span(style="color:#6b6b6b") odulator
+    span(class="hl")
+      b  (.js)
   
+  h1 1) Welcome !
+  br
+  br
   p This documentation is under construct.
   
   p Feel free to participate at 
     a(href="https://github.com/Champii/nodulator-doc-website") https://github.com/Champii/nodulator-doc-website
+
+
+  //- sidebar
+  ul.sidelist
+    li
+      a(href="#/doc/welcome") Welcome !
+    li
+      a(href="#/doc/installation") Installation
+    li
+      a(href="#/doc/quickstart") Quick Start
+    li
+      a.section Resource
+      ul
+        li
+          a(href="#/doc/resource/basics") Basics
+        li
+          a.section Class Methods
+          ul
+            li
+              a(href="#/doc/resource/create") Create
+            li
+              a(href="#/doc/resource/fetch") Fetch
+            li
+              a(href="#/doc/resource/list") List
+            li
+              a(href="#/doc/resource/deleteres") Delete
+        li
+          a.section Instance Methods
+          ul
+            li
+              a(href="#/doc/resource/save") Save
+            li
+              a(href="#/doc/resource/deleteins") Delete
+            li
+              a(href="#/doc/resource/tojson") ToJSON
+            li
+              a(href="#/doc/resource/serialize") Serialize
+            li
+              a(href="#/doc/resource/extendsafe") ExtendSafe
+        li
+          a.section Promises/Callbacks
+          ul
+            li
+              a(href="#/doc/resource/promises") Promises
+            li
+              a(href="#/doc/resource/callbacks") Callbacks
+        li
+          a.section Schema
+          ul
+            li
+              a(href="#/doc/resource/schemabasics") Basics
+            li
+              a(href="#/doc/resource/schematypes") Validation/Types
+            li
+              a(href="#/doc/resource/schemaoptional") Optional
+            li
+              a(href="#/doc/resource/schemadefault") Default
+            li
+              a(href="#/doc/resource/schemavirtual") Virtual
+            li
+              a(href="#/doc/resource/schemaunique") Unique(soon)
+            li
+              a.section Associations
+              ul
+                li
+                  a(href="#/doc/resource/assocbasics") Basics
+                li
+                  a(href="#/doc/resource/assochasone") HasOne
+                li
+                  a(href="#/doc/resource/assochasmany") HasMany
+                li
+                  a(href="#/doc/resource/assocbelongsto") BelongsTo
+                li
+                  a(href="#/doc/resource/assoclocalkey") LocalKey
+                li
+                  a(href="#/doc/resource/assocdistantkey") DistantKey
+                li
+                  a(href="#/doc/resource/assocdepth") Depth
+        li
+          a.section Inheritance
+          ul
+            li
+              a(href="#/doc/resource/inheritoverride") Override
+            li
+              a(href="#/doc/resource/inheritabstract") Abstract Class
+            li
+              a(href="#/doc/resource/inheritcomplex") Complex
+    
+        li
+          a.section Reactive Values
+          ul
+            li
+              a(href="#/doc/resource/reactivebasics") Basics
+            li
+              a(href="#/doc/resource/reactivenwatch") N.Watch
+            li
+              a(href="#/doc/resource/reactiveresourcewatch") Resource.Watch
+            li
+              a(href="#/doc/resource/reactiveinstancewatch") instance.Watch
+            
+    li
+      a.section Route
+      ul
+        li
+          a(href="#/doc/routes/routebasics") Basics
+        li
+          a(href="#/doc/routes/routerequest") Request Wrapper
+        li
+          a(href="#/doc/routes/routestandalone") Standalone
+        li
+          a.section Predefined
+          ul
+            li
+              a(href="#/doc/routes/routemulti") MultiRoute
+            li
+              a(href="#/doc/routes/routesingle") SingleRoute
+    li
+      a(href="#/doc/projectgeneration") Project Generation
+    li
+      a(href="#/doc/configuration") Configuration
+    li
+      a(href="#/doc/dbs") DBs
+    li
+      a(href="#/doc/console") Console
+    li
+      a(href="#/doc/debug") Debug
+    li
+      a(href="#/doc/bus") Bus
+    li
+      a.section Modules
+      ul
+        li
+          a(href="#/doc/modules/account") Nodulator-Account
+        li
+          a(href="#/doc/modules/assets") Nodulator-Assets
+        li
+          a(href="#/doc/modules/angular") Nodulator-Angular
+        li
+          a(href="#/doc/modules/sockets") Nodulator-Socket

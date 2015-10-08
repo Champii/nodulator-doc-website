@@ -1,36 +1,40 @@
-div(class="pagebody")
-  div(ng-switch="sub").content.well
-    div(ng-switch-when="welcome")
-      welcome
-    div(ng-switch-when="installation")
-      installation
-    div(ng-switch-when="quickstart")
-      quickstart
+div
+  button.btn(style="float: right; margin: 20px" ng-click="ToggleVisible()") {{ (visible ? 'Hide -> ' : '<- Show Console') }}
 
-    div(ng-switch-when="resource")
-      div(ng-switch="args[0]")
-        div(ng-switch-when="basics")
-          resourcebasics
-        div(ng-switch-when="create")
-          resourcecreate
-        div(ng-switch-when="fetch")
-          resourcefetch
-        div(ng-switch-when="list")
-          resourcelist
-        div(ng-switch-when="deleteres")
-          resourcedeleteres
-        div(ng-switch-when="save")
-          resourcesave
-        div(ng-switch-when="deleteins")
-          resourcedeleteins
-        div(ng-switch-when="tojson")
-          resourcetojson
-        div(ng-switch-when="serialize")
-          resourceserialize
-        div(ng-switch-when="promises")
-          promises
-        div(ng-switch-when="extendsafe")
-          resourceextendsafe
+  div 
+    
+    div(ng-switch="sub").content.well
+      div(ng-switch-when="welcome")
+        welcome
+      div(ng-switch-when="installation")
+        installation
+      div(ng-switch-when="quickstart")
+        quickstart
 
-    div(ng-switch-when="console")
-      console
+      div(ng-switch-when="resource")
+        div(ng-switch="args[0]")
+          div(ng-switch-when="basics")
+            resourcebasics
+          div(ng-switch-when="create")
+            resourcecreate
+          div(ng-switch-when="fetch")
+            resourcefetch
+          div(ng-switch-when="list")
+            resourcelist
+          div(ng-switch-when="deleteres")
+            resourcedeleteres
+          div(ng-switch-when="save")
+            resourcesave
+          div(ng-switch-when="deleteins")
+            resourcedeleteins
+          div(ng-switch-when="tojson")
+            resourcetojson
+          div(ng-switch-when="serialize")
+            resourceserialize
+          div(ng-switch-when="promises")
+            promises
+          div(ng-switch-when="extendsafe")
+            resourceextendsafe
+
+      div(ng-switch-when="console")
+        console
