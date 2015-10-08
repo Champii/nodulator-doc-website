@@ -70,7 +70,7 @@ html body {
   /*float: right;*/
   background: #383734;
   width: calc(85% / 2);
-  height: 100%;
+  height: calc(100% - 44px);
   position: fixed;
   right: 0px;
   top: 44px
