@@ -3,6 +3,6 @@
   "version": "0.0.1",
   "dependencies": {
     "angular-highlightjs": "^0.4.1",
-    "nodulator": "champii/nodulator#510eaba36d912ebd1ea9a991338f933bb402a8f6"
+    "nodulator": "champii/nodulator#2265fa594800867056eff5c03e2671a264c149cd"
   }
 }
