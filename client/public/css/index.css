@@ -95,7 +95,6 @@ html body {
   text-decoration: underline;
   margin-top: 20px;
 }
-
 .terminal-help {
   overflow-y:auto;
   background-color: rgb(75,75,75);
@@ -104,6 +103,9 @@ html body {
   position: fixed;
   right: 0px;
   bottom: 0px;
+}
+.terminal-help::-webkit-scrollbar { 
+    display: none;
 }
 
 .terminal-iframe {
