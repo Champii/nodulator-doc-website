@@ -12,3 +12,5 @@ div.doc
               | Loading a runnable terminal...
           h2(style="padding: 10px; padding-top: 100px" ng-show="error.length") 
             | Error: {{error}}
+      div(ng-show="visible && helpVisible" class="terminal-help")
+        consolehelp

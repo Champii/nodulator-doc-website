@@ -70,7 +70,7 @@ html body {
   /*float: right;*/
   background: #383734;
   width: calc(85% * 0.4);
-  height: calc(100% - 44px);
+  height: calc(50%);
   position: fixed;
   right: 0px;
   top: 44px
@@ -80,6 +80,30 @@ html body {
   float: right;
   width: 85%;
   height: 100%;
+}
+
+.consolehelp {
+  margin-left: 20px;
+
+}
+
+.consolehelp h3 {
+  text-decoration: underline;
+}
+
+.consolehelp h4 {
+  text-decoration: underline;
+  margin-top: 20px;
+}
+
+.terminal-help {
+  overflow-y:auto;
+  background-color: rgb(75,75,75);
+  width: calc(85% * 0.4);
+  height: calc(50% - 44px);
+  position: fixed;
+  right: 0px;
+  bottom: 0px;
 }
 
 .terminal-iframe {

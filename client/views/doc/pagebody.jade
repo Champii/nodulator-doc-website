@@ -1,5 +1,6 @@
 div
   button.btn(style="float: right; margin: 20px" ng-click="ToggleVisible()") {{ (visible ? 'Hide -> ' : '<- Show Console') }}
+  button.btn(style="float: right; margin: 20px" ng-click="ToggleHelpVisible()", ng-show="visible") {{ (helpVisible ? 'Hide Help ' : 'Shop Help') }}
 
   div 
     
