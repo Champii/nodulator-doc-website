@@ -10,7 +10,6 @@ class PageManagerDirective extends Nodulator.Directive 'pagemanager', '$rootScop
 
       @$timeout =>
         $('.sidebar').height $('.pagebody > div').height()
-        console.log 'Yeay', $('.pagebody > div').height()
       , 0
       @$rootScope.location = '/' + path[0]
       @$rootScope.sub = path[1] || null

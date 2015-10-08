@@ -1,4 +1,4 @@
-class PageBodyDirective extends Nodulator.Directive 'pagebody'
+class PageBodyDirective extends Nodulator.Directive 'pagebody', '$timeout'
 
   visible: true
 
@@ -8,6 +8,11 @@ class PageBodyDirective extends Nodulator.Directive 'pagebody'
       $('.pagebody').width '50%'
     else
       $('.pagebody').width '100%'
+
+    @$timeout =>
+      $('.sidebar').height $('.pagebody > div').height()
+    , 0
+
     null
 
 PageBodyDirective.Init()
