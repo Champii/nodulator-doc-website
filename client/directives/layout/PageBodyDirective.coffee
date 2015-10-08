@@ -5,7 +5,7 @@ class PageBodyDirective extends Nodulator.Directive 'pagebody', '$timeout'
   ToggleVisible: ->
     @scope.visible = !@scope.visible
     if @scope.visible
-      $('.pagebody').width '50%'
+      $('.pagebody').width '60%'
     else
       $('.pagebody').width '100%'
 
