@@ -3,10 +3,34 @@ div
   
   p Nodulator is available through NPM
 
-  bash $> npm install nodulator
+    bash $> npm install nodulator
   
-  p It's also available as a global package  
+  p It's also available as a global package, including the console and the Nodulator package manager
     
-  bash $> sudo npm install -g nodulator
+    bash $> sudo npm install -g nodulator
 
   p And you are ready to use it !
+  
+  p 
+    a(href="#/doc/console") Console 
+    | exemple: 
+    livescript
+      | $> N
+      | N > 
+      
+  p Package installation exemple:
+    
+    bash
+      | $> N install
+      | Installing nodulator
+    bash
+      | $> N install angular
+      | Installing nodulator
+      | Installing assets
+      | Installing socket
+      | Installing angular
+      
+  p Project creation exemple
+    bash
+      | $> N init
+      | [...]

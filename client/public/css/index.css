@@ -104,7 +104,7 @@ html body {
   right: 0px;
   bottom: 0px;
 }
-.terminal-help::-webkit-scrollbar { 
+.terminal-help::-webkit-scrollbar {
     display: none;
 }
 
@@ -126,7 +126,7 @@ html body {
 }
 .pagebody a {
   color: #F44D3C;
-  padding: 20px;
+  /*padding: 20px;*/
 }
 
 .content {

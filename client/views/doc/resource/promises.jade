@@ -6,9 +6,11 @@ div
     a(href="https://github.com/kriskowal/q") q
     |  package. 
     
-  p As every Resource can take a Promise and a 
-    a(href="#/doc/resource/callback") CallBack
-    | , they will return a Promise only if you don't provide a Callback.
+    p As every Resource can return a 
+      a(href="#/doc/resource/promises") Promise 
+      | or take a 
+      a(href="#/doc/resource/callbacks") CallBack
+      | , they will return a Promise only if you don't provide a Callback.
 
   p Promises are binary. That means that they are successful or failed. 
     | You can so define a '.fail()' callback to handle the failure, or a '.then()' to handle a success.

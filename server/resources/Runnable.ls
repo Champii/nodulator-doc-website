@@ -6,9 +6,7 @@ child = require 'child_process'
 callback = (response, done) ->
   str = '';
 
-  console.log 'Got', chunk
   response.on 'data', (chunk) ->
-    console.log 'Got', chunk
     str += chunk;
 
   response.on 'end', ->
@@ -24,17 +22,32 @@ getPage = (done) ->
 
     done null, stdout
 
+testPage = (url, done) ->
+  child.exec "curl #url | grep 'start error'", (err, stdout, stderr) ->
+    return done err if err?
+
+    done null, true
+
 class RunnableRoute extends N.Route
 
   Config: ->
 
     @Get (req) !->
-      getPage (err, page) ->
+
+      sendPage = (err, page) ->
         return req.SendError err if err?
 
-        console.log page
         page = page.match /\"(.+\.html)/g
         page =  {serviceUrl: page[0][1 to]*''}
+        req.session.url = page
         req.Send page
+
+      if not req.session.url?
+        getPage sendPage
+      else
+        testPage req.session.url, (err, status) ->
+          return getPage sendPage if err? or !status
+
+          req.Send req.session.url
 
 new RunnableRoute 'runnable'
