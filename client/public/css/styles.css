@@ -7,7 +7,7 @@ html, body {
   height:100%;
     /*background:center no-repeat fixed url('http://36nukx10904q2nqzfr2ammzk.wpengine.netdna-cdn.com/wp-content/uploads/2013/03/Fastest-Growing-Tech-Careers.jpg');*/
     /*background:center no-repeat fixed url('http://www.deluxevectors.com/images/sample/red-technology-background.jpg');*/
-    background:center no-repeat fixed url('../img/trails_red.jpg');
+    background:center no-repeat fixed url('/img/trails_red.jpg');
     background-size: cover;
     color:#444;
     font-family: 'Lato', sans-serif;
