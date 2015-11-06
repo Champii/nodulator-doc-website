@@ -1,3 +1,4 @@
-Players.Fetch name: 'test'
+Players.Fetch name: 'test' .Delete!
 
-  .then (.Delete!)
+# Equivalent to
+Players.Delete name: 'test'

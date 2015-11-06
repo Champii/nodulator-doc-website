@@ -1,6 +1,6 @@
 module.exports =
   cache: type: 'Redis'
-  minified: true
+  minified: false
   assets:
     app:
       path: '/client'

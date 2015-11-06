@@ -1,0 +1,25 @@
+div
+  h2 4.2.14) MayBelongsTo
+
+  h3 Arguments
+  
+  p The 'MayBelongsTo' class method is the same call as 'BelongsTo' except that it set the foreign key to be Optional()
+  p It takes the following arguments: 
+    bash
+      | Resource.MayBelongsTo AnotherResource, [fieldName], [foreignKeyName]
+  
+    p And returns the Resource
+    
+  p See the corresponding 
+    a(href="") MayBelongsTo
+    | documentation for more details
+          
+  h3 Exemple
+  
+  //- codetoggle
+  //-   livescript
+  //-     include ../../../../exemples/ls/resourcecreate.ls
+  //-   coffee
+  //-     include ../../../../exemples/coffee/resourcecreate.coffee
+  //-   js
+  //-     include ../../../../exemples/js/resourcecreate.js

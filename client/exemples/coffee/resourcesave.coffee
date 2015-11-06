@@ -1,5 +1,4 @@
 Players.Create name: 'test'
-
-  .then (player) ->
+  .Then (player) ->
     player.name = 'test2'
     player.Save()

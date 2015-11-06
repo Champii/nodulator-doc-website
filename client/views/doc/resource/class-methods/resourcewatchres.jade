@@ -1,0 +1,42 @@
+div
+  h2 4.2.6) Watch
+
+  h3 Arguments
+  
+  p The 'Watch' class method is used to set functions to be executed when something happend with some of the watched instance set or when the conditions are met.
+  p It takes the following arguments
+    bash
+      | Resource.Watch [string|object|array], callback
+    
+    p And returns the Resource
+      
+    p The callback is of form 'function (data) {}'
+      
+  h3 Argument type
+  
+  p The first argument can be from 3 types of arguments :
+    ul
+      li String: 
+        ul 
+          li 'all': This is the default and can be omitted. Execute the callback each time something happend with any instance in DB
+          li 'new': Execute the callback each time a new instance is registered into DB 
+          li 'updated': Execute the callback each time an instance has been updated into DB
+          li 'delete': Execute the callback each time an instance has been deleted from DB
+      li Object: 
+        ul 
+          li An Object of constraints like {name: 'Fergusson', level: 5}
+          li Execute the callback each time this set has changed
+      li Mixed Array:
+        ul 
+          li An array of Objects and/or ids.
+          li Execute the callback each time this set has changed
+      
+  h3 Exemple
+  
+  //- codetoggle
+  //-   livescript
+  //-     include ../../../../exemples/ls/resourcefetch.ls
+  //-   coffee
+  //-     include ../../../../exemples/coffee/resourcefetch.coffee
+  //-   js
+  //-     include ../../../../exemples/js/resourcefetch.js

@@ -1,5 +1,4 @@
 Players.Create name: \test
-
-  .then ->
+  .Then ->
     it.name = \test2
     it.Save!

@@ -155,44 +155,40 @@ span
                       | Players.Create do
                       |   name: \player1
                       |   level: 1
-                      |   (err, player) ->
-                      |     # Deal with that new 'player'
+                      | .Then (player) ->
+                      | .Catch (err) ->
                       | &nbsp;
                     coffee
                       | Players.Create
                       |   name: 'player1'
                       |   level: 1
-                      | , (err, player) ->
-                      |   # Deal with that new 'player'
+                      | .Then (player) ->
+                      | .Catch (err) ->
                       | &nbsp;
                     js
                       | Players.Create({
                       |   name: 'player1',
                       |   level: 1
-                      | }, function (err, player) {
-                      |   // Deal with that new 'player'
-                      | });
+                      | })
+                      | .Then(function (player) {})
+                      | .Catch(function (player) {})
+                      | &nbsp;
                   hr
                   p Easy to use API
                   codetoggle
                     livescript
                       | # Fetch player with id = 1
-                      | Players.Fetch 1 (err, player) ->
-                      |   player.level++
-                      |   player.Save (err) ->
+                      | Players.Fetch 1 .Set (.level++)
                       | &nbsp;
                     coffee
                       | # Fetch player with id = 1
-                      | Players.Fetch 1, (err, player) ->
-                      |   player.level++
-                      |   player.Save (err) ->
+                      | Players.Fetch 1 
+                      |   .Set (player) -> player.level++
                       | &nbsp;
                     js
                       | // Fetch player with id = 1
-                      | Players.Fetch(1, function (err, player) {
-                      |   player.level++;
-                      |   player.Save(function (err) {});
-                      | });
+                      | Players.Fetch(1).Set(function (player) { player.level++ });
+                      | &nbsp;
                   hr
                   p Can be extended
                   codetoggle
@@ -201,58 +197,48 @@ span
                       | &nbsp;
                       | class Players extends N \player
                       | &nbsp;
-                      |   LevelUp: (done) ->
-                      |     @level++
-                      |     @Save done
+                      |   LevelUp: (done) -> @Set (.level++) done
+                      | &nbsp;
                     coffee
                       | N = require 'nodulator'
                       | &nbsp;
                       | class Players extends N 'player'
                       | &nbsp;
-                      |   LevelUp: (done) ->
-                      |     @level++
-                      |     @Save done
+                      |   LevelUp: (done) -> 
+                      |     @Set ((player) -> player.level++), done
+                      | &nbsp;
                     js
                       | var N = require('nodulator');
                       | &nbsp;
                       | Players = N('player');
                       | &nbsp;
                       | Players.prototype.LevelUp = function (done) {
-                      |   this.level++;
-                      |   this.Save(done);
+                      |   this.Set(function (player) { player.level++ }, done);
                       | };
+                      | &nbsp;
                   hr
                   | Schema-full exemple with type validation
                   codetoggle
                     livescript
                       | N = require \nodulator
                       | &nbsp;
-                      | fooConfig =
-                      |   schema:
-                      |     field1: \string
-                      |     field2: \int
+                      | FooResource = N \foo
+                      |   ..Field \field1 \string
+                      |   ..Field \field2 \int
                       | &nbsp;
-                      | FooResource = N \foo fooConfig
                     coffee
                       | N = require 'nodulator'
                       | &nbsp;
-                      | fooConfig =
-                      |   schema:
-                      |     field1: 'string'
-                      |     field2: 'int'
+                      | FooResource = N 'foo'
+                      |   .Field 'field1', 'string'
+                      |   .Field 'field2', 'int'
                       | &nbsp;
-                      | FooResource = N 'foo', fooConfig
                     js
                       | var N = require('nodulator');
                       | &nbsp;
-                      | var fooConfig = {
-                      |   schema: {
-                      |     field1: 'string',
-                      |     field2: 'int'
-                      |   }
-                      | };
-                      | &nbsp;
-                      | var FooResource = N('foo', fooConfig);
+                      | var FooResource = N('foo')
+                      |   .Field('field1', 'string')
+                      |   .Field('field2', 'int')
 
         .col-sm-4.text-center
           .row
@@ -331,7 +317,6 @@ span
                       |     @Get '/:id', (req) => @resource.Fetch req.params.id
                       | &nbsp;
                       | Players = N 'player', PlayerRoute
-
                     js
                       | var = N = require('nodulator');
                       | &nbsp;

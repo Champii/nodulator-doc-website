@@ -35,11 +35,37 @@ div
             li
               a(href="#/doc/resource/create") Create
             li
-              a(href="#/doc/resource/fetch") Fetch
+              a(href="#/doc/resource/fetchres") Fetch
             li
               a(href="#/doc/resource/list") List
             li
               a(href="#/doc/resource/deleteres") Delete
+            li
+              a(href="#/doc/resource/field") Field
+            li
+              a(href="#/doc/resource/watchres") Watch
+            li
+              a(href="#/doc/resource/extend") Extend
+            li
+              a(href="#/doc/resource/attachroute") AttachRoute
+            li
+              a(href="#/doc/resource/hasone") HasOne
+            li
+              a(href="#/doc/resource/hasmany") HasMany
+            li
+              a(href="#/doc/resource/belongsto") BelongsTo
+            li
+              a(href="#/doc/resource/mayhasone") MayHasOne
+            li
+              a(href="#/doc/resource/mayhasmany") MayHasMany
+            li
+              a(href="#/doc/resource/maybelongsto") MayBelongsTo
+            li
+              a(href="#/doc/resource/hasonethrough") HasOneThough
+            li
+              a(href="#/doc/resource/hasmanythrough") HasManyThough
+            li
+              a(href="#/doc/resource/hasandbelongstomany") HasAndBelongsToMany
         li
           a.section Instance Methods
           ul
@@ -48,11 +74,23 @@ div
             li
               a(href="#/doc/resource/deleteins") Delete
             li
+              a(href="#/doc/resource/fetchins") Fetch
+            li
+              a(href="#/doc/resource/add") Add
+            li
+              a(href="#/doc/resource/remove") Remove
+            li
               a(href="#/doc/resource/tojson") ToJSON
             li
               a(href="#/doc/resource/serialize") Serialize
             li
               a(href="#/doc/resource/extendsafe") ExtendSafe
+            li
+              a(href="#/doc/resource/set") Set
+            li
+              a(href="#/doc/resource/log") Log
+            li
+              a(href="#/doc/resource/watchins") Watch
         li
           a.section Promises/Callbacks
           ul
@@ -75,23 +113,23 @@ div
               a(href="#/doc/resource/schemavirtual") Virtual
             li
               a(href="#/doc/resource/schemaunique") Unique(soon)
+        li
+          a.section Associations
+          ul
             li
-              a.section Associations
-              ul
-                li
-                  a(href="#/doc/resource/assocbasics") Basics
-                li
-                  a(href="#/doc/resource/assochasone") HasOne
-                li
-                  a(href="#/doc/resource/assochasmany") HasMany
-                li
-                  a(href="#/doc/resource/assocbelongsto") BelongsTo
-                li
-                  a(href="#/doc/resource/assoclocalkey") LocalKey
-                li
-                  a(href="#/doc/resource/assocdistantkey") DistantKey
-                li
-                  a(href="#/doc/resource/assocdepth") Depth
+              a(href="#/doc/resource/assocbasics") Basics
+            li
+              a(href="#/doc/resource/assochasone") HasOne
+            li
+              a(href="#/doc/resource/assochasmany") HasMany
+            li
+              a(href="#/doc/resource/assocbelongsto") BelongsTo
+            li
+              a(href="#/doc/resource/assoclocalkey") LocalKey
+            li
+              a(href="#/doc/resource/assocdistantkey") DistantKey
+            li
+              a(href="#/doc/resource/assocdepth") Depth
         li
           a.section Inheritance
           ul
@@ -101,7 +139,7 @@ div
               a(href="#/doc/resource/inheritabstract") Abstract Class
             li
               a(href="#/doc/resource/inheritcomplex") Complex
-    
+
         li
           a.section Reactive Values
           ul
@@ -113,7 +151,7 @@ div
               a(href="#/doc/resource/reactiveresourcewatch") Resource.Watch
             li
               a(href="#/doc/resource/reactiveinstancewatch") instance.Watch
-            
+
     li
       a.section Route
       ul

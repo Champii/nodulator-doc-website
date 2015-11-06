@@ -1,5 +1,5 @@
-Players.Fetch({name: 'test'})
+Players.Fetch({name: 'test'}).Delete()
 
-  .then(function (player) {
-    return player.Delete()
-  });
+// Equivalent to
+
+Players.Delete({name: 'test'})

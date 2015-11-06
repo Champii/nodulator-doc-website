@@ -1,4 +1,3 @@
 Players.Fetch name: 'test'
-
-  .then (player) ->
+  .Then (player) ->
     someSocket.Send player.ToJSON()

@@ -1,4 +1,5 @@
 Players.Fetch name: 'test'
+  .Delete()
 
-  .then (player) ->
-    player.Delete()
+# Equivalent to
+Players.Delete name: 'test'

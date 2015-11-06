@@ -1,14 +1,7 @@
-N  = require 'nodulator'
+N = require 'nodulator'
 
 Players = N 'player'
 
 Players.Create login: 'player1', password: 'test'
-
-  .fail console.error
-
-  .then (player) ->
-    player.login = 'newLogin'
-    player.Save!
-
-  .then (player) ->
-    # Argument is {login: 'newLogin', password: 'test'}
+  .Set login: 'newLogin'
+  .Log().Catch console.error

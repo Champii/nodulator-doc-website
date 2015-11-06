@@ -1,4 +1,4 @@
 Players.Fetch name: \test
 
-  .then ->
+  .Then ->
     someDb.Send it.Serialize!

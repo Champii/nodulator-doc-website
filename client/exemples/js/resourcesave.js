@@ -1,6 +1,5 @@
 Players.Create({name: 'test'})
-
-  .then(function (player) {
+  .Then(function (player) {
     player.name = 'test2'
     player.Save()
   });

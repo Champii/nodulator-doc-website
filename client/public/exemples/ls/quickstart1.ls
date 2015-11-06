@@ -1,12 +1,10 @@
 require! {nodulator: N}
 
-N.Resource \player
+Players = N \player
 
-N.Player.Create login: \player1 password: \test
+console.log Players
 
-  .fail console.error
-
-  .then (.login = \newLogin ; it) >> (.Save!)
-  
-  .then (player) ->
-    # Argument is {login: 'newLogin', password: 'test'}
+Players.Create login: \player1 password: \test
+  .Set login: \newLogin
+  .Log!.Catch console.error
+    

@@ -1,8 +1,9 @@
 Players.Delete 1
-  .then console.log
-
+  .Log()
+  
 Players.Delete name: 'test'
-  .then console.log
-
+  .Log()
+  
 Players.Delete [12, {name: 'test'}, 78]
-  .then console.log
+  .Log()
+  
