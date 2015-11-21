@@ -1,3 +1,3 @@
 require! {nodulator: N}
 
-Players = N \player
+Player = N \player

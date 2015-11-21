@@ -1,5 +1,5 @@
-Players.Fetch name: 'test'
+Player.Fetch name: 'test'
   .Delete()
 
 # Equivalent to
-Players.Delete name: 'test'
+Player.Delete name: 'test'

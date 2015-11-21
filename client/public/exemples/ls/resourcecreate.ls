@@ -1,9 +1,9 @@
-Players.Create login: \player1
+Player.Create login: \player1
 
   .then (player) ->
     # player is of form {id: 1, login: \player1}
 
-Players.Create do
+Player.Create do
   * login: \player2
   * login: \player3
 

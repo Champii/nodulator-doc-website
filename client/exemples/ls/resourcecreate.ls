@@ -1,6 +1,6 @@
-Players.Create login: \player1 .Log!
+Player.Create login: \player1 .Log!
 
-Players.Create do
+Player.Create do
   * login: \player2
   * login: \player3
 .Log!

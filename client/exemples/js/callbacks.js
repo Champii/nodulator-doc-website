@@ -1,4 +1,4 @@
-Players.Create({name: 'test'}, function (err, player) {
+Player.Create({name: 'test'}, function (err, player) {
   if (err != null)
     return console.error(err);
 

@@ -1,10 +1,10 @@
 require! {nodulator: N}
 
-Players = N \player
+Player = N \player
 
-console.log Players
+console.log Player
 
-Players.Create login: \player1 password: \test
+Player.Create login: \player1 password: \test
   .Set login: \newLogin
   .Log!.Catch console.error
     

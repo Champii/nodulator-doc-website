@@ -1,3 +1,3 @@
-Players.Fetch name: 'test'
+Player.Fetch name: 'test'
   .Then (player) ->
     someDb.Send player.Serialize()

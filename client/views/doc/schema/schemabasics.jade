@@ -1,0 +1,23 @@
+div
+  h2 4.5.1) Basics
+  
+  p The Schema holds and manage every Resource Fields and associations.
+  p Thanks to him, you can define how the Resource should act when adding/modifying instance.
+  
+  p The Schema isnt directly accessible and should not be. You can define or change a new field thanks to the Resource.Field() class method, 
+    | and you can define relationship with calls like Resource.Has*() or Resource.MayHas*()
+  
+  p Each Resource has its own Schema configuration. To set a config, add a 'schema' field to the Resource configuration.
+    | This field can be either 'free' (by default, can be ommited) or 'strict'.
+    
+  h3 In 'free' mode: 
+  ul
+    li You can add whatever you want in your instance
+    li Every added fields will be Optional() by default (except for relationships)
+    li If a field is present, it will check for its type
+
+  h3 In 'strict' mode: 
+  ul
+    li You cannot have a property that is not set by 'Resource.Field()'
+    li Every added fields will be Required() by default (except for relationships)
+    li If a field is not present, it will complain.

@@ -1,4 +1,4 @@
-err, test <- Players.Create name: \test
+err, test <- Player.Create name: \test
 return console.error err if err?
 
 test.name = \test2

@@ -10,7 +10,9 @@ div
   
     p And returns the Resource
     
-  p Warning, this call create a Required() field with the name of the 'Resource' in the 'AnotherResource'
+  p Warning, this call create a Required() field with the name of the 'Resource' in the 'AnotherResource'.
+  P Exemple with a 'player' that hasone 'weapon' => weapon will have a required 'playerId' field
+  P It also automaticaly create a BelongsTo association, that can be avoided by passing autoBelongsTo as false
 
   p See the corresponding 
     a(href="") HasOne
@@ -18,10 +20,10 @@ div
           
   h3 Exemple
   
-  //- codetoggle
-  //-   livescript
-  //-     include ../../../../exemples/ls/resourcecreate.ls
-  //-   coffee
-  //-     include ../../../../exemples/coffee/resourcecreate.coffee
-  //-   js
-  //-     include ../../../../exemples/js/resourcecreate.js
+  codetoggle
+    livescript
+      include ../../../../exemples/ls/resourcehasone.ls
+    coffee
+      include ../../../../exemples/coffee/resourcehasone.coffee
+    js
+      include ../../../../exemples/js/resourcehasone.js

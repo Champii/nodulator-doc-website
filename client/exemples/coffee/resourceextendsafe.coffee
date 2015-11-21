@@ -1,3 +1,3 @@
-Players.Fetch name: 'test'
+Player.Fetch name: 'test'
   .Set name: 'test', protectedAssoc: 'someValue'
   .Log!

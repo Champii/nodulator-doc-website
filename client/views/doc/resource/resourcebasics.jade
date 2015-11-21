@@ -1,6 +1,8 @@
 div
   h2 4.1) Basics
 
+  h3 Resource creation
+
   p Resources are at the heart of Nodulator. This object allows you to modelize 
     | and manipulate documents or tables from DB system. 
   p Here is the simpliest way to declare and to use a Resource : 
@@ -17,38 +19,43 @@ div
   p But you can also just call the Resource and get the created resource throught 'N.' :
     livescript
       | N  \player
-      | N.Players.Create name: \test
+      | N.Player.Create name: \test
   br
       
   p The arguments a Resource can take are describe here: 
-    bash N  name, [Route], [Config]
+    livescript N  name, [Route], [Config]
 
   br
   p The Route and Config arguments are both optionals and can be swaped
       
-  p This call returns a Players Resource object that represents your models in DB
+  p This call returns a Player Resource object that represents your models in DB
     
-  p You can get and manage your models thanks to a Resource, with theses Class methods (for exemple with a 'Players' resource, and a 'player' instance):
+  h3 Chainable Calls
+
+  p Most of the calls are chainable as far as you dont give a callback as argument.
+  p WARNING: They are chainable but they stay asynchronous. Some promise stuff is working under the scene.
+    
+  h3 Common calls
+  
+  p You can get and manage your models thanks to a Resource, with theses Class methods (for exemple with a 'Player' resource, and a 'player' instance):
     ul
       li
-        a(href="#/doc/resource/create") Players.Create()
+        a(href="#/doc/resource/create") Player.Create()
       li
-        a(href="#/doc/resource/fetch") Players.Fetch()
+        a(href="#/doc/resource/fetch") Player.Fetch()
       li
-        a(href="#/doc/resource/list") Players.List()
+        a(href="#/doc/resource/list") Player.List()
       li
-        a(href="#/doc/resource/deleteres") Players.Delete()
+        a(href="#/doc/resource/deleteres") Player.Delete()
         
     | And theses Instance methods: 
 
     ul
       li
-        a(href="#/doc/resource/save") player.Save()
+        a(href="#/doc/resource/set") player.Set()
       li
-        a(href="#/doc/resource/deleteins") player.Delete()
+        a(href="#/doc/resource/log") player.Log()
       li
         a(href="#/doc/resource/tojson") player.ToJSON()
       li
-        a(href="#/doc/resource/serialize") player.Serialize()
-      li
-        a(href="#/doc/resource/extendsafe") player.ExtendSafe()
+        a(href="#/doc/resource/deleteins") player.Delete()

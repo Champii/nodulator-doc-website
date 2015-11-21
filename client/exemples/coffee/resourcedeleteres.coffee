@@ -1,9 +1,9 @@
-Players.Delete 1
+Player.Delete 1
   .Log()
   
-Players.Delete name: 'test'
+Player.Delete name: 'test'
   .Log()
   
-Players.Delete [12, {name: 'test'}, 78]
+Player.Delete [12, {name: 'test'}, 78]
   .Log()
   

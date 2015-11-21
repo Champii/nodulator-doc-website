@@ -1,3 +1,3 @@
 N = require 'nodulator'
 
-Players = N 'player'
+Player = N 'player'

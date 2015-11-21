@@ -608,7 +608,7 @@
       return this.scope.$watch('codeToggleService.language', (function(_this) {
         return function() {
           return _this.$timeout(function() {
-            replace('Players', '#FF6E00');
+            replace('Player', '#FF6E00');
             replace('.Create', '#F7FF00');
             replace('.Fetch', '#F7FF00');
             replace('.List', '#F7FF00');

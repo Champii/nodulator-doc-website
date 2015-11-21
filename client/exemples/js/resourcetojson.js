@@ -1,4 +1,4 @@
-Players.Fetch({name: 'test'})
+Player.Fetch({name: 'test'})
   .Then(function (player) {
     someSocket.Send player.ToJSON();
   });

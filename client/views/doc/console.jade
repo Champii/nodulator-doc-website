@@ -26,7 +26,7 @@ div
   br
   p The console preload every Resource found in the folder given, and make them available in the global context. For exemple with saying, a N ('player') loaded:
     livescript
-      | N > player = Players.Create name: \test
+      | N > player = Player.Create name: \test
       | {id: 1, name: 'test'}
       | N > player.name = \test2
       | 'test2'
@@ -43,7 +43,7 @@ div
   br
   p
     livescript
-      | N > players = Players.List!
+      | N > players = Player.List!
       | [{id: 1, name: 'test1'}
       |  {id: 2, name: 'test2'}
       |  {id: 3, name: 'test3'}]
@@ -53,7 +53,7 @@ div
       |                        stat: {type: 'int', default: 0}
       |                        playerId: \int
       |                        Player: 
-      |                          type: Players
+      |                          type: Player
       |                          localKey: \playerId
       | [...]
       | N > stats = Stats.Create names |> map -> playerId: it

@@ -19,15 +19,15 @@ div(class="consolehelp")
   p Nodulator Console is already launched, and allows you to perform actual Nodulator commands.
   p For exemple, try to create a Resource and fetch an element from it:
     livescript
-      | N > Players = N \player
+      | N > Player = N \player
       | [...]
-      | N > player1 = Players.Create name: \player1
+      | N > player1 = Player.Create name: \player1
       | {id: 1, name: 'player1'}
       | N > player1.name = \newPlayer1
       | 'newPlayer1'
       | N > player1.Save!
       | {id: 1, name: 'newPlayer1'}
-      | N > newPlayer1 = Players.Fetch name: \newPlayer1
+      | N > newPlayer1 = Player.Fetch name: \newPlayer1
       | {id: 1, name: 'newPlayer1'}
     
   h4 Tmux

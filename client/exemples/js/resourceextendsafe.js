@@ -1,1 +1,1 @@
-Players.Fetch({name: 'test'}).Set({name: 'test', protectedAssoc: 'someValue'}).Log()
+Player.Fetch({name: 'test'}).Set({name: 'test', protectedAssoc: 'someValue'}).Log()

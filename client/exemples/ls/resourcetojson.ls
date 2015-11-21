@@ -1,4 +1,4 @@
-Players.Fetch name: \test
+Player.Fetch name: \test
 
   .Then ->
     someSocket.Send it.ToJSON!
