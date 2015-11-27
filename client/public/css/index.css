@@ -153,8 +153,12 @@ html body {
 
 }
 
+
 .pagebody h1, .pagebody h2, .pagebody h3 {
   text-decoration: underline;
+}
+.pagebody h1.text-center {
+  text-decoration: none;
 }
 
 #section4 p {
