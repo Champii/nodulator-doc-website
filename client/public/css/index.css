@@ -50,9 +50,9 @@ html body {
 .sidebar {
 
   position: fixed;
-  float: left;
+  /*float: left;*/
   width: 250px;
-  height: 100%;
+  height: calc(100% - (44px));
   min-width: 250px;
   /*overflow-x: hidden;*/
   background-color: rgb(75,75,75);
