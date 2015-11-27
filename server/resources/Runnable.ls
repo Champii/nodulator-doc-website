@@ -17,7 +17,7 @@ callback = (response, done) ->
 
 getPage = (done) ->
 
-  child.exec 'curl http://code.runnable.com/VhWRqcS4LUoLm3Nv/nodulator-for-node-js | grep http://service', (err, stdout, stderr) ->
+  child.exec 'curl http://code.runnable.com/VhWRqcS4LUoLm3Nv/nodulator-for-node-js-orm-rest-api-and-livescript | grep http://service', (err, stdout, stderr) ->
     return done err if err?
 
     done null, stdout
