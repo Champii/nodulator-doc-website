@@ -1,7 +1,7 @@
 class PageBodyDirective extends Nodulator.Directive 'pagebody', '$timeout'
 
   visible: true
-  helpVisible: true
+  helpVisible: false
 
   ToggleVisible: ->
     @scope.visible = !@scope.visible
