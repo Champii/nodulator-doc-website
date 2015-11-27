@@ -153,6 +153,10 @@ html body {
 
 }
 
+h1, h2, h3 {
+  text-decoration: underline;
+}
+
 #section4 p {
   width: 100%;
 
