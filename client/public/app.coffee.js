@@ -594,38 +594,7 @@
       return CodeToggleDirective.__super__.constructor.apply(this, arguments);
     }
 
-    CodeToggleDirective.prototype._Init = function() {
-      var replace;
-      replace = function(toFind, toReplace, color) {
-        if (!color) {
-          color = toReplace;
-          toReplace = toFind;
-        }
-        return $(".hljs:contains('" + toFind + "')").each(function(id, item) {
-          return $(item).html($(item).html().replace(new RegExp(toReplace, 'g'), "<span style='color:" + color + "'>" + toReplace + "</span>"));
-        });
-      };
-      return this.scope.$watch('codeToggleService.language', (function(_this) {
-        return function() {
-          return _this.$timeout(function() {
-            replace('Player', '#FF6E00');
-            replace('.Create', '#F7FF00');
-            replace('.Fetch', '#F7FF00');
-            replace('.List', '#F7FF00');
-            replace('.Delete', '#F7FF00');
-            replace('.Save', '#F7FF00');
-            replace('.ToJSON', '#F7FF00');
-            replace('.Serialize', '#F7FF00');
-            replace('.ExtendSafe', '#F7FF00');
-            replace('N >', 'N >', '#D103FF');
-            replace('N ', '#0AE250');
-            replace('fail', '#FF0000');
-            replace('then', '#00FF18');
-            return replace('console.log', '.log', '#13E0DA');
-          });
-        };
-      })(this), true);
-    };
+    CodeToggleDirective.prototype._Init = function() {};
 
     return CodeToggleDirective;
 
@@ -682,15 +651,7 @@
       return ConsoleDirective.__super__.constructor.apply(this, arguments);
     }
 
-    ConsoleDirective.prototype._Init = function() {
-      return this.$timeout((function(_this) {
-        return function() {
-          return $(".hljs:contains('N >')").each(function(id, item) {
-            return console.log($(item).html($(item).html().replace(/N &gt;/g, '<span style="color:#29CA29">N</span> <span style="color:#DC00FF">&gt;</span>')));
-          });
-        };
-      })(this), 0);
-    };
+    ConsoleDirective.prototype._Init = function() {};
 
     return ConsoleDirective;
 
