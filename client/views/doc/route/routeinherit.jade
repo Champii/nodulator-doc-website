@@ -1,0 +1,48 @@
+div
+  h2 5.3) Route Inheritance
+  
+  p Each route is inheritable. To do so, you have to override the Config() method and call super() when you want to activate parent's routes :
+  
+  livescript
+    | class Route1 extends N.Route
+    |   Config: ->
+    |     @Get \/:id (.params.id)
+    | 
+    | class Route2 extends Route1
+    |   Config: ->
+    |     @Get \/test -> \test
+    |     super!
+    | 
+    | new Route2 \route
+    
+  p It create 2 routes in that order:
+    ul
+      li GET /api/1/routes/test
+      li GET /api/1/routes/:id
+      
+  p So the :id route will not trigger before test one
+
+  h3 Override a route
+
+  p You can override an existing route by using the same Verb + Url 
+  
+  livescript
+    | class Route1 extends N.Route.Collection
+    |   Config: ->
+    |     super!
+    |     @Get \/:id (.params.id)
+
+  p This one replace the 
+    a(href="#/doc/routes/Collection") Collection 
+    | 'GET :id' by a new one returning the given id instead of the fetched Resource
+
+  h3 Deleting an existing Route
+
+  p To do that, you just have to set the same Verb + Url as the existing route, and to return 'null'.
+  p It will mimic the express behaviour and return a 404. 
+
+  livescript
+    | class Route1 extends N.Route.Collection
+    |   Config: ->
+    |     super!
+    |     @Get \/:id -> null

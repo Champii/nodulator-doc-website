@@ -75,6 +75,7 @@ div
           div(ng-switch-when="log")
             resourcelog
 
+
           div(ng-switch-when="promises")
             promises
           div(ng-switch-when="callbacks")
@@ -82,6 +83,17 @@ div
   
           div(ng-switch-when="schemabasics")
             schemabasics
+
+      div(ng-switch-when="routes")
+        div(ng-switch="args[0]")
+          div(ng-switch-when="basics")
+            routebasics
+          div(ng-switch-when="request")
+            request
+          div(ng-switch-when="inherit")
+            routeinherit
+          div(ng-switch-when="collection")
+            collection
 
       div(ng-switch-when="console")
         console

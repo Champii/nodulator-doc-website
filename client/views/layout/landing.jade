@@ -15,7 +15,7 @@ span
           b  Framework
         |  for Restful APIs
       p.text-center (And more if affinity)
-      p.text-center v0.1.1
+      p.text-center v0.1.4
         br
         br
         iframe(src="https://ghbtns.com/github-btn.html?user=champii&repo=nodulator&type=fork&count=true&size=largev=2", frameborder="0", scrolling="0", width="80px", height="30px")
@@ -96,41 +96,39 @@ span
                   | Basic exemple with a Resource and a Route
                   codetoggle
                     livescript
-                      | {{MultiRoute}:Route}:N = require \nodulator
+                      | require! {nodulator: {{Collection}:Route}:N}
                       | &nbsp;
-                      | # Make usable shema-less models over API  with one call
-                      | Player = N \player MultiRoute
+                      | Player = N \player Collection
                     coffee
                       | N = require 'nodulator'
-                      | MultiRoute = N.Route.MultiRoute
+                      | Collection = N.Route.Collection
                       | &nbsp;
-                      | # Make usable shema-less models over API  with one call
-                      | Player = N 'player', MultiRoute
+                      | Player = N 'player', Collection
                     js
                       | var N = require('nodulator');
-                      | var MultiRoute = N.Route.MultiRoute;
+                      | var Collection = N.Route.Collection;
                       | &nbsp;
-                      | // Make usable shema-less models  over API with one call
-                      | var Player = N('player', MultiRoute);
+                      | var Player = N('player', Collection);
                   p See Routing section ->
                   hr
                   | Project generation
                   bash
                     | $> sudo npm install -g nodulator
-                    | $> Nodulator install
+                    | $> mkdir newProject
+                    | $> cd newProject
                     | $> Nodulator init
                   | Create
                   pre.text-left
-                    | main.coffee
+                    | index.ls
                     | package.json
                     | settings/
                     | server/
-                    | ├── index.coffee
+                    | ├── index.ls
                     | ├── loadOrder.json
                     | ├── processors/
-                    | │   └── index.coffee
+                    | │   └── index.ls
                     | └── resources/
-                    |     └── index.coffee
+                    |     └── index.ls
                   p Add your resources directly in /server/resources/
                   hr
                   | Modules
@@ -174,71 +172,86 @@ span
                       | .Catch(function (player) {})
                       | &nbsp;
                   hr
-                  p Easy to use API
+                  p Easy to use, chainable async calls with promises
                   codetoggle
                     livescript
-                      | # Fetch player with id = 1
                       | Player.Fetch 1 .Set (.level++)
+                      |  .Then -> Player.Fetch 2 .Set name: \player2
+                      |  .Catch console.error
                       | &nbsp;
                     coffee
-                      | # Fetch player with id = 1
-                      | Player.Fetch 1 
-                      |   .Set (player) -> player.level++
+                      | Player.Fetch(1).Set (player) -> player.level++
+                      |  .Then -> Player.Fetch(2).Set name: 'player2'
+                      |  .Catch console.error
                       | &nbsp;
                     js
-                      | // Fetch player with id = 1
                       | Player.Fetch(1).Set(function (player) { player.level++ });
+                      |  .Then(function (player) { return Player.Fetch(2).Set({name: 'player2'}) })
+                      |  .Catch(console.error);
                       | &nbsp;
                   hr
                   p Can be extended
                   codetoggle
                     livescript
-                      | N = require \nodulator
+                      | require! {nodulator: N}
                       | &nbsp;
                       | class Player extends N \player
-                      | &nbsp;
-                      |   LevelUp: (.Set (.level++))
+                      |   LevelUp: -> @Set (.level++)
+                      | 
+                      | Player.Field \level \int .Default 1
+                      | Player.Create!LevelUp!
                       | &nbsp;
                     coffee
                       | N = require 'nodulator'
                       | &nbsp;
                       | class Player extends N 'player'
-                      | &nbsp;
-                      |   LevelUp: (done) -> 
-                      |     @Set ((player) -> player.level++), done
+                      |   LevelUp: -> @Set (player) -> player.level++
+                      | 
+                      | Player.Field('level', 'int').Default 1
+                      | Player.Create().LevelUp()
                       | &nbsp;
                     js
                       | var N = require('nodulator');
                       | &nbsp;
                       | Player = N('player');
                       | &nbsp;
-                      | Player.prototype.LevelUp = function (done) {
-                      |   this.Set(function (player) { player.level++ }, done);
+                      | Player.prototype.LevelUp = function () {
+                      |   this.Set(function (player) { player.level++ });
                       | };
+                      | 
+                      | Player.Field('level', 'int').Default(1);
+                      | Player.Create().LevelUp();
                       | &nbsp;
                   hr
                   | Schema-full exemple with type validation
                   codetoggle
                     livescript
-                      | N = require \nodulator
+                      | require! {nodulator: N}
                       | &nbsp;
                       | FooResource = N \foo
-                      |   ..Field \field1 \string
-                      |   ..Field \field2 \int
+                      |   ..Field \field1 \string .Required!Unique!
+                      |   ..Field \field2 \int .Default 1
+                      |   ..Field \virtual \int .Virtual -> it.field1 + it.field2
                       | &nbsp;
                     coffee
                       | N = require 'nodulator'
                       | &nbsp;
                       | FooResource = N 'foo'
-                      |   .Field 'field1', 'string'
-                      |   .Field 'field2', 'int'
+                      | FooResource.Field('field1', 'string').Required().Unique()
+                      | FooResource.Field('field2', 'int').Default 1
+                      | FooResource.Field('virtual', 'string').Virtual (obj) -> 
+                      |   obj.field1 + obj.field2
                       | &nbsp;
                     js
                       | var N = require('nodulator');
                       | &nbsp;
-                      | var FooResource = N('foo')
-                      |   .Field('field1', 'string')
-                      |   .Field('field2', 'int')
+                      | var FooResource = N('foo');
+                      | FooResource.Field('field1', 'string').Required().Unique();
+                      | FooResource.Field('field2', 'int').Default(1);
+                      | FooResource.Field('virtual', 'string')
+                      |              .Virtual(function (obj) {
+                      |                return obj.field1 + obj.field2;
+                      |              });
 
         .col-sm-4.text-center
           .row
@@ -247,73 +260,49 @@ span
                 .panel-heading
                   h3 Routing
                 .panel-body
-                  | SingleRoute
-                  codetoggle
-                    livescript
-                      | {{SingleRoute}:Route}:N = require \nodulator
-                      | &nbsp;
-                      | Player = N \player SingleRoute
-                    coffee
-                      | N = require 'nodulator'
-                      | SingleRoute = N.Route.SingleRoute
-                      | &nbsp;
-                      | Player = N 'player', SingleRoute
-                    js
-                      | var N = require('nodulator');
-                      | var SingleRoute = N.Route.SingleRoute;
-                      | &nbsp;
-                      | var Player = N 'player', SingleRoute
-                  p This exemple create a server and listen for the following routes.
-                  p It creates a route to access element with id = 1 only, creating a Singleton model over API
-                  pre.text-left
-                    | GET     => /api/1/player   => Fetch
-                    | PUT     => /api/1/player   => Update
-
-                  span
-                    | By default on
-                    a(href="http://localhost:3000")  http://localhost:3000
-                  hr
-                  | MultiRoute
-                  codetoggle
-                    livescript
-                      | {{MultiRoute}:Route}:N = require \nodulator
-                      | &nbsp;
-                      | Player = N \player MultiRoute
-                    coffee
-                      | N = require 'nodulator'
-                      | MultiRoute = N.Route.MultiRoute
-                      | &nbsp;
-                      | Player = N 'player', MultiRoute
-                    js
-                      | var N = require('nodulator');
-                      | var MultiRoute = N.Route.MultiRoute;
-                      | &nbsp;
-                      | var Player = N('player', MultiRoute);
-                  | This previous exemple create a server and listen for the following routes:
-                  pre.text-left
-                    | GET     => /api/1/players       => List all
-                    | GET     => /api/1/players/:id   => Get One
-                    | POST    => /api/1/players       => Create
-                    | PUT     => /api/1/players/:id   => Update
-                    | DELETE  => /api/1/players/:id   => Delete
-                  hr
+                  //- | SingleRoute
+                  //- codetoggle
+                  //-   livescript
+                  //-     | {{SingleRoute}:Route}:require! {nodulator: N}
+                  //-     | &nbsp;
+                  //-     | Player = N \player SingleRoute
+                  //-   coffee
+                  //-     | N = require 'nodulator'
+                  //-     | SingleRoute = N.Route.SingleRoute
+                  //-     | &nbsp;
+                  //-     | Player = N 'player', SingleRoute
+                  //-   js
+                  //-     | var N = require('nodulator');
+                  //-     | var SingleRoute = N.Route.SingleRoute;
+                  //-     | &nbsp;
+                  //-     | var Player = N 'player', SingleRoute
+                  //- p This exemple create a server and listen for the following routes.
+                  //- p It creates a route to access element with id = 1 only, creating a Singleton model over API
+                  //- pre.text-left
+                  //-   | GET     => /api/1/player   => Fetch
+                  //-   | PUT     => /api/1/player   => Update
+                  //- 
+                  //- span
+                  //-   | By default on
+                  //-   a(href="http://localhost:3000")  http://localhost:3000
+                  //- hr
                   | Custom route
                   codetoggle
                     livescript
-                      | {Route}:N = require \nodulator
+                      | require! {nodulator: {Route}:N}
                       | &nbsp;
                       | class PlayerRoute extends Route
-                      | &nbsp;
                       |   Config: ->
-                      |     @Get \/:id ~> @resource.Fetch it.params.id
+                      |     @Get \/test -> toto: \tata
+                      |     @Get \/:id  ~> @resource.Fetch it.params.id
                       | &nbsp;
                       | Player = N \player PlayerRoute
                     coffee
                       | N = require 'nodulator'
                       | &nbsp;
                       | class PlayerRoute extends N.Route
-                      | &nbsp;
                       |   Config: ->
+                      |     @Get '/test' -> toto: 'tata'
                       |     @Get '/:id', (req) => @resource.Fetch req.params.id
                       | &nbsp;
                       | Player = N 'player', PlayerRoute
@@ -326,11 +315,39 @@ span
                       |   this.Get('/:id', function (req) {
                       |     return this.resource.Fetch(req.params.id);
                       |   });
+                      |   this.Get('/test', function () {
+                      |     return {toto: 'tata'};
+                      |   });
                       | };
                       | &nbsp;
                       | var Player = N('player', PlayerRoute);
                   pre.text-left
+                    | GET     => /api/1/players/test  => Returns {toto: 'tata'}
                     | GET     => /api/1/players/:id   => Get One
+                  | Collection
+                  codetoggle
+                    livescript
+                      | require! {nodulator: {{Collection}:Route}:N}
+                      | &nbsp;
+                      | Player = N \player Collection
+                    coffee
+                      | N = require 'nodulator'
+                      | Collection = N.Route.Collection
+                      | &nbsp;
+                      | Player = N 'player', Collection
+                    js
+                      | var N = require('nodulator');
+                      | var Collection = N.Route.Collection;
+                      | &nbsp;
+                      | var Player = N('player', Collection);
+                  | This previous exemple create a server and listen for the following routes:
+                  pre.text-left
+                    | GET     => /api/1/players       => List all
+                    | GET     => /api/1/players/:id   => Get One
+                    | POST    => /api/1/players       => Create
+                    | PUT     => /api/1/players/:id   => Update
+                    | DELETE  => /api/1/players/:id   => Delete
+                  hr
 
     //- .container.v-center
     //-   .row

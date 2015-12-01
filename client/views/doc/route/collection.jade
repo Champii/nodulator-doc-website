@@ -1,0 +1,32 @@
+div
+  h2 5.4.1) Collection
+    
+  p The Collection object is available through 'N.Route.Collection', and has a set of useful routes defined to handle your Resource.
+  
+  livescript
+    | Players = N \player N.Route.Collection
+
+  p It creates five routes by default :
+  
+  pre.text-left
+    | GET     => /api/1/players       => List all
+    | GET     => /api/1/players/:id   => Get One
+    | POST    => /api/1/players       => Create
+    | PUT     => /api/1/players/:id   => Update
+    | DELETE  => /api/1/players/:id   => Delete 
+    
+  p For routes that take an id, the Resource is automaticaly fetched and set as 'req.instance'
+
+  h3 Inheritance and overriding
+
+  p Obviously, you can inherit from it and customise your routes: 
+  
+  p (supposing you have defined a LevelUp() method in your Player)
+  
+  livescript
+    | class PlayerRoute extends N.Route.Collection
+    |   Config: ->
+    |     super!
+    |     @Get \/:id/levelup (.instance.LevelUp!)
+    | 
+    | Player = N \player PlayerRoute
