@@ -1,0 +1,4 @@
+div
+  div.hide(ng-transclude)
+  div(ng-if="codeToggleService.language == 'js' && contentJs.length")
+    div(hljs, no-escape, source="contentJs", language="js").text-left

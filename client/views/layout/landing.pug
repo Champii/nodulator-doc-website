@@ -1,0 +1,752 @@
+span
+  section#welcome.container-fluid
+    .v-center
+      br
+      h1.text-center
+        span(class="hl")
+          b N
+        span(style="color:#6b6b6b") odulator 
+        span(class="hl")
+          b (.js)
+      br
+      h2.text-center.lato.animate.slideInDown
+        | Complete
+        span(class="hl")
+          b  Framework
+        |  for Restful APIs
+      p.text-center (And more if affinity)
+      p.text-center v0.1.4
+        br
+        br
+        iframe(src="https://ghbtns.com/github-btn.html?user=champii&repo=nodulator&type=fork&count=true&size=largev=2", frameborder="0", scrolling="0", width="80px", height="30px")
+        iframe(src="https://ghbtns.com/github-btn.html?user=champii&repo=nodulator&type=star&count=true&size=largev=2", frameborder="0", scrolling="0", width="80px", height="30px")
+      p.text-center
+        br
+        br
+        a.btn.btn-danger.btn-lg.btn-huge.lato(href='#/home/gettingstarted') Getting Started
+
+    a(href='#/home/gettingstarted')
+      .scroll-down.bounceInDown.animated
+        span
+          i.fa.fa-angle-down.fa-2x
+  //- section
+  //-   .container-fluid.v-center
+  //-     .row
+  //-       .col-sm-2.col-sm-offset-2.col-xs-6
+  //-         .text-center
+  //-           a(href='')
+  //-             img.img-circle.img-responsive.img-thumbnail(style='width:100px;', src='//placehold.it/100/444')
+  //-           h3.text-center
+  //-       .col-sm-2.col-xs-6
+  //-         .text-center
+  //-           a(href='')
+  //-             img.img-circle.img-responsive.img-thumbnail(style='width:100px;', src='//placehold.it/100/444')
+  //-           h3.text-center
+  //-       .col-sm-2.col-xs-6
+  //-         .text-center
+  //-           a(href='')
+  //-             img.img-circle.img-responsive.img-thumbnail(style='width:100px;', src='//placehold.it/100/444')
+  //-           h3.text-center
+  //-       .col-sm-2.col-xs-6
+  //-         .text-center
+  //-           a(href='')
+  //-             img.img-circle.img-responsive.img-thumbnail(style='width:100px;', src='//placehold.it/100/444')
+  //-           h3.text-center
+  //-     .row
+  //-       .col-sm-2.col-sm-offset-2.col-xs-6
+  //-         .text-center
+  //-           a(href='')
+  //-             img.img-circle.img-responsive.img-thumbnail(style='width:100px;', src='//placehold.it/100/444')
+  //-           h3.text-center
+  //-       .col-sm-2.col-xs-6
+  //-         .text-center
+  //-           a(href='')
+  //-             img.img-circle.img-responsive.img-thumbnail(style='width:100px;', src='//placehold.it/100/444')
+  //-           h3.text-center
+  //-       .col-sm-2.col-xs-6
+  //-         .text-center
+  //-           a(href='')
+  //-             img.img-circle.img-responsive.img-thumbnail(style='width:100px;', src='//placehold.it/100/444')
+  //-           h3.text-center
+  //-       .col-sm-2.col-xs-6
+  //-         .text-center
+  //-           a(href='')
+  //-             img.img-circle.img-responsive.img-thumbnail(style='width:100px;', src='//placehold.it/100/444')
+  //-           h3.text-center
+  //-     // /row
+  section#gettingstarted.container-fluid
+    div
+      h1.text-center Getting Started
+      h3.text-center Few code is better than long text.
+      hr
+    .container
+      .row
+        .col-sm-4
+          .row
+            .col-sm-12.text-center
+              .panel.panel-default.slideInLeft.animate
+                .panel-heading
+                  h3 Easy to Setup
+                .panel-body
+                  p In a terminal
+                  bash
+                    | $> npm install nodulator
+
+                  hr
+                  | Basic exemple with a Resource and a Route
+                  codetoggle
+                    livescript
+                      | require! {nodulator: {{Collection}:Route}:N}
+                      | &nbsp;
+                      | Player = N \player Collection
+                    coffee
+                      | N = require 'nodulator'
+                      | Collection = N.Route.Collection
+                      | &nbsp;
+                      | Player = N 'player', Collection
+                    js
+                      | var N = require('nodulator');
+                      | var Collection = N.Route.Collection;
+                      | &nbsp;
+                      | var Player = N('player', Collection);
+                  p See Routing section ->
+                  hr
+                  | Project generation
+                  bash
+                    | $> sudo npm install -g nodulator
+                    | $> mkdir newProject
+                    | $> cd newProject
+                    | $> Nodulator init
+                  | Create
+                  pre.text-left
+                    | index.ls
+                    | package.json
+                    | settings/
+                    | server/
+                    | ├── index.ls
+                    | ├── loadOrder.json
+                    | ├── processors/
+                    | │   └── index.ls
+                    | └── resources/
+                    |     └── index.ls
+                  p Add your resources directly in /server/resources/
+                  hr
+                  | Modules
+                  bash
+                    | $> Nodulator install assets
+                    | $> Nodulator init
+                  p Install
+                    a(href="https://github.com/Champii/Nodulator-Assets")  Nodulator-Assets
+                    |  and init client arborescence.
+
+
+        .col-sm-4.text-center
+          .row
+            .col-sm-12.text-center
+              .panel.panel-default.slideInUp.animate
+                .panel-heading
+                  h3 ORM
+                .panel-body
+                  p Fully agnostic ORM
+                  codetoggle
+                    livescript
+                      | Player.Create do
+                      |   name: \player1
+                      |   level: 1
+                      | .Then (player) ->
+                      | .Catch (err) ->
+                      | &nbsp;
+                    coffee
+                      | Player.Create
+                      |   name: 'player1'
+                      |   level: 1
+                      | .Then (player) ->
+                      | .Catch (err) ->
+                      | &nbsp;
+                    js
+                      | Player.Create({
+                      |   name: 'player1',
+                      |   level: 1
+                      | })
+                      | .Then(function (player) {})
+                      | .Catch(function (player) {})
+                      | &nbsp;
+                  hr
+                  p Easy to use, chainable async calls with promises
+                  codetoggle
+                    livescript
+                      | Player.Fetch 1 .Set (.level++)
+                      |  .Then -> Player.Fetch 2 .Set name: \player2
+                      |  .Catch console.error
+                      | &nbsp;
+                    coffee
+                      | Player.Fetch(1).Set (player) -> player.level++
+                      |  .Then -> Player.Fetch(2).Set name: 'player2'
+                      |  .Catch console.error
+                      | &nbsp;
+                    js
+                      | Player.Fetch(1).Set(function (player) { player.level++ });
+                      |  .Then(function (player) { return Player.Fetch(2).Set({name: 'player2'}) })
+                      |  .Catch(console.error);
+                      | &nbsp;
+                  hr
+                  p Can be extended
+                  codetoggle
+                    livescript
+                      | require! {nodulator: N}
+                      | &nbsp;
+                      | class Player extends N \player
+                      |   LevelUp: -> @Set (.level++)
+                      | 
+                      | Player.Field \level \int .Default 1
+                      | Player.Create!LevelUp!
+                      | &nbsp;
+                    coffee
+                      | N = require 'nodulator'
+                      | &nbsp;
+                      | class Player extends N 'player'
+                      |   LevelUp: -> @Set (player) -> player.level++
+                      | 
+                      | Player.Field('level', 'int').Default 1
+                      | Player.Create().LevelUp()
+                      | &nbsp;
+                    js
+                      | var N = require('nodulator');
+                      | &nbsp;
+                      | Player = N('player');
+                      | &nbsp;
+                      | Player.prototype.LevelUp = function () {
+                      |   this.Set(function (player) { player.level++ });
+                      | };
+                      | 
+                      | Player.Field('level', 'int').Default(1);
+                      | Player.Create().LevelUp();
+                      | &nbsp;
+                  hr
+                  | Schema-full exemple with type validation
+                  codetoggle
+                    livescript
+                      | require! {nodulator: N}
+                      | &nbsp;
+                      | FooResource = N \foo
+                      |   ..Field \field1 \string .Required!Unique!
+                      |   ..Field \field2 \int .Default 1
+                      |   ..Field \virtual \int .Virtual -> it.field1 + it.field2
+                      | &nbsp;
+                    coffee
+                      | N = require 'nodulator'
+                      | &nbsp;
+                      | FooResource = N 'foo'
+                      | FooResource.Field('field1', 'string').Required().Unique()
+                      | FooResource.Field('field2', 'int').Default 1
+                      | FooResource.Field('virtual', 'string').Virtual (obj) -> 
+                      |   obj.field1 + obj.field2
+                      | &nbsp;
+                    js
+                      | var N = require('nodulator');
+                      | &nbsp;
+                      | var FooResource = N('foo');
+                      | FooResource.Field('field1', 'string').Required().Unique();
+                      | FooResource.Field('field2', 'int').Default(1);
+                      | FooResource.Field('virtual', 'string')
+                      |              .Virtual(function (obj) {
+                      |                return obj.field1 + obj.field2;
+                      |              });
+
+        .col-sm-4.text-center
+          .row
+            .col-sm-12.text-center
+              .panel.panel-default.slideInRight.animate
+                .panel-heading
+                  h3 Routing
+                .panel-body
+                  //- | SingleRoute
+                  //- codetoggle
+                  //-   livescript
+                  //-     | {{SingleRoute}:Route}:require! {nodulator: N}
+                  //-     | &nbsp;
+                  //-     | Player = N \player SingleRoute
+                  //-   coffee
+                  //-     | N = require 'nodulator'
+                  //-     | SingleRoute = N.Route.SingleRoute
+                  //-     | &nbsp;
+                  //-     | Player = N 'player', SingleRoute
+                  //-   js
+                  //-     | var N = require('nodulator');
+                  //-     | var SingleRoute = N.Route.SingleRoute;
+                  //-     | &nbsp;
+                  //-     | var Player = N 'player', SingleRoute
+                  //- p This exemple create a server and listen for the following routes.
+                  //- p It creates a route to access element with id = 1 only, creating a Singleton model over API
+                  //- pre.text-left
+                  //-   | GET     => /api/1/player   => Fetch
+                  //-   | PUT     => /api/1/player   => Update
+                  //- 
+                  //- span
+                  //-   | By default on
+                  //-   a(href="http://localhost:3000")  http://localhost:3000
+                  //- hr
+                  | Custom route
+                  codetoggle
+                    livescript
+                      | require! {nodulator: {Route}:N}
+                      | &nbsp;
+                      | class PlayerRoute extends Route
+                      |   Config: ->
+                      |     @Get \/test -> toto: \tata
+                      |     @Get \/:id  ~> @resource.Fetch it.params.id
+                      | &nbsp;
+                      | Player = N \player PlayerRoute
+                    coffee
+                      | N = require 'nodulator'
+                      | &nbsp;
+                      | class PlayerRoute extends N.Route
+                      |   Config: ->
+                      |     @Get '/test' -> toto: 'tata'
+                      |     @Get '/:id', (req) => @resource.Fetch req.params.id
+                      | &nbsp;
+                      | Player = N 'player', PlayerRoute
+                    js
+                      | var = N = require('nodulator');
+                      | &nbsp;
+                      | var PlayerRoute = N.Route
+                      | &nbsp;
+                      | PlayerRoute.prototype.Config = function () {
+                      |   this.Get('/:id', function (req) {
+                      |     return this.resource.Fetch(req.params.id);
+                      |   });
+                      |   this.Get('/test', function () {
+                      |     return {toto: 'tata'};
+                      |   });
+                      | };
+                      | &nbsp;
+                      | var Player = N('player', PlayerRoute);
+                  pre.text-left
+                    | GET     => /api/1/players/test  => Returns {toto: 'tata'}
+                    | GET     => /api/1/players/:id   => Get One
+                  | Collection
+                  codetoggle
+                    livescript
+                      | require! {nodulator: {{Collection}:Route}:N}
+                      | &nbsp;
+                      | Player = N \player Collection
+                    coffee
+                      | N = require 'nodulator'
+                      | Collection = N.Route.Collection
+                      | &nbsp;
+                      | Player = N 'player', Collection
+                    js
+                      | var N = require('nodulator');
+                      | var Collection = N.Route.Collection;
+                      | &nbsp;
+                      | var Player = N('player', Collection);
+                  | This previous exemple create a server and listen for the following routes:
+                  pre.text-left
+                    | GET     => /api/1/players       => List all
+                    | GET     => /api/1/players/:id   => Get One
+                    | POST    => /api/1/players       => Create
+                    | PUT     => /api/1/players/:id   => Update
+                    | DELETE  => /api/1/players/:id   => Delete
+                  hr
+
+    //- .container.v-center
+    //-   .row
+    //-     .col-sm-4
+    //-       .row
+    //-         .col-sm-12.text-center
+    //-           .panel.panel-default.slideInLeft.animate
+    //-             .panel-heading
+    //-               h3 Philosophy
+    //-                 .panel-body
+    //-               p Nodulator is a NodeJS framework designed to make it more easy to create highly modulable REST API applications with integrated ORM in CoffeeScript and Javascript.
+    //-               p In a few lines of code, you can create complex project architectures with high performance and reusability.
+    //-               p It tries make a big overlay to every traditionnal packages used to make REST client/server applications in CoffeeScript.
+    //-               p Its main goal is to give developers a complex REST routing system, an ORM and high-level modules, encapsulating every classic behaviour needed to create complex projects.
+    //-               p Its core provides everything needed to build powerfull REST APIs, and allow the developer to reuse his code through every projects.
+    //-               hr
+    //-               hr
+    //-     .col-sm-4.text-center
+    //-       .row
+    //-         .col-sm-12.text-center
+    //-           .panel.panel-default.slideInUp.animate
+    //-             .panel-heading
+    //-               h3 Modular
+    //-                 .panel-body
+    //-               p There is plenty of modules made for Nodulator. Watch for all the functionalities they can provide to your project:
+    //-               p - Nodulator-Assets: Automatic assets management, just append folders' path to the default module configuration and enjoy watching your assets be automaticaly added to your client page.
+    //-               p - Nodulator-Account: Extends basic Resource to support and manage every authentication part of your application with PassportJS.
+    //-               p - Nodulator-Angular: Add AngularJS support client-side with a bunch of Coffeescript classes, and link them with your server in order to facilitate model exchanges.
+    //-               p - Nodulator-Socket: Add SocketIO support, and binds a lot of usual socket fonctionalities to the client.
+    //-               hr
+    //-               hr
+    //-     .col-sm-4.text-center
+    //-       .row
+    //-         .col-sm-12.text-center
+    //-           .panel.panel-default.slideInRight.animate
+    //-             .panel-heading
+    //-               h3 Database agnostic
+    //-                 .panel-body
+    //-               p Nodulator natively support MySQL and MongoDB.
+    //-               p It is designed to possibly switch from one to another transparently during developement processes.
+    //-               p Also, there is a Dummy-DB included for developement facilities, that is flushed upon every server restart. This is the default behaviour.
+    //-               p You can add your own Database support easely thanks to differents levels of abstraction.
+    //-               p For exemple, adding Amazon S3 support by default is actually under discussion.
+    //-               hr
+    //-               hr
+    //-   // /row
+    //-   .row
+    //-     br
+    //- // /container
+  //- section#section3.container-fluid
+  //-   .row
+  //-     .col-sm-6.col-sm-offset-3.col-md-6.col-md-offset-3
+  //-       h2.text-center.lato Getting Started
+  //-       hr
+  //-       .media
+  //-         h3 Npm installation
+  //-         .media-left
+  //-           pre.prettyprint.linenums.lang-bash.text-left
+  //-             | $> npm install nodulator
+
+  //-         .media-body.media-middle
+  //-           p
+  //-             span(class="hl") Nodulator
+  //-             span  can easily be installed by NPM
+  //-       hr
+  //-       .media
+  //-         h3 Easy ORM with Schema-less models
+  //-         .media-left
+  //-           codetoggle
+  //-             coffee
+  //-               | Nodulator = require 'nodulator'
+  //-               | &nbsp;
+  //-               | # Make usable models with one call
+  //-               | FooResource = Nodulator.Resource 'foo'
+  //-               | FooResource.Init()
+  //-               | &nbsp;
+  //-               | # The Create() method is used to add rows
+  //-               | blob = {field1: 'value1', field2: 'value2'}
+  //-               | FooResource.Create blob, (err, foo) ->
+  //-               |   return console.error err if err?
+  //-               | &nbsp;
+  //-               |   foo.field1 = 'anotherValue'
+  //-               | &nbsp;
+  //-               |   # After make change to foo instance, save it
+  //-               |   foo.Save (err) ->
+  //-               |     return console.error err if err?
+  //-             js
+  //-               | var Nodulator = require('nodulator');
+  //-               | &nbsp;
+  //-               | // Make usable models with one call
+  //-               | var FooResource = Nodulator.Resource('foo');
+  //-               | FooResource.Init()
+  //-               | &nbsp;
+  //-               | // The Create() method is used to add rows
+  //-               | FooResource.Create({
+  //-               |   field1: 'value1',
+  //-               |   field2: 'value2'
+  //-               | }, function (err, foo) {
+  //-               |   if (err)
+  //-               |     return console.error(err);
+  //-               | &nbsp;
+  //-               |   foo.field1 = 'anotherValue';
+  //-               | &nbsp;
+  //-               |   // After make change to foo instance, save it
+  //-               |   foo.Save(function (err) {
+  //-               |     if (err)
+  //-               |       return console.error(err);
+  //-               |   });
+  //-               | });
+
+  //-         .media-body.media-middle
+  //-           p Nodulator have to be required like every other usual packages
+  //-           p Every model management is handled by a
+  //-             b  Resource
+  //-             |  class.
+  //-           p Each time you create a new resource, you
+  //-             b  have to
+  //-             |  call the
+  //-             b  Init()
+  //-             |  method when you want it to be usable first time. It will create the model in database if non existant, associate the route object (if any) and prepare schema, validation and model association.
+  //-           p Here it creates a foo row in selected table/document (see
+  //-             b  Configuration
+  //-             |  section) and change one of its values before save it again.
+  //-           p By default,
+  //-             b  Resources
+  //-             |  are Schema-less and you can add pretty much whatever you want into them. See next exemple for a Schema-full model.
+  //-           p You can use the created element like any javascript object, and call
+  //-             b  Save()
+  //-             |  method for exemple
+  //-           //- img(src='//placehold.it/100')
+  //-       hr
+  //-       .media
+  //-         h3 Schema-full models supported
+  //-         .media-left
+  //-           codetoggle
+  //-             coffee
+  //-               | Nodulator = require 'nodulator'
+  //-               | &nbsp;
+  //-               | fooConfig =
+  //-               |   schema:
+  //-               |     field1: 'string'
+  //-               |     field2: 'string'
+  //-               | &nbsp;
+  //-               | FooResource = Nodulator.Resource 'foo', fooConfig
+  //-               | FooResource.Init()
+  //-             js
+  //-               | var Nodulator = require('nodulator');
+  //-               | &nbsp;
+  //-               | var fooConfig = {
+  //-               |   schema: {
+  //-               |     field1: 'string',
+  //-               |     field2: 'string'
+  //-               |   }
+  //-               | };
+  //-               | &nbsp;
+  //-               | var FooResource = Nodulator.Resource('foo', fooConfig);
+  //-               | FooResource.Init()
+
+  //-         .media-body.media-middle
+  //-           p Each time you specify a schema property in the config object, your Resource now checks for fields validity and might return some errors if you provide bad types.
+  //-           p Note that you can pass arguments to Nodulator.Resource(). We'll see later that we can add another one to specify routes.
+  //-           p In this mode, if you add a field that doesn't belong to a real field in schema, it might be ignored.
+  //-       hr
+  //-       .media
+  //-         h3 Model association
+  //-         .media-left
+  //-           codetoggle
+  //-             coffee
+  //-               | async = require 'async'
+  //-               | Nodulator = require 'nodulator'
+  //-               | &nbsp;
+  //-               | BarResource = Nodulator.Resource 'bar'
+  //-               | BarResource.Init()
+  //-               | &nbsp;
+  //-               | fooConfig =
+  //-               |   schema:
+  //-               |     barId: 'int'
+  //-               |     bar:
+  //-               |       type: BarResource
+  //-               |       localKey: 'barId'
+  //-               | &nbsp;
+  //-               | FooResource = Nodulator.Resource 'foo', fooConfig
+  //-               | FooResource.Init()
+  //-               | &nbsp;
+  //-               | # Populate exemple
+  //-               | async.auto
+  //-               |   createBar: (done) ->
+  //-               |       BarResource.Create {barField: 'barValue'}, done
+  //-               | &nbsp;
+  //-               |   createFoo: ['createBar', (done, results) ->
+  //-               |       FooResource.Create {barId: results.createBar.id}, done]
+  //-               | &nbsp;
+  //-               |   foo: ['createFoo', (done, results) ->
+  //-               |       FooResource.Fetch 1, done]
+  //-               | &nbsp;
+  //-               | , (err, results) ->
+  //-               |   return console.error err if err?
+  //-               | &nbsp;
+  //-               |   console.log results.foo
+  //-               |   # Will output :
+  //-               |   # {id: 1, barId: 1, bar: {id: 1, barField: 'barValue'}}
+  //-             js
+  //-               | var async = require('async');
+  //-               | var Nodulator = require('nodulator');
+  //-               | &nbsp;
+  //-               | var BarResource = Nodulator.Resource('bar');
+  //-               | BarResource.Init()
+  //-               | &nbsp;
+  //-               | fooConfig = {
+  //-               |   schema: {
+  //-               |     barId: 'int',
+  //-               |     bar: {
+  //-               |       type: BarResource,
+  //-               |       localKey: 'barId'
+  //-               |     }
+  //-               |   }
+  //-               | };
+  //-               | &nbsp;
+  //-               | var FooResource = Nodulator.Resource('foo', fooConfig);
+  //-               | FooResource.Init()
+  //-               | &nbsp;
+  //-               | // Populate exemple
+  //-               | async.auto({
+  //-               |   createBar: function (done) {
+  //-               |       BarResource.Create({barField: 'barValue'}, done);
+  //-               |   },
+  //-               | &nbsp;
+  //-               |   createFoo: ['createBar', function (done, results) {
+  //-               |       FooResource.Create({barId: results.createBar.id}, done);
+  //-               |   }],
+  //-               | &nbsp;
+  //-               |   foo: ['createFoo', function (done, results) {
+  //-               |       FooResource.Fetch(1, done);
+  //-               |   }]
+  //-               | &nbsp;
+  //-               | }, function (err, results) {
+  //-               |   if (err)
+  //-               |     return console.error(err);
+  //-               | &nbsp;
+  //-               |   console.log(results.foo);
+  //-               |   // Will output :
+  //-               |   // {id: 1, barId: 1, bar: {id: 1, barField: 'barValue'}}
+  //-               | });
+  //-         .media-body.media-middle
+  //-           p This is a full working association exemple
+  //-           p We create a BarResource that will be the associated model automaticaly retrieved
+  //-           p As usual when we want a newly created Resource to be usable, we call Init().
+  //-           p In the FooResource schema property, you can specify a field conaining the resource id to load.
+  //-           p Then, if you specify a Resource as a type for a schema field, you must also provide a 'localKey' to match the 'id' value to fetch.
+  //-           p In this exemple, when we will fetch a FooResource, it will automaticaly retrieve the BarResource with the 'id' specified into the 'barId' property, and put it in the 'bar' property.
+  //-           p &nbsp;
+  //-           p &nbsp;
+  //-           p &nbsp;
+  //-           p &nbsp;
+  //-           p Watch this 'Populate exemple' to get an exemple of how you can create such models.
+  //-           p &nbsp;
+  //-           p &nbsp;
+  //-           p &nbsp;
+  //-           p &nbsp;
+  //-       hr
+  //-       .media
+  //-         h3 Easy to extend
+  //-         .media-left
+  //-           codetoggle
+  //-             coffee
+  //-               | Nodulator = require 'nodulator'
+  //-               | &nbsp;
+  //-               | class UnitResource extends Nodulator.Resource 'unit'
+  //-               | &nbsp;
+  //-               |   LevelUp: (done) ->
+  //-               |     @level++
+  //-               |     @Save done
+  //-               | &nbsp;
+  //-               |   @List: (done) ->
+  //-               |     @ListBy {life: 10}, (err, units) ->
+  //-               |       return done err if err?
+  //-               | &nbsp;
+  //-               |       done null, units
+  //-               | &nbsp;
+  //-               | UnitResource.Init()
+
+  //-             js
+  //-               | var Nodulator = require('nodulator');
+  //-               | &nbsp;
+  //-               | var UnitResource = Nodulator.Resource('unit');
+  //-               | &nbsp;
+  //-               | UnitResource.prototype.LevelUp = function (done) {
+  //-               |   this.level++;
+  //-               |   this.Save(done);
+  //-               | };
+  //-               | &nbsp;
+  //-               | UnitResource.List = function (done) {
+  //-               |   this.ListBy({life: 10}, function (err, units) {
+  //-               |     if (err)
+  //-               |       return done(err);
+  //-               | &nbsp;
+  //-               |     done(null, units);
+  //-               |   });
+  //-               | };
+  //-               | &nbsp;
+  //-               | UnitResource.Init();
+
+  //-         .media-body.media-middle
+  //-           p All you have to do is to append new methods to your class and use it like any other.
+  //-           p Here we extend the UnitResource to add:
+  //-           p <- an Instance method (LevelUp())
+  //-           p &nbsp;
+  //-           p <- and a Class method (@List())
+  //-           p This one is just an alias for @ListBy with specific values.
+  //-           p &nbsp;
+  //-           p Every 'done' callback take two parameters: (err, result) ->
+  //-           p And we call Init() when we are ready to start using this Resource.
+  //-       hr
+  //-       .media
+  //-         h3 Our site is still under construct. Check our
+  //-           a(href='https://github.com/Champii/Nodulator')  github
+  //-           |  for more informations.
+        //- hr
+        //- .media
+        //-   h3 Boom
+        //-   .media-body.media-middle
+        //-     p
+        //-       | Offset right home page content that is taller that 12,000 pixels. That&apos;s a lotta content Lorem ipsum dolor sit amet, adipiscing elit.
+        //-   .media-right
+        //-     img(src='//placehold.it/100')
+  //- section#section4.container-fluid
+  //-   h1.text-center A Bootstrap Foundation
+  //-   .row
+  //-     .col-sm-6.col-sm-offset-3
+  //-       h3.text-center.lato.slideInUp.animate
+  //-         | That
+  //-         strong Doesn&apos;t
+  //-         |  Have to Look Like Bootstrap.
+  //-       br
+  //-       .row
+  //-         .col-xs-4.col-xs-offset-1
+  //-           | Some brand-tacular designs even have home page content that is taller that 12,000 pixels. That&apos;s a lotta content.
+  //-         .col-xs-2
+  //-         .col-xs-4.text-right
+  //-           | Anyhoo, this is just some random blurb of text, and Bootply.com is a playground and code editor for Bootstrap.
+  //-       br
+  //-       p.text-center
+  //-         img.img-responsive.thumbnail.center-block(src='//placehold.it/444x222/444/FFF')
+  //- section#section5
+  //-   .container.v-center
+  //-     .row
+  //-       .col-md-12
+  //-         h1.text-center Make Contact
+  //-         hr
+  //-     .row
+  //-       .col-sm-9
+  //-         .row.form-group
+  //-           .col-sm-3
+  //-             input#firstName.form-control(type='text', name='firstName', placeholder='First Name', required='')
+  //-           .col-sm-3
+  //-             input#middleName.form-control(type='text', name='firstName', placeholder='Middle Name', required='')
+  //-           .col-sm-4
+  //-             input#lastName.form-control(type='text', name='lastName', placeholder='Last Name', required='')
+  //-         .row.form-group
+  //-           .col-sm-5
+  //-             input.form-control(type='email', name='email', placeholder='Email', required='')
+  //-           .col-sm-5
+  //-             input.form-control(type='email', name='phone', placeholder='Phone', required='')
+  //-         .row.form-group
+  //-           .col-sm-10
+  //-             input.form-control(type='homepage', placeholder='Website URL', required='')
+  //-         .row.form-group
+  //-           .col-sm-10
+  //-             button.btn.btn-default.btn-lg.pull-right Contact Us
+  //-       .col-sm-3.pull-right
+  //-         address
+  //-           strong Some LLC
+  //-           br
+  //-           |               795 Folsom Ave, Suite 600
+  //-           br
+  //-           |               Newport, RI 94107
+  //-           br
+  //-           |               P: (123) 456-7890            address
+  //-           strong Email Us
+  //-           br
+  //-           a(href='mailto:#') first.last@example.com
+  //- section#section6.container-fluid
+  //-   ul.row.list-unstyled
+  //-     li.col-md-6.col-md-offset-1.col-xs-10.col-xs-offset-1
+  //-       h3.text-center This will scale down proportionately.
+  //-     li.col-md-3.col-md-offset-0.col-xs-10.col-xs-offset-1.text-center
+  //-       a.center-block.btn.btn-default.btn-lg.btn-huge.lato.animate.slideInRight(href='') Responsive Design
+  //- section#section7.container-fluid
+  //-   .row
+  //-     // fontawesome icons
+  //-     .col-sm-1.col-sm-offset-3.col-xs-4.text-center
+  //-       i.fa.fa-github.fa-4x
+  //-     .col-sm-1.col-xs-4.text-center
+  //-       i.fa.fa-foursquare.fa-4x
+  //-     .col-sm-1.col-xs-4.text-center
+  //-       i.fa.fa-pinterest.fa-4x
+  //-     .col-sm-1.col-xs-4.text-center
+  //-       i.fa.fa-google-plus.fa-4x
+  //-     .col-sm-1.col-xs-4.text-center
+  //-       i.fa.fa-twitter.fa-4x
+  //-     .col-sm-1.col-xs-4.text-center
+  //-       i.fa.fa-dribbble.fa-4x

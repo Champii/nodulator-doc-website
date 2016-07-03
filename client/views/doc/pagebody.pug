@@ -1,0 +1,99 @@
+div
+  span(class="buttonbox")
+    div
+      button.btn(ng-click="ToggleVisible()") {{ (visible ? 'Hide -> ' : '<- Show Console') }}
+    div
+      button.btn(ng-click="ToggleHelpVisible()", ng-show="visible") {{ (helpVisible ? 'Hide Help ' : 'Shop Help') }}
+
+  div 
+    
+    div(ng-switch="sub").content.well
+      div(ng-switch-when="welcome")
+        welcome
+      div(ng-switch-when="installation")
+        installation
+      div(ng-switch-when="quickstart")
+        quickstart
+
+      div(ng-switch-when="resource")
+        div(ng-switch="args[0]")
+          div(ng-switch-when="basics")
+            resourcebasics
+          div(ng-switch-when="create")
+            resourcecreate
+          div(ng-switch-when="fetchres")
+            resourcefetchres
+          div(ng-switch-when="list")
+            resourcelist
+          div(ng-switch-when="deleteres")
+            resourcedeleteres
+          div(ng-switch-when="field")
+            resourcefield
+          div(ng-switch-when="watchres")
+            resourcewatchres
+          div(ng-switch-when="extend")
+            resourceextend
+          div(ng-switch-when="attachroute")
+            resourceattachroute
+          div(ng-switch-when="hasone")
+            resourcehasone
+          div(ng-switch-when="hasmany")
+            resourcehasmany
+          div(ng-switch-when="belongsto")
+            resourcebelongsto
+          div(ng-switch-when="mayhasone")
+            resourcemayhasone
+          div(ng-switch-when="mayhasmany")
+            resourcemayhasmany
+          div(ng-switch-when="maybelongsto")
+            resourcemaybelongsto
+          div(ng-switch-when="hasonethrough")
+            resourcehasonethrough
+          div(ng-switch-when="hasmanythrough")
+            resourcehasmanythrough
+          div(ng-switch-when="hasandbelongstomany")
+            resourcehasandbelongstomany
+
+          div(ng-switch-when="save")
+            resourcesave
+          div(ng-switch-when="set")
+            resourceset
+          div(ng-switch-when="fetchins")
+            resourcefetchins
+          div(ng-switch-when="deleteins")
+            resourcedeleteins
+          div(ng-switch-when="tojson")
+            resourcetojson
+          div(ng-switch-when="serialize")
+            resourceserialize
+          div(ng-switch-when="add")
+            resourceadd
+          div(ng-switch-when="remove")
+            resourceremove
+          div(ng-switch-when="watchins")
+            resourcewatchins
+          div(ng-switch-when="log")
+            resourcelog
+
+
+          div(ng-switch-when="promises")
+            promises
+          div(ng-switch-when="callbacks")
+            callbacks
+  
+          div(ng-switch-when="schemabasics")
+            schemabasics
+
+      div(ng-switch-when="routes")
+        div(ng-switch="args[0]")
+          div(ng-switch-when="basics")
+            routebasics
+          div(ng-switch-when="request")
+            request
+          div(ng-switch-when="inherit")
+            routeinherit
+          div(ng-switch-when="collection")
+            collection
+
+      div(ng-switch-when="console")
+        console

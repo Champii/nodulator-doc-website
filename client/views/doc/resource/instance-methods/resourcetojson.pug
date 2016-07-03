@@ -1,0 +1,22 @@
+div
+  h2 4.3.5) ToJSON
+
+  h3 Arguments
+  
+  p The 'ToJSON' instance method is used to extract an objects with every schema property (if any) or with every object properties found
+  p This process is recursive throught the relationships.
+  p It is used to get a proper JSON representation in order to send the instance over the network  
+  br
+  p It takes no arguments and returns the object with every relationship
+    bash
+      | resource.ToJSON()
+                
+  h3 Exemple
+  
+  codetoggle
+    livescript
+      include ../../../../exemples/ls/resourcetojson.ls
+    coffee
+      include ../../../../exemples/coffee/resourcetojson.coffee
+    js
+      include ../../../../exemples/js/resourcetojson.js

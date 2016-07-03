@@ -1,0 +1,39 @@
+nav.navbar.navbar-trans.navbar-fixed-top(role='navigation')
+  a.navbar-brand(href='#/home/welcome', ng-click="GoTo('home')") 
+    span.text-danger N
+    | odulator 
+    span.text-danger (.js)
+  .container
+    center
+      .navbar-header
+      //- button.navbar-toggle(type='button', data-toggle='collapse', data-target='#navbar-collapsible')
+      //-   span.sr-only Toggle navigation
+      //-   span.icon-bar
+      //-   span.icon-bar
+      //-   span.icon-bar
+      #navbar-collapsible.navbar-collapse.collapse
+        ul.nav.navbar-nav.navbar-left
+          li(ng-class="{active: location === '/' || (location === '/home' && sub === 'welcome')}")
+            a(href='#/home/welcome') Home
+          li(ng-class="{active: location === '/home' && sub === 'gettingstarted'}")
+            a(href='#/home/gettingstarted') Getting started
+          //- li
+          //-   a(href='#section3', ng-click="GoTo('home')") Modules (soon)
+          li(ng-class="{active: location === '/doc'}")
+            //- a(href='#section4') Documentation (soon)
+            a(href='#/doc/welcome', ng-click="GoTo('doc')") Documentation
+          //- li
+          //-   a(href='#section5') Tutorials (soon)
+          li
+            a(href='https://github.com/Champii/Nodulator') Github
+          li
+            a(href='mailto:contact@champii.io') Contact
+          li
+            | &nbsp;
+
+        //- ul.nav.navbar-nav.navbar-right
+      //-   li
+      //-     a(href='#', data-toggle='modal', data-target='#myModal')
+      //-       i.fa.fa-heart-o.fa-lg
+      //- a(class="github-button", href="https://github.com/champii/nodulator", data-icon="octicon-star", data-style="mega", data-count-href="/champii/nodulator/stargazers", data-count-api="/repos/champii/nodulator#stargazers_count", data-count-aria-label="# stargazers on GitHub", aria-label="Star champii/nodulator on GitHub") Star
+      //- script(async defer id="github-bjs" src="https://buttons.github.io/buttons.js")

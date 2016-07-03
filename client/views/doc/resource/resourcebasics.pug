@@ -1,0 +1,61 @@
+div
+  h2 4.1) Basics
+
+  h3 Resource creation
+
+  p Resources are at the heart of Nodulator. This object allows you to modelize 
+    | and manipulate documents or tables from DB system. 
+  p Here is the simpliest way to declare and to use a Resource : 
+
+  codetoggle
+    livescript
+      include ../../../exemples/ls/resourcebasics.ls
+    coffee
+      include ../../../exemples/coffee/resourcebasics.coffee
+    js
+      include ../../../exemples/js/resourcebasics.js
+      
+  br
+  p But you can also just call the Resource and get the created resource throught 'N.'. Theses are equivalents: 
+    livescript
+      | N  \player .Create name: \test
+      | N.Player.Create name: \test
+  br
+      
+  p The arguments a Resource can take are describe here: 
+    livescript N  name, [Route], [Config]
+
+  br
+  p The Route and Config arguments are both optionals and can be swaped
+      
+  p This call returns a Player Resource object that represents your models in DB
+    
+  h3 Chainable Calls
+
+  p Most of the calls are chainable as far as you dont give a callback as argument.
+  p WARNING: They are chainable but they stay asynchronous. Some promise stuff is working under the scene.
+    
+  h3 Common calls
+  
+  p You can get and manage your models thanks to a Resource, with theses Class methods (for exemple with a 'Player' resource, and a 'player' instance):
+    ul
+      li
+        a(href="#/doc/resource/create") Player.Create()
+      li
+        a(href="#/doc/resource/fetch") Player.Fetch()
+      li
+        a(href="#/doc/resource/list") Player.List()
+      li
+        a(href="#/doc/resource/deleteres") Player.Delete()
+        
+    | And theses Instance methods: 
+
+    ul
+      li
+        a(href="#/doc/resource/set") player.Set()
+      li
+        a(href="#/doc/resource/log") player.Log()
+      li
+        a(href="#/doc/resource/tojson") player.ToJSON()
+      li
+        a(href="#/doc/resource/deleteins") player.Delete()

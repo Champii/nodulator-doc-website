@@ -1,0 +1,24 @@
+div
+  h2 4.4.2) Callbacks
+
+  br
+  p Every Resources calls can take a Callback of the form : 'function (err, data) {}'
+    
+  p As every Resource can return a 
+    a(href="#/doc/resource/promises") Promise 
+    | or take a 
+    a(href="#/doc/resource/callbacks") CallBack
+    | , they will return a Promise only if you don't provide a Callback.
+    | Else, it will returns the caller for chaining purpose.
+
+  
+  h3 Exemples 
+  
+  br
+  codetoggle
+    livescript
+      include ../../../exemples/ls/callbacks.ls
+    coffee
+      include ../../../exemples/coffee/callbacks.coffee
+    js
+      include ../../../exemples/js/callbacks.js

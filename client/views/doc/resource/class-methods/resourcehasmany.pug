@@ -1,0 +1,28 @@
+div
+  h2 4.2.10) HasMany
+
+  h3 Arguments
+  
+  p The 'HasMany' class method set a one-to-many relationship between two Resource in both directions by default.
+  p It takes the following arguments: 
+    bash
+      | Resource.HasMany AnotherResource, [autoBelongsTo], [fieldName], [foreignKeyName]
+  
+    p And returns the Resource
+    
+  p Warning, this call create a Required() field with the name of the 'Resource' in the 'AnotherResource'
+
+    
+  p See the corresponding 
+    a(href="") HasMany
+    | documentation for more details
+          
+  h3 Exemple
+  
+  codetoggle
+    livescript
+      include ../../../../exemples/ls/resourcehasmany.ls
+    coffee
+      include ../../../../exemples/coffee/resourcehasmany.coffee
+    js
+      include ../../../../exemples/js/resourcehasmany.js

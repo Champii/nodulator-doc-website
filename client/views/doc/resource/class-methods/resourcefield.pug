@@ -1,0 +1,35 @@
+div
+  h2 4.2.5) Field
+
+  h3 Arguments
+
+  p The 'Field' class method is used to define a field name and type in order to validate it.
+  p Depending on the 
+    a(href="#/schema/mode") Schema Mode
+    |, that can be either 'free' (by default), or 'strict', the newly added field will be respectively
+    | optional or required. 
+  p If optional, the system will never complain if not present. If present anyway, it will check for its type validation. 
+
+  p It takes the following arguments
+    bash
+      | Resource.Field name, type
+
+    p And returns the created 
+      a(href="#/schema/property") SchemaProperty
+
+    p You can directly specify specifities for this SchemaProperty like '.Default('value')', '.Virtual(func)'.
+    p Watch the corresponding documentation.
+
+  h3 Argument type
+
+  p Both arguments are strings.
+
+  h3 Exemple
+
+  codetoggle
+    livescript
+      include ../../../../exemples/ls/resourcefield.ls
+    coffee
+      include ../../../../exemples/coffee/resourcefield.coffee
+    js
+      include ../../../../exemples/js/resourcefield.js

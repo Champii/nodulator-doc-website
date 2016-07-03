@@ -1,0 +1,61 @@
+div
+  h2 5.1) Route Basics
+
+  p Nodulator provides a Route object, which can to be attached to a Resource object (or not) in order to describe routing process.
+
+  p There is 2 different ways to attach a Resource to a Route:
+
+  p You can bind a Route to a Resource
+
+  livescript
+    | Player = N \player N.Route
+
+  p Or you can bind a Resource to a Route. In this case, you have to instanciate the Route yourself once.
+  
+  livescript
+    | class PlayerRoute extends N.Route
+    |   resource: Player
+    | 
+    | new PlayerRoute
+
+  p The attached Resource will be available as 'this.resource' inside the Route
+
+  p The N.Route object is an empty route object and do nothing. You have to extend it in order to define your routes.
+
+  livescript
+    | class UnitRoute extends N.Route
+    |   Config: ->
+    |     @Get \/:id ~> @resource.Fetch +it.params.id
+    |     @Post      ~> @resource.Create it.body
+
+  p Here we define: 
+    ul
+      li GET => /api/1/{resource_name}/:id
+      li POST => /api/1/{resource_name}
+      
+  p The {resource_name} is defined by the attached resource name.
+  
+  p For exemple with 
+  
+  livescript
+    | Player = N \player PlayerRoute
+
+  ul
+    li GET => /api/1/players/:id
+    li POST => /api/1/players
+
+  h3 Available calls :
+
+  ul
+    li Get()
+    li Post()
+    li Put()
+    li Delete()
+    li All()
+
+  p Every calls take the same arguments. For exemple with Get:  
+  bash Route::Get [endPoint = '/'], [middleware, [middleware, ...]], callback
+
+  p The callback takes a 
+    a(href="#/doc/routes/request") Request 
+    | Object as only parameter.

@@ -1,0 +1,29 @@
+div
+  h2 4.2.9) HasOne
+
+  h3 Arguments
+  
+  p The 'HasOne' class method set a one-to-one relationship between two Resource in both directions by default.
+  p It takes the following arguments: 
+    bash
+      | Resource.HasOne AnotherResource, [autoBelongsTo], [fieldName], [foreignKeyName]
+  
+    p And returns the Resource
+    
+  p Warning, this call create a Required() field with the name of the 'Resource' in the 'AnotherResource'.
+  P Exemple with a 'player' that hasone 'weapon' => weapon will have a required 'playerId' field
+  P It also automaticaly create a BelongsTo association, that can be avoided by passing autoBelongsTo as false
+
+  p See the corresponding 
+    a(href="") HasOne
+    | documentation for more details
+          
+  h3 Exemple
+  
+  codetoggle
+    livescript
+      include ../../../../exemples/ls/resourcehasone.ls
+    coffee
+      include ../../../../exemples/coffee/resourcehasone.coffee
+    js
+      include ../../../../exemples/js/resourcehasone.js

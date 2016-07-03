@@ -1,0 +1,22 @@
+div
+  h2 4.3.6) Serialize
+
+  h3 Arguments
+  
+  p The 'Serialize' instance method is used to extract an objects with every schema property (if any) or with every object properties found
+  p This call does not returns any relationships, only own properties.
+  p It is used to get a proper representation in order to send the instance to the DB
+  br
+  p It takes no arguments and returns the object with no relationship
+    bash
+      | resource.Serialize()
+                
+  h3 Exemple
+  
+  codetoggle
+    livescript
+      include ../../../../exemples/ls/resourceserialize.ls
+    coffee
+      include ../../../../exemples/coffee/resourceserialize.coffee
+    js
+      include ../../../../exemples/js/resourceserialize.js
