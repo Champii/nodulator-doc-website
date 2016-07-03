@@ -5,7 +5,7 @@ span
       h1.text-center
         span(class="hl")
           b N
-        span(style="color:#6b6b6b") odulator 
+        span(style="color:#6b6b6b") odulator
         span(class="hl")
           b (.js)
       br
@@ -15,7 +15,7 @@ span
           b  Framework
         |  for Restful APIs
       p.text-center (And more if affinity)
-      p.text-center v0.1.4
+      p.text-center v0.1.5
         br
         br
         iframe(src="https://ghbtns.com/github-btn.html?user=champii&repo=nodulator&type=fork&count=true&size=largev=2", frameborder="0", scrolling="0", width="80px", height="30px")
@@ -150,43 +150,55 @@ span
                   p Fully agnostic ORM
                   codetoggle
                     livescript
-                      | Player.Create do
-                      |   name: \player1
-                      |   level: 1
-                      | .Then (player) ->
-                      | .Catch (err) ->
+                      | Player
+                      |   .Create do
+                      |     name: \player1
+                      |     level: 1
+                      |   .Then (player) ->
+                      |   .Catch (err) ->
                       | &nbsp;
                     coffee
-                      | Player.Create
-                      |   name: 'player1'
-                      |   level: 1
-                      | .Then (player) ->
-                      | .Catch (err) ->
+                      | Player
+                      |   .Create
+                      |     name: 'player1'
+                      |     level: 1
+                      |   .Then (player) ->
+                      |   .Catch (err) ->
                       | &nbsp;
                     js
-                      | Player.Create({
-                      |   name: 'player1',
-                      |   level: 1
-                      | })
-                      | .Then(function (player) {})
-                      | .Catch(function (player) {})
+                      | Player
+                      |   .Create({
+                      |     name: 'player1',
+                      |     level: 1
+                      |   })
+                      |   .Then(function (player) {})
+                      |   .Catch(function (player) {})
                       | &nbsp;
                   hr
                   p Easy to use, chainable async calls with promises
                   codetoggle
                     livescript
-                      | Player.Fetch 1 .Set (.level++)
-                      |  .Then -> Player.Fetch 2 .Set name: \player2
+                      | Player
+                      |  .Fetch 1 
+                      |  .Set (.level++)
+                      |  .Then -> Player.Fetch 2 
+                      |  .Set name: \player2
                       |  .Catch console.error
                       | &nbsp;
                     coffee
-                      | Player.Fetch(1).Set (player) -> player.level++
-                      |  .Then -> Player.Fetch(2).Set name: 'player2'
+                      | Player
+                      |  .Fetch 1
+                      |  .Set (player) -> player.level++
+                      |  .Then -> Player.Fetch 2
+                      |  .Set name: 'player2'
                       |  .Catch console.error
                       | &nbsp;
                     js
-                      | Player.Fetch(1).Set(function (player) { player.level++ });
-                      |  .Then(function (player) { return Player.Fetch(2).Set({name: 'player2'}) })
+                      | Player
+                      |  .Fetch(1)
+                      |  .Set(function (player) { player.level++ });
+                      |  .Then(function (player) { return Player.Fetch(2) })
+                      |  .Set({name: 'player2'}) 
                       |  .Catch(console.error);
                       | &nbsp;
                   hr
@@ -197,7 +209,7 @@ span
                       | &nbsp;
                       | class Player extends N \player
                       |   LevelUp: -> @Set (.level++)
-                      | 
+                      | &nbsp;
                       | Player.Field \level \int .Default 1
                       | Player.Create!LevelUp!
                       | &nbsp;
@@ -206,7 +218,7 @@ span
                       | &nbsp;
                       | class Player extends N 'player'
                       |   LevelUp: -> @Set (player) -> player.level++
-                      | 
+                      | &nbsp;
                       | Player.Field('level', 'int').Default 1
                       | Player.Create().LevelUp()
                       | &nbsp;
@@ -218,7 +230,7 @@ span
                       | Player.prototype.LevelUp = function () {
                       |   this.Set(function (player) { player.level++ });
                       | };
-                      | 
+                      | &nbsp;
                       | Player.Field('level', 'int').Default(1);
                       | Player.Create().LevelUp();
                       | &nbsp;
@@ -239,7 +251,7 @@ span
                       | FooResource = N 'foo'
                       | FooResource.Field('field1', 'string').Required().Unique()
                       | FooResource.Field('field2', 'int').Default 1
-                      | FooResource.Field('virtual', 'string').Virtual (obj) -> 
+                      | FooResource.Field('virtual', 'string').Virtual (obj) ->
                       |   obj.field1 + obj.field2
                       | &nbsp;
                     js
@@ -281,7 +293,7 @@ span
                   //- pre.text-left
                   //-   | GET     => /api/1/player   => Fetch
                   //-   | PUT     => /api/1/player   => Update
-                  //- 
+                  //-
                   //- span
                   //-   | By default on
                   //-   a(href="http://localhost:3000")  http://localhost:3000

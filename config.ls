@@ -9,4 +9,5 @@ module.exports =
             vendors: <[ public/js ]>
             js: <[ index.coffee directives controllers factories services ]>
             css: <[ public/css ]>
+            '/img': <[ public/img ]>
     angular: {}

@@ -47,4 +47,4 @@ class RunnableRoute extends N.Route
 
           req.Send req.session.url
 
-new RunnableRoute 'runnable'
+new RunnableRoute 'runnables'
